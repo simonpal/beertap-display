@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useRecipes } from "../api";
 import { BaseRecipe } from "../models";
@@ -72,30 +72,30 @@ interface RecipeSettingsProps {
 }
 export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
   const { settings, updateSettings = (k, v) => null } = useStorage();
-  const [page, setPage] = useState(0);
+  const [lastId, setLastId] = useState("");
   const [selectedRecipes, setSelectedRecipes] = useState(
     Array(settings.noKegs)
       .fill(null)
       .map((_, i) => settings.kegs?.[i] || null)
   );
 
-  const { data } = useRecipes(page);
-  const categorized: { [key: string]: BaseRecipe[] } = useMemo(() => {
-    const defaultStyle = "No category";
-    if (data && data.length > 0) {
-      const mapped = data.reduce((acc: any, curr: any) => {
-        const key = curr?.style?.name || defaultStyle;
-        acc[key] =
-          Array.isArray(acc[key]) && acc[key].length > 0
-            ? [...acc[key], curr]
-            : [curr];
-        return acc;
-      }, {});
-      return mapped;
-    }
-    return {};
-  }, [data]);
-  console.log(categorized);
+  const { recipes } = useRecipes(lastId);
+  // const categorized: { [key: string]: BaseRecipe[] } = useMemo(() => {
+  //   const defaultStyle = "No category";
+  //   if (data && data.length > 0) {
+  //     const mapped = data.reduce((acc: any, curr: any) => {
+  //       const key = curr?.style?.name || defaultStyle;
+  //       acc[key] =
+  //         Array.isArray(acc[key]) && acc[key].length > 0
+  //           ? [...acc[key], curr]
+  //           : [curr];
+  //       return acc;
+  //     }, {});
+  //     return mapped;
+  //   }
+  //   return {};
+  // }, [data]);
+  // console.log(categorized);
   const updateSelectedRecipes = (id: string, idx: number) => {
     let rec = [...selectedRecipes];
     const found = selectedRecipes.findIndex((item) => item === id);
@@ -114,12 +114,34 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
     updateSettings("kegs", selectedRecipes);
     onClose();
   };
+
+  // useEffect(() => {
+  //   setFetchedIds({last: data[data.length - 1]._id)};
+  // }, [data]);
   return (
     <StyledSettings>
       <h2>Recipes</h2>
-      {categorized && (
+      {recipes && recipes.length > 0 && (
         <ul>
-          {Object.entries(categorized).map(([key, value]) => (
+          {recipes.map((rec: BaseRecipe) => (
+            <li key={rec._id}>
+              <h3>{rec?.name || "(No name)"}</h3>
+              <div className="author">Author: {rec.author}</div>
+              {rec?.style && (
+                <div className="style">Style: {rec.style.name}</div>
+              )}
+              {selectedRecipes.map((_, idx) => (
+                <button
+                  key={`button-${rec._id}-${idx}`}
+                  className={`${isSelected(rec._id, idx) ? "selected" : ""}`}
+                  onClick={() => updateSelectedRecipes(rec._id, idx)}
+                >
+                  Keg {idx + 1}
+                </button>
+              ))}
+            </li>
+          ))}
+          {/* {Object.entries(categorized).map(([key, value]) => (
             <li>
               <h2>{key}</h2>
               <ul>
@@ -145,14 +167,17 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
                 ))}
               </ul>
             </li>
-          ))}
+          ))} */}
         </ul>
       )}
-      {data && page > 0 && (
+      {/* {data && page > 0 && (
         <Button onClick={() => setPage(page - 1)}>Previous</Button>
-      )}
-      {data && data.length === 10 && (
-        <Button onClick={() => setPage(page + 1)}>Next</Button>
+      )} */}
+      {recipes && recipes.length >= 10 && (
+        // <Button onClick={() => setPage(page + 1)}>Next</Button>
+        <Button onClick={() => setLastId(recipes[recipes.length - 1]._id)}>
+          Fetch more
+        </Button>
       )}
       <div className="save-recipes">
         <p>Do you want to save these settings?</p>

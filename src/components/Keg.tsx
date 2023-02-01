@@ -126,7 +126,7 @@ interface KegProps {
 
 const KEG_BASE = 4.45;
 
-export const Keg = ({ onClick, recipeId }: KegProps) => {
+const Keg = ({ onClick, recipeId }: KegProps) => {
   const [ebcValue, setEbcValue] = useState<number>(10);
   const [liter, setLiter] = useState<number>(16);
   const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -186,3 +186,5 @@ export const Keg = ({ onClick, recipeId }: KegProps) => {
     </Wrapper>
   );
 };
+
+export default React.memo(Keg);

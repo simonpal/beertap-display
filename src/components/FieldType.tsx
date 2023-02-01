@@ -1,39 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-
-// interface Props {
-//   title: string;
-//   value: string;
-// }
-
-const StyledKeyValue = styled.div`
-  flex-basis: 25%;
-  padding: 1rem 0.5rem;
-  color: ${({ theme }) => theme.colors.text};
-  strong {
-    display: block;
-    margin-bottom: 0.2rem;
-    text-transform: capitalize;
-  }
-`;
+import { KeyValue } from "./recipe/KeyValue";
+import { isNull } from "../utils";
+import { ItemTable } from "./FieldTable";
 
 interface Props {
   prop: string;
   value: any;
 }
-
-interface KeyValueProps {
-  title: string;
-  value: string | Number;
-}
-export const KeyValue: React.FC<KeyValueProps> = ({ title, value }) => {
-  return (
-    <StyledKeyValue data-testid={`data-item-${title}`}>
-      {title && <strong>{title}: </strong>}
-      {value}
-    </StyledKeyValue>
-  );
-};
 
 interface ObjectProps {
   prop: string;
@@ -56,59 +29,8 @@ export const ObjectWithProps: React.FC<ObjectProps> = ({ prop, obj }) => {
   );
 };
 
-const mergeKeys = (a: any, b: any): string[] => {
-  return [...a, ...b.filter((i: any) => !a.includes(i) && !i.startsWith("_"))];
-};
-export const isNull = (a: any) => {
-  return typeof a === "object" && !a;
-};
-
-const ItemTable = ({ title, array }: any) => {
-  const allKeys: string[] = array.reduce(
-    (acc: any, curr: any) => mergeKeys(acc, Object.keys(curr)),
-    []
-  );
-  return (
-    <div>
-      {title && <strong>{title}:</strong>}
-      <table>
-        <thead>
-          <tr>
-            {allKeys.map((title, index) => (
-              <th key={`th-${index}`}>{title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {array.map((line: any, index: number) => {
-            return (
-              <tr key={`tr-${index}`}>
-                {allKeys.map((key, index) => {
-                  const value = line[key];
-                  // const [key, value] = item;
-                  const passKey = key.toLowerCase() === "price" ? key : "";
-                  return (
-                    <td key={`td-${index}`}>
-                      {value !== undefined ? (
-                        <Field prop={passKey} value={value} />
-                      ) : (
-                        <>&nbsp;</>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
 export const Field = ({ prop, value }: Props) => {
-  console.log(prop, value);
-  if (prop.startsWith("_")) return null;
+  if (prop.startsWith("_") || isNull(value)) return null;
   switch (true) {
     case typeof value === "undefined" || isNull(value) || value === "":
       return <KeyValue key={prop} title={prop} value="-" />;

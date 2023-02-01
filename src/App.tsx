@@ -2,12 +2,10 @@ import * as React from "react";
 import { useState } from "react";
 import { hot } from "react-hot-loader/root";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { Keg } from "./components/Keg";
 import { Modal } from "./components/Modal";
 import { Settings } from "./components/Settings";
 import { StorageProvider } from "./utils/storage";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { KegRow, KegWrapper } from "./components/layout/KegRow";
 import AllKegs from "./components/AllKegs";
 import { RecipeSettings } from "./components/Recipes";
 
@@ -15,6 +13,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
     },
   },
 });

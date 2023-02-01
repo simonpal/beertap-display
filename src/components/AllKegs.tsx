@@ -1,6 +1,6 @@
 import React from "react";
 import { useStorage } from "../utils/storage";
-import { Keg } from "./Keg";
+import Keg from "./Keg";
 import { KegRow, KegWrapper } from "./layout/KegRow";
 
 const AllKegs = () => {

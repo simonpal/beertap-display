@@ -1,8 +1,10 @@
 import { useQuery } from "react-query";
 import { encode } from "js-base64";
 import { useStorage } from "./utils/storage";
+import { useEffect, useState } from "react";
+import { BaseRecipe } from "./models";
 
-const apiUrl = "https://api.brewfather.app/v1";
+const apiUrl = "https://api.brewfather.app/v2";
 const storageSettings = localStorage.getItem("settings");
 let token = "";
 if (storageSettings) {
@@ -17,9 +19,9 @@ const header = {
   authorization: token,
 };
 
-const fetchRecipes = (page: number) => {
-  const offset = page * 10;
-  return fetch(`${apiUrl}/recipes?offset=${offset}`, {
+const fetchRecipes = (lastId: string) => {
+  // const offset = page * 10;
+  return fetch(`${apiUrl}/recipes?start_after=${lastId}`, {
     method: "GET",
     headers: header,
   }).then((res) => res.json());
@@ -30,12 +32,19 @@ const fetchRecipe = (id: string) =>
     headers: header,
   }).then((res) => res.json());
 
-export const useRecipes = (page: number) => {
-  const result = useQuery(`recipes-${page}`, () => fetchRecipes(page));
+export const useRecipes = (lastId: string) => {
+  const [recipes, setRecipes] = useState<BaseRecipe[]>([]);
+  const result = useQuery(`recipes-${lastId}`, () => fetchRecipes(lastId));
 
   const { data, error, isLoading } = result;
 
-  return { data, error, isLoading };
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setRecipes([...recipes, ...data]);
+    }
+  }, [data]);
+
+  return { recipes, error, isLoading };
 };
 export const useRecipe = (id: string) => {
   const result = useQuery(`recipe-${id}`, () => fetchRecipe(id), {
