@@ -42,7 +42,10 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
             value={`${recipe?.fermentablesTotalAmount}kg`}
           />
           <KeyValue title="EBC" value={`${recipe?.color}`} />
-          <KeyValue title="OG/FG" value={`${recipe?.og} / ${recipe?.fg}`} />
+          <KeyValue
+            title="OG/FG"
+            value={`${recipe?.og?.toFixed(3)} / ${recipe?.fg?.toFixed(3)}`}
+          />
           <KeyValue title="IBU" value={`${recipe?.ibu}`} />
           <KeyValue title="Hops" value={hops.join(", ")} />
         </HalfColumn>
