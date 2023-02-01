@@ -1,0 +1,48 @@
+{
+  "name": "mf-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "build-dev": "webpack --mode development",
+    "build-prod": "webpack --mode production",
+    "start": "webpack serve --hot --mode development"
+  },
+  "dependencies": {
+    "js-base64": "^3.7.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0",
+    "react-query": "^3.34.19",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@hot-loader/react-dom": "^17.0.2+4.13.0",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.24",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "dotenv-webpack": "^7.1.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.5.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}
