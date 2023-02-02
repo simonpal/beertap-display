@@ -40,7 +40,12 @@ export const useRecipes = (lastId: string) => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      setRecipes([...recipes, ...data]);
+      setRecipes([
+        ...recipes.filter(
+          (rec) => !data.find((newRec: any) => newRec._id === rec._id)
+        ),
+        ...data,
+      ]);
     }
   }, [data]);
 

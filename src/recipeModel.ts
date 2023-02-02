@@ -39,6 +39,7 @@ export interface Hop {
   substitutes: string;
   amount: number;
   type: string;
+  actualTime?: number;
 }
 
 export interface Timestamp2 {

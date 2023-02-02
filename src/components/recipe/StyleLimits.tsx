@@ -1,9 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
+import { ITheme } from "../../App";
 
+interface IBackground {
+  background: string;
+}
 const StyleLimitsWrapper = styled.div`
   height: 6rem;
-  margin-bottom: 0.5rem;
+
   width: 100%;
   padding: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -25,7 +29,7 @@ const Line = styled.div`
   height: 0.25rem;
   width: 100%;
   border-radius: 0.25rem;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.1);
 `;
 
 interface ValueHolderProps {
@@ -67,28 +71,32 @@ const ValueHolder = styled.div<ValueHolderProps>`
   }
 `;
 
-interface RangeProps {
+interface RangeProps extends IBackground {
   widthPercentage: number;
+  rangeStart: number;
 }
 
 const StyleRange = styled.div<RangeProps>`
   width: ${({ widthPercentage }) => `${widthPercentage}%`};
   position: absolute;
-  background-color: ${({ theme }) => theme.colors.primary};
-  left: 0;
+  background-color: ${({ background }) => background};
+  left: ${({ rangeStart }) => `${rangeStart}%`};
+  /* left: 50%; 
+  transform: translateX(-50%);*/
   height: 100%;
   top: 0;
   border-radius: 0.25rem;
 `;
 
-interface ValueProps {
+interface ValueProps extends IBackground {
   leftPercentage: number;
 }
 const ActualValue = styled.div<ValueProps>`
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.primary};
+  width: 2px;
+  height: 0.875rem;
+  // border-radius: 50%;
+  // background-color: ${({ background }) => background};
+  background-color: #fff;
   box-shadow: 4px 3px 6px 0px rgba(0, 0, 0, 0.75);
   z-index: 10;
   left: ${({ leftPercentage }) => `${leftPercentage}%`};
@@ -97,10 +105,41 @@ const ActualValue = styled.div<ValueProps>`
   position: absolute;
 `;
 
-const StyleLimits = ({ title, value, min, max, padding }: any) => {
-  const valueMax = Math.max(value, max) + padding;
-  const width = (max / valueMax) * 100;
-  const left = (value / valueMax) * 100;
+interface StyleLimitProps {
+  title: string;
+  value: number;
+  min: number;
+  max: number;
+  padding: number;
+}
+
+const StyleLimits = ({ title, value, min, max, padding }: StyleLimitProps) => {
+  const theme = useTheme() as ITheme;
+  const bg = value > max ? theme.colors.error : theme.colors.primary;
+
+  const values = useMemo(() => {
+    const valueMax = Math.max(value, max) * 1.1;
+    const valueMin = Math.min(value, min) * 0.9;
+    const diff = max - min;
+    const minMaxDiff = valueMax - valueMin;
+    const styleDiff = max - min;
+    if (title === "test") {
+      console.log({ minMaxDiff }, { styleDiff });
+      console.log({ value });
+      console.log({ min }, { valueMin }, { max }, { valueMax });
+    }
+    return {
+      rangeWidth: ((max + min) / (valueMax + valueMin)) * 100,
+      left: (value / valueMax) * 100,
+      rangeStart: (diff / valueMax) * 100,
+    };
+  }, [value, min, max]);
+  /*
+    Range start (minValue * 0.7) -> end (maxValue * 1.3)
+    Style min
+    Style max
+    Actual value = 
+  */
   return (
     <StyleLimitsWrapper>
       <h4>
@@ -111,10 +150,16 @@ const StyleLimits = ({ title, value, min, max, padding }: any) => {
       </h4>
       <Line>
         {/* <ValueHolder>{min}</ValueHolder> */}
-        <ActualValue leftPercentage={left}>
-          <ValueHolder center>{value.toFixed(3)}</ValueHolder>
+        <ActualValue background={bg} leftPercentage={values.left}>
+          <ValueHolder center>
+            {value.countDecimals() > 3 ? value.toFixed(3) : value}
+          </ValueHolder>
         </ActualValue>
-        <StyleRange widthPercentage={width} />
+        <StyleRange
+          background={bg}
+          rangeStart={values.rangeStart}
+          widthPercentage={values.rangeWidth}
+        ></StyleRange>
         {/* <ValueHolder right>{max}</ValueHolder> */}
       </Line>
     </StyleLimitsWrapper>

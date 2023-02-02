@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { Button } from "./layout/Button";
+import { CloseButton } from "./layout/CloseButton";
 
 const unfoldIn = keyframes`
 0% {
@@ -70,38 +71,43 @@ const StyledModal = styled.div`
     vertical-align: middle;
     .modal {
       background-color: ${({ theme }) => theme.colors.modalBg};
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
       border-radius: 1rem;
       max-width: 80%;
       max-height: 80vh;
       font-weight: 300;
-      position: relative;
       transform: scale(0);
       animation: ${zoomIn} 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-      align-items: flex-start;
-      justify-content: flex-start;
-      overflow: auto;
-      ::-webkit-scrollbar {
-        width: 0.5rem;
+      position: relative;
+      > div {
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow: auto;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+        height: 100%;
+        &::-webkit-scrollbar {
+          width: 0.5rem;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: #555;
+          border-radius: 0.25rem;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: #888;
+        }
       }
 
-      /* Track */
-      ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        background: #555;
-        border-radius: 0.25rem;
-      }
-
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        background: #888;
-      }
       h2 {
         font-size: 25px;
         line-height: 25px;
@@ -111,6 +117,7 @@ const StyledModal = styled.div`
         font-size: 18px;
         line-height: 22px;
       }
+
       .modal-svg {
         position: absolute;
         top: 0;
@@ -136,9 +143,6 @@ const StyledModal = styled.div`
       }
     }
   }
-  ${Button} {
-    margin: 0 auto;
-  }
 `;
 
 interface ModalProps {
@@ -157,7 +161,7 @@ export const Modal: React.FC<ModalProps> = ({ visible, onClose, children }) => {
           {children}
           {/* <h2>I'm a Modal</h2>
           <p>Hear me roar.</p> */}
-          <Button onClick={onClose}>Close</Button>
+          <CloseButton onClick={onClose}>&#x2715;</CloseButton>
           {/* <svg
             className="modal-svg"
             xmlns="http://www.w3.org/2000/svg"

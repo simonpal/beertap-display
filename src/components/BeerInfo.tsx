@@ -20,6 +20,13 @@ const HalfColumn = styled.div`
   align-items: flex-start;
 `;
 
+const BeerTitle = styled.h2`
+  margin-bottom: 2rem !important;
+  padding-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+`;
 interface BeerInfoProps {
   recipe: FullRecipe;
 }
@@ -33,12 +40,13 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
   }, [recipe]);
   return (
     <div>
-      <h2>{`${recipe?.name} ${recipe?.abv}% by ${recipe?.author}`}</h2>
+      <BeerTitle>{`${recipe?.name} by ${recipe?.author}`}</BeerTitle>
       <Row>
         <HalfColumn>
+          <KeyValue title="ABV" value={`${recipe.abv}%`} />
           <KeyValue title="Batch size" value={`${recipe.batchSize}l`} />
           <KeyValue
-            title="Total amount of fermentables"
+            title="Amount of fermentables"
             value={`${recipe?.fermentablesTotalAmount}kg`}
           />
           <KeyValue title="EBC" value={`${recipe?.color}`} />
@@ -48,6 +56,10 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
           />
           <KeyValue title="IBU" value={`${recipe?.ibu}`} />
           <KeyValue title="Hops" value={hops.join(", ")} />
+          <KeyValue
+            title="Yeasts"
+            value={recipe.yeasts.map((y) => y.name).join(", ")}
+          />
         </HalfColumn>
         <HalfColumn>
           <h3>
@@ -59,33 +71,42 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
           {recipe?.style && (
             <>
               <StyleLimits
+                title="test"
+                value={30}
+                min={20}
+                max={40}
+                padding={5}
+              />
+              {/* <StyleLimits
                 title="IBU"
                 value={recipe.ibu}
                 min={recipe.style.ibuMin}
                 max={recipe.style.ibuMax}
-                padding={10}
               />
               <StyleLimits
                 title="ABV"
                 value={recipe.abv}
                 min={recipe.style.abvMin}
                 max={recipe.style.abvMax}
-                padding={2}
               />
               <StyleLimits
                 title="Color"
                 value={recipe.color}
                 min={recipe.style.colorMin}
                 max={recipe.style.colorMax}
-                padding={2}
               />
               <StyleLimits
                 title="OG"
                 value={recipe.og}
                 min={recipe.style.ogMin}
                 max={recipe.style.ogMax}
-                padding={0.05}
               />
+              <StyleLimits
+                title="FG"
+                value={recipe.fg}
+                min={recipe.style.fgMin}
+                max={recipe.style.fgMax}
+              /> */}
             </>
           )}
         </HalfColumn>
@@ -107,16 +128,37 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
             grainCategory,
             potential,
             inventory,
+            notFermentable,
+            userNotes,
+            potentialPercentage,
+            origin,
+            bestBeforeDate,
+            manufacturingDate,
+            hidden,
+            lovibond,
+            name,
             ...rest
           } = item;
-          return rest;
+          return { name, ...rest };
         })}
       />
       <Field
         prop="Hops"
         value={recipe?.hops?.map((item) => {
-          const { notes, inventory, origin, ...rest } = item;
-          return rest;
+          const {
+            notes,
+            inventory,
+            origin,
+            name,
+            usedIn,
+            substitutes,
+            userNotes,
+            year,
+            temp,
+            actualTime,
+            ...rest
+          } = item;
+          return { name, ...rest };
         })}
       />
       {/* <Row>

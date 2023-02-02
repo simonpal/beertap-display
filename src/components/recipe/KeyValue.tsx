@@ -9,12 +9,18 @@ const StyledKeyValue = styled.div`
   justify-content: space-between;
   padding: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  align-items: center;
+  align-items: flex-start;
   color: ${({ theme }) => theme.colors.text};
   strong {
     /* display: block;
     margin-bottom: 0.2rem; */
     text-transform: capitalize;
+  }
+  span:first-of-type {
+    text-align: left;
+  }
+  span:last-of-type {
+    text-align: right;
   }
 `;
 
@@ -37,7 +43,11 @@ export const KeyValue: React.FC<KeyValueProps> = ({ title, value }) => {
   let bg = useMemo(() => calcFromEbc(Number(value) || 10), [value]);
   return (
     <StyledKeyValue data-testid={`data-item-${title}`}>
-      <span>{title && <strong>{title}: </strong>}</span>
+      {title && (
+        <span>
+          <strong>{title}: </strong>
+        </span>
+      )}
       <span>
         {value} {title === "EBC" && <ColorBox backgroundColor={`#${bg}`} />}
       </span>

@@ -4,13 +4,15 @@ import { mergeKeys } from "../utils";
 import { Field } from "./FieldType";
 
 const TableWrapper = styled.div`
-  max-width: 100%;
-  overflow: auto;
+  width: 100%;
+  //overflow: auto;
   margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   table {
     border-collapse: collapse;
     min-width: 100%;
     th {
+      text-transform: capitalize;
       padding: 0.25rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -48,7 +50,7 @@ export const ItemTable = ({ title, array }: any) => {
           <thead>
             <tr>
               {allKeys.map((title, index) => (
-                <th key={`th-${index}`}>{title}</th>
+                <th key={`th-${index}-${title}`}>{title}</th>
               ))}
             </tr>
           </thead>
@@ -61,7 +63,7 @@ export const ItemTable = ({ title, array }: any) => {
                     // const [key, value] = item;
                     const passKey = key.toLowerCase() === "price" ? key : "";
                     return (
-                      <td key={`td-${index}`}>
+                      <td key={`td-${index}-${title}`}>
                         {value !== undefined ? (
                           <Field prop={passKey} value={value} />
                         ) : (

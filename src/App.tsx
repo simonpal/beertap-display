@@ -1,7 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
 import { hot } from "react-hot-loader/root";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import {
+  createGlobalStyle,
+  DefaultTheme,
+  ThemeProvider,
+} from "styled-components";
 import { Modal } from "./components/Modal";
 import { Settings } from "./components/Settings";
 import { StorageProvider } from "./utils/storage";
@@ -18,13 +22,14 @@ const queryClient = new QueryClient({
   },
 });
 
-interface ITheme {
+export interface ITheme {
   colors: {
     pageBg: string;
     text: string;
     primary: string;
     modalBg: string;
     gradientBg: string;
+    error: string;
   };
 }
 const theme = {
@@ -33,7 +38,8 @@ const theme = {
     text: "#FFF",
     primary: "#7A5CF5",
     modalBg: "#101018",
-    gradientBg: "linear-gradient(to right, #c6426e, #642b73);",
+    gradientBg: "linear-gradient(to right, #c6426e, #642b73)",
+    error: "#eb4d4b",
   },
 };
 

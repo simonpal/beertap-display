@@ -44,7 +44,7 @@ const StyledSettings = styled.div`
       }
       .author,
       .style {
-        opacity: 0.5;
+        opacity: 0.8;
         font-size: 0.75rem;
       }
       button {
@@ -79,7 +79,7 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
       .map((_, i) => settings.kegs?.[i] || null)
   );
 
-  const { recipes } = useRecipes(lastId);
+  const { recipes, isLoading } = useRecipes(lastId);
   // const categorized: { [key: string]: BaseRecipe[] } = useMemo(() => {
   //   const defaultStyle = "No category";
   //   if (data && data.length > 0) {
