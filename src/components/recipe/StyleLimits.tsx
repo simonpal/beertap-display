@@ -110,35 +110,47 @@ interface StyleLimitProps {
   value: number;
   min: number;
   max: number;
-  padding: number;
+  paddingUpperFactor: number;
+  paddingLowerFactor: number;
 }
 
-const StyleLimits = ({ title, value, min, max, padding }: StyleLimitProps) => {
+const StyleLimits = ({
+  title,
+  value,
+  min,
+  max,
+  paddingUpperFactor,
+  paddingLowerFactor,
+}: StyleLimitProps) => {
   const theme = useTheme() as ITheme;
   const bg = value > max ? theme.colors.error : theme.colors.primary;
 
   const values = useMemo(() => {
-    const valueMax = Math.max(value, max) * 1.1;
-    const valueMin = Math.min(value, min) * 0.9;
+    const valueMax = Math.max(value, max) * paddingUpperFactor;
+    const valueMin = Math.min(value, min) * paddingLowerFactor;
     const diff = max - min;
     const minMaxDiff = valueMax - valueMin;
     const styleDiff = max - min;
-    if (title === "test") {
+    if (title === "test" || title === "IBU" || title === "OG") {
       console.log({ minMaxDiff }, { styleDiff });
       console.log({ value });
       console.log({ min }, { valueMin }, { max }, { valueMax });
     }
+    const width = ((minMaxDiff - styleDiff) / minMaxDiff) * 100;
     return {
-      rangeWidth: ((max + min) / (valueMax + valueMin)) * 100,
+      rangeWidth: width, //((max - min) / (valueMax - valueMin)) * 100,
       left: (value / valueMax) * 100,
-      rangeStart: (diff / valueMax) * 100,
+      rangeStart: ((min - valueMin) / valueMax) * 100,
     };
   }, [value, min, max]);
   /*
-    Range start (minValue * 0.7) -> end (maxValue * 1.3)
-    Style min
-    Style max
-    Actual value = 
+    AllTrack = valueMin -> valueMax;
+    CompleteDiff = valueMax-valueMin = 100%
+    styleDiff = max-min
+    PercentOfCompleteDiff = styleDiff / completeDiff;
+    Left = ((min-valueMin) / valueMax) * 100
+    Start = min
+    End = max
   */
   return (
     <StyleLimitsWrapper>

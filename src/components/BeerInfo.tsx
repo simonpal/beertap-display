@@ -75,15 +75,18 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
                 value={30}
                 min={20}
                 max={40}
-                padding={5}
+                paddingUpperFactor={1.1}
+                paddingLowerFactor={0.9}
               />
-              {/* <StyleLimits
+              <StyleLimits
+                paddingUpperFactor={1.1}
+                paddingLowerFactor={0.9}
                 title="IBU"
                 value={recipe.ibu}
                 min={recipe.style.ibuMin}
                 max={recipe.style.ibuMax}
               />
-              <StyleLimits
+              {/*<StyleLimits
                 title="ABV"
                 value={recipe.abv}
                 min={recipe.style.abvMin}
@@ -94,19 +97,21 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
                 value={recipe.color}
                 min={recipe.style.colorMin}
                 max={recipe.style.colorMax}
-              />
+              />*/}
               <StyleLimits
+                paddingUpperFactor={1.01}
+                paddingLowerFactor={0.96}
                 title="OG"
                 value={recipe.og}
                 min={recipe.style.ogMin}
                 max={recipe.style.ogMax}
               />
-              <StyleLimits
+              {/* <StyleLimits
                 title="FG"
                 value={recipe.fg}
                 min={recipe.style.fgMin}
                 max={recipe.style.fgMax}
-              /> */}
+              />  */}
             </>
           )}
         </HalfColumn>
