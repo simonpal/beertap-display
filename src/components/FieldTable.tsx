@@ -3,6 +3,15 @@ import styled from "styled-components";
 import { mergeKeys } from "../utils";
 import { Field } from "./FieldType";
 
+const TableTitle = styled.h4`
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
 const TableWrapper = styled.div`
   width: 100%;
   //overflow: auto;
@@ -43,7 +52,7 @@ export const ItemTable = ({ title, array }: any) => {
 
   return (
     <>
-      {title && <strong>{title}:</strong>}
+      {title && <TableTitle>{title}</TableTitle>}
 
       <TableWrapper>
         <table>

@@ -15,12 +15,16 @@ import { useKegWeight } from "../utils/useKegWeight";
 import { useRecipe } from "../api";
 import { Modal } from "./Modal";
 import { BeerInfo } from "./BeerInfo";
+import { Spinner } from "./layout/Spinner";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  h3 {
+    text-align: center;
+  }
 `;
 
 const waves = keyframes`
@@ -34,6 +38,7 @@ const waves = keyframes`
 
 const StyledKeg = styled.div<ColorBoxProps>`
   font-size: 2rem;
+  margin-bottom: 1rem;
   width: 150px;
   display: flex;
   flex-direction: column;
@@ -54,6 +59,7 @@ const StyledKeg = styled.div<ColorBoxProps>`
 
 const KegBody = styled.div`
   position: relative;
+  background: #333;
   .keg-inner {
     position: absolute;
     z-index: 0;
@@ -128,22 +134,32 @@ const KEG_BASE = 4.45;
 
 const Keg = ({ onClick, recipeId }: KegProps) => {
   const [ebcValue, setEbcValue] = useState<number>(10);
-  const [liter, setLiter] = useState<number>(16);
+  const [liter, setLiter] = useState<number>(19);
   const [showInfo, setShowInfo] = useState<boolean>(false);
 
   const maxLiter = 19;
 
   // const { data } = useKegWeight();
-  const { data: recipe } = useRecipe(recipeId || "");
+  const { data: recipe, isLoading } = useRecipe(recipeId || "");
   console.log({ recipe });
   const rgb = useMemo(() => calcFromEbc(recipe?.color || 10), [recipe]);
   // console.log(data);
   const literPercentage = useMemo(() => {
     return Math.round((liter / maxLiter) * 100);
   }, [liter]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Wrapper>
-      <h3>{recipe?.name}</h3>
+      <h3>
+        {" "}
+        {recipe?.name} {`${recipe?.abv}%`}
+      </h3>
+      <div className="short-info">
+        {recipe?.style && <span>{recipe?.style?.name}</span>}
+      </div>
       {/* <Label htmlFor="liter">Liter</Label>
       <Input
         type="number"
@@ -161,7 +177,7 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
         value={ebcValue}
         onChange={(e) => setEbcValue(Number(e.target.value))}
       /> */}
-      <Button onClick={() => setShowInfo(true)}>Visa info</Button>
+
       {/* <ColorBox $ebcColor={rgb} />
       {rgb} */}
 
@@ -180,6 +196,9 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
         </KegBody>
         <img src={kegBottom} className="keg-bottom" />
       </StyledKeg>
+      <Button outlined onClick={() => setShowInfo(true)}>
+        Visa info
+      </Button>
       <Modal visible={showInfo} onClose={() => setShowInfo(false)}>
         <BeerInfo recipe={recipe} />
       </Modal>

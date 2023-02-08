@@ -6,6 +6,7 @@ import { useStorage } from "../utils/storage";
 import { Button } from "./layout/Button";
 import { Input } from "./layout/Input";
 import { Label } from "./layout/Label";
+import { Spinner } from "./layout/Spinner";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -26,13 +27,15 @@ const StyledSettings = styled.div`
     list-style-type: none;
     text-align: left;
     padding: 0;
-    margin: 0;
+    margin: 0 0 1rem 0;
+    width: 100%;
     li {
       padding: 0.5rem 0;
+      width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       ul {
         margin-bottom: 1.5rem;
         li {
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
       }
       h2,
@@ -49,11 +52,23 @@ const StyledSettings = styled.div`
       }
       button {
         background-color: transparent;
-        color: ${({ theme }) => theme.colors.primary};
+        color: ${({ theme }) => theme.colors.text};
         border: ${({ theme }) => `1px solid ${theme.colors.primary}`};
+        font-weight: bold;
+        font-size: 0.875rem;
+        height: 2rem;
+        transition: background-color 0.2s ease;
         &.selected {
           background-color: ${({ theme }) => theme.colors.primary};
           color: ${({ theme }) => theme.colors.text};
+        }
+        &:first-of-type {
+          border-top-left-radius: 0.25rem;
+          border-bottom-left-radius: 0.25rem;
+        }
+        &:last-of-type {
+          border-top-right-radius: 0.25rem;
+          border-bottom-right-radius: 0.25rem;
         }
       }
     }
@@ -62,6 +77,8 @@ const StyledSettings = styled.div`
     padding: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
+    width: 100%;
     p {
       margin-bottom: 1rem;
     }
@@ -173,9 +190,18 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
       {/* {data && page > 0 && (
         <Button onClick={() => setPage(page - 1)}>Previous</Button>
       )} */}
+      {isLoading && (
+        <div style={{ width: "100%" }}>
+          <Spinner />
+        </div>
+      )}
       {recipes && recipes.length >= 10 && (
         // <Button onClick={() => setPage(page + 1)}>Next</Button>
-        <Button onClick={() => setLastId(recipes[recipes.length - 1]._id)}>
+        <Button
+          outlined
+          center
+          onClick={() => setLastId(recipes[recipes.length - 1]._id)}
+        >
           Fetch more
         </Button>
       )}

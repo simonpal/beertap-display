@@ -12,6 +12,10 @@ import { StorageProvider } from "./utils/storage";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import AllKegs from "./components/AllKegs";
 import { RecipeSettings } from "./components/Recipes";
+// import appBg from "./assets/pexels-pixabay-65210.jpeg";
+
+// const appBg = require("./assets/pexels-pixabay-65210.jpeg");
+const appBg = require("./assets/appbg-3.jpeg");
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,6 +85,22 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 #root, #__next {
   isolation: isolate;
+}
+#app {
+  min-height: 100%;
+  &:after {
+  content: "";
+  background-image: url(${appBg.default});
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;   
+}
 }
 header {
   width: 100%;

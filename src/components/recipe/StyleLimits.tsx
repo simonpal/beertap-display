@@ -131,16 +131,22 @@ const StyleLimits = ({
     const diff = max - min;
     const minMaxDiff = valueMax - valueMin;
     const styleDiff = max - min;
-    if (title === "test" || title === "IBU" || title === "OG") {
+    if (title === "test" || title === "IBU" || title === "FG") {
       console.log({ minMaxDiff }, { styleDiff });
       console.log({ value });
       console.log({ min }, { valueMin }, { max }, { valueMax });
     }
-    const width = ((minMaxDiff - styleDiff) / minMaxDiff) * 100;
+    const width = (styleDiff / minMaxDiff) * 100; // ((minMaxDiff - styleDiff) / minMaxDiff) * 100;
+    console.log(
+      { styleDiff },
+      { minMaxDiff },
+      { width },
+      styleDiff / minMaxDiff
+    );
     return {
       rangeWidth: width, //((max - min) / (valueMax - valueMin)) * 100,
-      left: (value / valueMax) * 100,
-      rangeStart: ((min - valueMin) / valueMax) * 100,
+      left: ((value - valueMin) / minMaxDiff) * 100, // (value / valueMax) * 100,
+      rangeStart: ((min - valueMin) / minMaxDiff) * 100,
     };
   }, [value, min, max]);
   /*

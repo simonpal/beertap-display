@@ -87,6 +87,9 @@ const StyledModal = styled.div`
         flex-direction: column;
         max-width: 100%;
         height: 100%;
+        > div {
+          width: 100%;
+        }
         &::-webkit-scrollbar {
           width: 0.5rem;
         }

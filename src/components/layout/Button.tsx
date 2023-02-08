@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+interface ButtonProps {
+  outlined?: boolean;
+  center?: boolean;
+}
+
+export const Button = styled.button<ButtonProps>`
   background: ${({ theme }) => theme.colors.gradientBg};
   color: ${({ theme }) => theme.colors.text};
   border: 0;
@@ -13,4 +18,33 @@ export const Button = styled.button`
   font-size: 1rem;
   justify-content: center;
   font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  span {
+    width: 100%;
+    height: 100%;
+  }
+  ${({ outlined, theme }) =>
+    outlined &&
+    `
+    background: ${theme.colors.modalBg};
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      z-index: -1;
+      margin: -2px; 
+      border-radius: inherit;
+      background: ${theme.colors.gradientBg};
+    }
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  `}
+  ${({ center }) =>
+    center &&
+    `
+    margin: 0 auto;
+    }
+  `}
 `;

@@ -70,14 +70,14 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
 
           {recipe?.style && (
             <>
-              <StyleLimits
+              {/* <StyleLimits
                 title="test"
                 value={30}
                 min={20}
                 max={40}
                 paddingUpperFactor={1.1}
                 paddingLowerFactor={0.9}
-              />
+              /> */}
               <StyleLimits
                 paddingUpperFactor={1.1}
                 paddingLowerFactor={0.9}
@@ -86,32 +86,39 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
                 min={recipe.style.ibuMin}
                 max={recipe.style.ibuMax}
               />
-              {/*<StyleLimits
+              <StyleLimits
+                paddingUpperFactor={1.05}
+                paddingLowerFactor={0.95}
                 title="ABV"
                 value={recipe.abv}
                 min={recipe.style.abvMin}
                 max={recipe.style.abvMax}
               />
               <StyleLimits
+                paddingUpperFactor={1.1}
+                paddingLowerFactor={0.9}
                 title="Color"
                 value={recipe.color}
                 min={recipe.style.colorMin}
                 max={recipe.style.colorMax}
-              />*/}
+              />
               <StyleLimits
-                paddingUpperFactor={1.01}
-                paddingLowerFactor={0.96}
+                paddingUpperFactor={1.001}
+                paddingLowerFactor={0.999}
                 title="OG"
                 value={recipe.og}
                 min={recipe.style.ogMin}
                 max={recipe.style.ogMax}
               />
-              {/* <StyleLimits
+
+              <StyleLimits
+                paddingUpperFactor={1.001}
+                paddingLowerFactor={0.999}
                 title="FG"
                 value={recipe.fg}
                 min={recipe.style.fgMin}
                 max={recipe.style.fgMax}
-              />  */}
+              />
             </>
           )}
         </HalfColumn>
