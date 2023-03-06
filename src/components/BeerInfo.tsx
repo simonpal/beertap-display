@@ -58,7 +58,7 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
           <KeyValue title="Hops" value={hops.join(", ")} />
           <KeyValue
             title="Yeasts"
-            value={recipe.yeasts.map((y) => y.name).join(", ")}
+            value={(recipe?.yeasts || []).map((y) => y.name).join(", ")}
           />
         </HalfColumn>
         <HalfColumn>

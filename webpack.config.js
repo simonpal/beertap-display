@@ -49,10 +49,11 @@ const config = {
       templateContent: ({ htmlWebpackPlugin }) =>
         '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
         htmlWebpackPlugin.options.title +
+        "</title>" +
         '<link rel="preconnect" href="https://fonts.googleapis.com">' +
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
         '<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">' +
-        '</title></head><body><div id="app"></div></body></html>',
+        '</head><body><div id="app"></div></body></html>',
       filename: "index.html",
     }),
   ],
