@@ -7,6 +7,8 @@ import { Button } from "./layout/Button";
 import { Input } from "./layout/Input";
 import { Label } from "./layout/Label";
 import { Spinner } from "./layout/Spinner";
+import { BiBeer } from "react-icons/Bi";
+import { ModalTitle } from "./layout/ModalTitle";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -16,12 +18,6 @@ const StyledSettings = styled.div`
   }
   input {
     width: 100%;
-  }
-  h2 {
-    text-align: center;
-    background: ${({ theme }) => theme.colors.gradientBg};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
   ul {
     list-style-type: none;
@@ -137,7 +133,9 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
   // }, [data]);
   return (
     <StyledSettings>
-      <h2>Recipes</h2>
+      <ModalTitle>
+        <BiBeer /> Recipes
+      </ModalTitle>
       {recipes && recipes.length > 0 && (
         <ul>
           {recipes.map((rec: BaseRecipe) => (

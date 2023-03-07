@@ -44,6 +44,7 @@ const theme = {
     text: "#FFF",
     primary: "#7A5CF5",
     modalBg: "#101018",
+    gradientStart: "#c6426e",
     gradientBg: "linear-gradient(to right, #c6426e, #642b73)",
     error: "#eb4d4b",
   },
@@ -120,6 +121,12 @@ header {
     cursor: pointer;
     svg {
       margin-right: 0.75rem;
+      transition: transform 0.15s ease;
+    }
+    &:hover {
+      svg {
+        transform: scale(1.1);
+      }
     }
   }
 }

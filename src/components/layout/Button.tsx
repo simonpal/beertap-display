@@ -26,6 +26,12 @@ export const Button = styled.button<ButtonProps>`
   }
   svg {
     margin-right: 0.75rem;
+    transition: transform 0.15s ease;
+  }
+  &:hover {
+    svg {
+      transform: scale(1.1);
+    }
   }
   ${({ outlined, theme }) =>
     outlined &&

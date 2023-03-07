@@ -4,6 +4,8 @@ import { useStorage } from "../utils/storage";
 import { Button } from "./layout/Button";
 import { Input } from "./layout/Input";
 import { Label } from "./layout/Label";
+import { FiSettings } from "react-icons/Fi";
+import { ModalTitle } from "./layout/ModalTitle";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -14,12 +16,6 @@ const StyledSettings = styled.div`
   input {
     width: 100%;
   }
-  h2 {
-    text-align: center;
-    background: ${({ theme }) => theme.colors.gradientBg};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
 `;
 
 export const Settings = () => {
@@ -27,7 +23,9 @@ export const Settings = () => {
 
   return (
     <StyledSettings>
-      <h2>Settings</h2>
+      <ModalTitle>
+        <FiSettings /> Settings
+      </ModalTitle>
       <div>
         <Label htmlFor="brewfatherUid">Brewfather user id</Label>
         <Input
