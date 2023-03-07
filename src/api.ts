@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { BaseRecipe } from "./models";
 
 const apiUrl = "https://api.brewfather.app/v2";
+const recipesLimit = 20;
 const storageSettings = localStorage.getItem("settings");
 let token = "";
 if (storageSettings) {
@@ -21,10 +22,13 @@ const header = {
 
 const fetchRecipes = (lastId: string) => {
   // const offset = page * 10;
-  return fetch(`${apiUrl}/recipes?start_after=${lastId}`, {
-    method: "GET",
-    headers: header,
-  }).then((res) => res.json());
+  return fetch(
+    `${apiUrl}/recipes?start_after=${lastId}&limit=${recipesLimit}`,
+    {
+      method: "GET",
+      headers: header,
+    }
+  ).then((res) => res.json());
 };
 const fetchRecipe = (id: string) =>
   fetch(`${apiUrl}/recipes${id ? `/${id}` : ""}`, {
@@ -34,11 +38,16 @@ const fetchRecipe = (id: string) =>
 
 export const useRecipes = (lastId: string) => {
   const [recipes, setRecipes] = useState<BaseRecipe[]>([]);
+  const [reachedLimit, setReachedLimit] = useState<boolean>(false);
   const result = useQuery(`recipes-${lastId}`, () => fetchRecipes(lastId));
 
   const { data, error, isLoading } = result;
 
   useEffect(() => {
+    console.log("reached limit? ", data?.length < recipesLimit);
+    if (data && data.length < recipesLimit) {
+      setReachedLimit(true);
+    }
     if (data && data.length > 0) {
       setRecipes([
         ...recipes.filter(
@@ -49,7 +58,7 @@ export const useRecipes = (lastId: string) => {
     }
   }, [data]);
 
-  return { recipes, error, isLoading };
+  return { recipes, error, isLoading, reachedLimit };
 };
 export const useRecipe = (id: string) => {
   const result = useQuery(`recipe-${id}`, () => fetchRecipe(id), {

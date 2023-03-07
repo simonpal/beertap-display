@@ -92,7 +92,7 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
       .map((_, i) => settings.kegs?.[i] || null)
   );
 
-  const { recipes, isLoading } = useRecipes(lastId);
+  const { recipes, isLoading, reachedLimit } = useRecipes(lastId);
   // const categorized: { [key: string]: BaseRecipe[] } = useMemo(() => {
   //   const defaultStyle = "No category";
   //   if (data && data.length > 0) {
@@ -199,8 +199,9 @@ export const RecipeSettings = ({ onClose }: RecipeSettingsProps) => {
           outlined
           center
           onClick={() => setLastId(recipes[recipes.length - 1]._id)}
+          disabled={reachedLimit}
         >
-          Fetch more
+          {reachedLimit ? "No more recipes" : "Fetch more"}
         </Button>
       )}
       <div className="save-recipes">

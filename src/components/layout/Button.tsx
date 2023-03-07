@@ -33,6 +33,10 @@ export const Button = styled.button<ButtonProps>`
       transform: scale(1.1);
     }
   }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
   ${({ outlined, theme }) =>
     outlined &&
     `
