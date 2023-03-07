@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 interface KegWrapperProps {
@@ -14,6 +13,6 @@ export const KegRow = styled.div`
 export const KegWrapper = styled.div<KegWrapperProps>`
   width: ${(props) => `${100 / props.noKegs}%`};
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 `;

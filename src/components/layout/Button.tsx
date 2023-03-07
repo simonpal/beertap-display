@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components'
+import { type ITheme } from '../../App'
 
 interface ButtonProps {
-  outlined?: boolean;
-  center?: boolean;
+  outlined?: boolean
+  center?: boolean
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -40,7 +41,7 @@ export const Button = styled.button<ButtonProps>`
   ${({ outlined, theme }) =>
     outlined &&
     `
-    background: ${theme.colors.modalBg};
+    background: ${(theme as ITheme).colors.modalBg};
     &:before {
       content: '';
       position: absolute;
@@ -48,7 +49,7 @@ export const Button = styled.button<ButtonProps>`
       z-index: -1;
       margin: -2px; 
       border-radius: inherit;
-      background: ${theme.colors.gradientBg};
+      background: ${(theme as ITheme).colors.gradientBg};
     }
     &:hover {
       background: rgba(255,255,255,0.1);
@@ -60,4 +61,4 @@ export const Button = styled.button<ButtonProps>`
     margin: 0 auto;
     }
   `}
-`;
+`

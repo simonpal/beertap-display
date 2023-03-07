@@ -1,0 +1,15 @@
+{
+    "parserOptions": {
+        "project": ["./tsconfig.json"],
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react","jsx-a11y"],
+    "extends": ["plugin:react/recommended","plugin:jsx-a11y/recommended", "standard-with-typescript"],
+    "rules": {
+        "@typescript-eslint/no-var-requires": 0,
+        "no-tabs": 0,
+        "@typescript-eslint/no-dynamic-delete": "warn",
+        "@typescript-eslint/strict-boolean-expressions": 0
+    }
+  }

@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-const Svg = styled.svg``;
+const Svg = styled.svg``
 
-export const Wave = (props: any) => {
+export const Wave: React.FC = (props: any) => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,5 +26,5 @@ export const Wave = (props: any) => {
         </clipPath>
       </defs>
     </Svg>
-  );
-};
+  )
+}

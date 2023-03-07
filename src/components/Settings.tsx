@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useStorage } from "../utils/storage";
-import { Button } from "./layout/Button";
 import { Input } from "./layout/Input";
 import { Label } from "./layout/Label";
 import { FiSettings } from "react-icons/Fi";
 import { ModalTitle } from "./layout/ModalTitle";
+import { Checkbox } from "./layout/Checkbox";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -13,12 +13,12 @@ const StyledSettings = styled.div`
   > div {
     margin-bottom: 1rem;
   }
-  input {
+  input:not([type="checkbox"]) {
     width: 100%;
   }
 `;
 
-export const Settings = () => {
+export const Settings: React.FC = () => {
   const { updateSettings = () => null, settings } = useStorage();
 
   return (
@@ -32,7 +32,9 @@ export const Settings = () => {
           type="text"
           id="brewfaterUid"
           defaultValue={settings.brewfatherUserId}
-          onChange={(e) => updateSettings("brewfatherUserId", e.target.value)}
+          onChange={(e) => {
+            updateSettings("brewfatherUserId", e.target.value);
+          }}
         />
       </div>
       <div>
@@ -41,7 +43,9 @@ export const Settings = () => {
           type="text"
           id="brewfaterApiKey"
           defaultValue={settings.brewfatherApiKey}
-          onChange={(e) => updateSettings("brewfatherApiKey", e.target.value)}
+          onChange={(e) => {
+            updateSettings("brewfatherApiKey", e.target.value);
+          }}
         />
       </div>
       <div>
@@ -50,7 +54,21 @@ export const Settings = () => {
           type="number"
           id="noKegs"
           defaultValue={settings.noKegs}
-          onChange={(e) => updateSettings("noKegs", Number(e.target.value))}
+          onChange={(e) => {
+            updateSettings("noKegs", Number(e.target.value));
+          }}
+        />
+      </div>
+      <div>
+        <Checkbox
+          label="I have a connected display"
+          defaultChecked={settings.connectedDisplay}
+          onChange={(e) => {
+            updateSettings(
+              "connectedDisplay",
+              Boolean(e.currentTarget.checked)
+            );
+          }}
         />
       </div>
       {/* <div>

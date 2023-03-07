@@ -1,20 +1,26 @@
-import React from "react";
-import { useQuery } from "react-query";
+import { useQuery } from 'react-query'
 
-const token = process.env.HOME_ASSISTANT_TOKEN;
-const baseUrl = process.env.HOME_ASSISTANT_URL;
+const token = process.env.HOME_ASSISTANT_TOKEN
+const baseUrl = process.env.HOME_ASSISTANT_URL
 
-const apiFetch = (url: string) => {
-  return fetch(url, {
+const apiFetch = async (url: string): Promise<any> => {
+  return await fetch(url, {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
+      Authorization: `Bearer ${token ?? ''}`
+    }
+  })
+}
 
-export const useKegWeight = () => {
-  const { isLoading, error, data } = useQuery("kegWeightData", () =>
-    apiFetch(`${baseUrl}/states/sensor.vikt`).then((res) => res.json())
-  );
-  return { isLoading, error, data };
-};
+export const useKegWeight = (): any => {
+  const { isLoading, error, data } = useQuery(
+    'kegWeightData',
+    async () =>
+      await apiFetch(`${baseUrl ?? ''}/states/sensor.vikt`).then(
+        async (res): Promise<any> => {
+          const data = await res.json()
+          return data
+        }
+      )
+  )
+  return { isLoading, error, data }
+}

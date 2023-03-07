@@ -35,3 +35,11 @@ export interface BaseRecipe {
   equipment: Equipment;
   style: Style;
 }
+
+export interface StorageSettings {
+  brewfatherApiKey: string;
+  brewfatherUserId: string;
+  kegs: string[];
+  noKegs: number;
+  connectedDisplay: boolean;
+}

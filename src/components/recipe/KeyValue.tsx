@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
-import styled from "styled-components";
-import { calcFromEbc } from "../../utils/colorCalc";
+import React, { useMemo } from 'react'
+import styled from 'styled-components'
+import { calcFromEbc } from '../../utils/colorCalc'
 
 const StyledKeyValue = styled.div`
   width: 100%;
@@ -22,10 +22,10 @@ const StyledKeyValue = styled.div`
   span:last-of-type {
     text-align: right;
   }
-`;
+`
 
 interface ColorBoxProps {
-  backgroundColor: string;
+  backgroundColor: string
 }
 const ColorBox = styled.span<ColorBoxProps>`
   width: 1rem;
@@ -33,24 +33,24 @@ const ColorBox = styled.span<ColorBoxProps>`
   display: inline-block;
   margin-left: 0.5rem;
   background-color: ${({ backgroundColor }) => backgroundColor};
-`;
+`
 
 interface KeyValueProps {
-  title: string;
-  value: string | Number;
+  title: string
+  value: string | number
 }
 export const KeyValue: React.FC<KeyValueProps> = ({ title, value }) => {
-  let bg = useMemo(() => calcFromEbc(Number(value) || 10), [value]);
+  const bg = useMemo(() => calcFromEbc(Number(value) || 10), [value])
   return (
-    <StyledKeyValue data-testid={`data-item-${title}`}>
-      {title && (
-        <span>
-          <strong>{title}: </strong>
-        </span>
-      )}
-      <span>
-        {value} {title === "EBC" && <ColorBox backgroundColor={`#${bg}`} />}
-      </span>
-    </StyledKeyValue>
-  );
-};
+		<StyledKeyValue data-testid={`data-item-${title}`}>
+			{title && (
+				<span>
+					<strong>{title}: </strong>
+				</span>
+			)}
+			<span>
+				{value} {title === 'EBC' && <ColorBox backgroundColor={`#${bg}`} />}
+			</span>
+		</StyledKeyValue>
+  )
+}

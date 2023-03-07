@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
-import { ITheme } from "../../App";
+import React, { useMemo } from 'react'
+import styled, { useTheme } from 'styled-components'
+import { type ITheme } from '../../App'
 
 interface IBackground {
-  background: string;
+  background: string
 }
 const StyleLimitsWrapper = styled.div`
   height: 6rem;
@@ -22,7 +22,7 @@ const StyleLimitsWrapper = styled.div`
       font-size: 0.875rem;
     }
   }
-`;
+`
 
 const Line = styled.div`
   position: relative;
@@ -30,17 +30,17 @@ const Line = styled.div`
   width: 100%;
   border-radius: 0.25rem;
   background-color: rgba(255, 255, 255, 0.1);
-`;
+`
 
 interface ValueHolderProps {
-  right?: boolean;
-  center?: boolean;
+  right?: boolean
+  center?: boolean
 }
 
 const ValueHolder = styled.div<ValueHolderProps>`
   position: absolute;
-  left: ${({ right }) => (right ? "auto" : 0)};
-  right: ${({ right }) => (right ? 0 : "auto")};
+  left: ${({ right }) => (right ? 'auto' : 0)};
+  right: ${({ right }) => (right ? 0 : 'auto')};
   padding: 0.15rem 0.3rem;
   background: #333;
   border-radius: 0.25rem;
@@ -69,11 +69,11 @@ const ValueHolder = styled.div<ValueHolderProps>`
     bottom: 100%;
     transform: translateX(-50%);
   }
-`;
+`
 
 interface RangeProps extends IBackground {
-  widthPercentage: number;
-  rangeStart: number;
+  widthPercentage: number
+  rangeStart: number
 }
 
 const StyleRange = styled.div<RangeProps>`
@@ -86,10 +86,10 @@ const StyleRange = styled.div<RangeProps>`
   height: 100%;
   top: 0;
   border-radius: 0.25rem;
-`;
+`
 
 interface ValueProps extends IBackground {
-  leftPercentage: number;
+  leftPercentage: number
 }
 const ActualValue = styled.div<ValueProps>`
   width: 2px;
@@ -103,40 +103,40 @@ const ActualValue = styled.div<ValueProps>`
   top: 50%;
   transform: translateY(-50%);
   position: absolute;
-`;
+`
 
 interface StyleLimitProps {
-  title: string;
-  value: number;
-  min: number;
-  max: number;
-  paddingUpperFactor: number;
-  paddingLowerFactor: number;
+  title: string
+  value: number
+  min: number
+  max: number
+  paddingUpperFactor: number
+  paddingLowerFactor: number
 }
 
-const StyleLimits = ({
+const StyleLimits: React.FC<StyleLimitProps> = ({
   title,
   value,
   min,
   max,
   paddingUpperFactor,
-  paddingLowerFactor,
-}: StyleLimitProps) => {
-  const theme = useTheme() as ITheme;
-  const bg = value > max ? theme.colors.error : theme.colors.primary;
+  paddingLowerFactor
+}) => {
+  const theme = useTheme() as ITheme
+  const bg = value > max ? theme.colors.error : theme.colors.primary
 
   const values = useMemo(() => {
-    const valueMax = Math.max(value, max) * paddingUpperFactor;
-    const valueMin = Math.min(value, min) * paddingLowerFactor;
-    const diff = max - min;
-    const minMaxDiff = valueMax - valueMin;
-    const styleDiff = max - min;
+    const valueMax = Math.max(value, max) * paddingUpperFactor
+    const valueMin = Math.min(value, min) * paddingLowerFactor
+    // const diff = max - min
+    const minMaxDiff = valueMax - valueMin
+    const styleDiff = max - min
     // if (title === "test" || title === "IBU" || title === "FG") {
     //   console.log({ minMaxDiff }, { styleDiff });
     //   console.log({ value });
     //   console.log({ min }, { valueMin }, { max }, { valueMax });
     // }
-    const width = (styleDiff / minMaxDiff) * 100; // ((minMaxDiff - styleDiff) / minMaxDiff) * 100;
+    const width = (styleDiff / minMaxDiff) * 100 // ((minMaxDiff - styleDiff) / minMaxDiff) * 100;
     // console.log(
     //   { styleDiff },
     //   { minMaxDiff },
@@ -144,11 +144,11 @@ const StyleLimits = ({
     //   styleDiff / minMaxDiff
     // );
     return {
-      rangeWidth: width, //((max - min) / (valueMax - valueMin)) * 100,
+      rangeWidth: width, // ((max - min) / (valueMax - valueMin)) * 100,
       left: ((value - valueMin) / minMaxDiff) * 100, // (value / valueMax) * 100,
-      rangeStart: ((min - valueMin) / minMaxDiff) * 100,
-    };
-  }, [value, min, max]);
+      rangeStart: ((min - valueMin) / minMaxDiff) * 100
+    }
+  }, [value, min, max])
   /*
     AllTrack = valueMin -> valueMax;
     CompleteDiff = valueMax-valueMin = 100%
@@ -161,7 +161,7 @@ const StyleLimits = ({
   return (
     <StyleLimitsWrapper>
       <h4>
-        {title}{" "}
+        {title}{' '}
         <span>
           Min: {min} / Max: {max}
         </span>
@@ -181,7 +181,7 @@ const StyleLimits = ({
         {/* <ValueHolder right>{max}</ValueHolder> */}
       </Line>
     </StyleLimitsWrapper>
-  );
-};
+  )
+}
 
-export default React.memo(StyleLimits);
+export default React.memo(StyleLimits)

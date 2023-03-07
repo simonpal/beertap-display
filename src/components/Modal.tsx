@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { Button } from "./layout/Button";
-import { CloseButton } from "./layout/CloseButton";
+import React, { useEffect } from 'react'
+import styled, { keyframes } from 'styled-components'
+import { CloseButton } from './layout/CloseButton'
 
 const unfoldIn = keyframes`
 0% {
@@ -13,7 +12,7 @@ const unfoldIn = keyframes`
 100% {
   transform:scaleY(1) scaleX(1);
 }
-`;
+`
 
 const unfoldOut = keyframes`
 0% {
@@ -25,7 +24,7 @@ const unfoldOut = keyframes`
 100% {
   transform:scaleY(.005) scaleX(0);
 }
-`;
+`
 
 const zoomIn = keyframes`
     0% {
@@ -35,7 +34,7 @@ const zoomIn = keyframes`
         transform:scale(1);
     }
   
-  `;
+  `
 
 const zoomOut = keyframes`
   0% {
@@ -45,7 +44,7 @@ const zoomOut = keyframes`
     transform:scale(0);
   }
   
-  `;
+  `
 
 const StyledModal = styled.div`
   position: fixed;
@@ -146,19 +145,19 @@ const StyledModal = styled.div`
       }
     }
   }
-`;
+`
 
 interface ModalProps {
-  visible: boolean;
-  onClose: () => void;
+  visible: boolean
+  onClose: () => void
 }
 
 export const Modal: React.FC<ModalProps> = ({ visible, onClose, children }) => {
   useEffect(() => {
-    document.body.style.overflow = visible ? "hidden" : "auto";
-  }, [visible]);
+    document.body.style.overflow = visible ? 'hidden' : 'auto'
+  }, [visible])
   return (
-    <StyledModal className={visible ? "" : "out"}>
+    <StyledModal className={visible ? '' : 'out'}>
       <div className="modal-background">
         <div className="modal">
           {children}
@@ -185,5 +184,5 @@ export const Modal: React.FC<ModalProps> = ({ visible, onClose, children }) => {
         </div>
       </div>
     </StyledModal>
-  );
-};
+  )
+}

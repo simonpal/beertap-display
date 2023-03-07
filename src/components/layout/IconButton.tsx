@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const IconButton = styled.button`
   background-color: rgba(255, 255, 255, 0.05);
@@ -16,4 +15,4 @@ export const IconButton = styled.button`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-`;
+`

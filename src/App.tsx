@@ -3,20 +3,20 @@ import { useState } from "react";
 import { hot } from "react-hot-loader/root";
 import { BiBeer } from "react-icons/Bi";
 import { FiSettings } from "react-icons/Fi";
-import {
-  createGlobalStyle,
-  DefaultTheme,
-  ThemeProvider,
-} from "styled-components";
+import { BsDisplay } from "react-icons/Bs";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Modal } from "./components/Modal";
 import { Settings } from "./components/Settings";
 import { StorageProvider } from "./utils/storage";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import AllKegs from "./components/AllKegs";
 import { RecipeSettings } from "./components/Recipes";
+import { DisplaySettings } from "./components/DisplaySettings";
+import { Header } from "./components/layout/Header";
 // import appBg from "./assets/pexels-pixabay-65210.jpeg";
 
 // const appBg = require("./assets/pexels-pixabay-65210.jpeg");
+
 const appBg = require("./assets/appbg-3.jpeg");
 
 const queryClient = new QueryClient({
@@ -49,10 +49,6 @@ const theme = {
     error: "#eb4d4b",
   },
 };
-
-interface Props {
-  name: string;
-}
 
 interface GlobalStyleProps {
   theme: ITheme;
@@ -135,32 +131,45 @@ header {
 const App: React.FC = () => {
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [recipesModalVisible, setRecipesModalVisible] = useState(false);
+  const [displayModalVisible, setDisplayModalVisible] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <StorageProvider>
           <GlobalStyles />
-          <header>
-            <button onClick={() => setRecipesModalVisible(true)}>
-              <BiBeer /> Select recipes
-            </button>
-            <button onClick={() => setSettingsModalVisible(true)}>
-              <FiSettings />
-              Settings
-            </button>
-          </header>
+          <Header
+            setSettingsModalVisible={setSettingsModalVisible}
+            setRecipesModalVisible={setRecipesModalVisible}
+            setDisplayModalVisible={setDisplayModalVisible}
+          />
           <Modal
             visible={settingsModalVisible}
-            onClose={() => setSettingsModalVisible(false)}
+            onClose={() => {
+              setSettingsModalVisible(false);
+            }}
           >
             <Settings />
           </Modal>
           <Modal
             visible={recipesModalVisible}
-            onClose={() => setRecipesModalVisible(false)}
+            onClose={() => {
+              setRecipesModalVisible(false);
+            }}
           >
-            <RecipeSettings onClose={() => setRecipesModalVisible(false)} />
+            <RecipeSettings
+              onClose={() => {
+                setRecipesModalVisible(false);
+              }}
+            />
+          </Modal>
+          <Modal
+            visible={displayModalVisible}
+            onClose={() => {
+              setDisplayModalVisible(false);
+            }}
+          >
+            <DisplaySettings />
           </Modal>
           <AllKegs />
         </StorageProvider>

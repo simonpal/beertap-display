@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ModalTitle = styled.h2`
   display: flex;
@@ -13,4 +13,4 @@ export const ModalTitle = styled.h2`
       fill: ${({ theme }) => theme.colors.gradientStart};
     } */
   }
-`;
+`

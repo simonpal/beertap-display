@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 export const CloseButton = styled.button`
   width: 3rem;
   height: 3rem;
@@ -18,4 +18,4 @@ export const CloseButton = styled.button`
   span {
     display: inline-block;
   }
-`;
+`

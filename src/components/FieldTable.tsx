@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { mergeKeys } from "../utils";
-import { Field } from "./FieldType";
+import React from 'react'
+import styled from 'styled-components'
+import { mergeKeys } from '../utils'
+import { Field } from './FieldType'
 
 const TableTitle = styled.h4`
   text-align: center;
@@ -10,7 +10,7 @@ const TableTitle = styled.h4`
   width: 100%;
   font-size: 1.1rem;
   color: ${({ theme }) => theme.colors.primary};
-`;
+`
 
 const TableWrapper = styled.div`
   width: 100%;
@@ -42,13 +42,18 @@ const TableWrapper = styled.div`
       text-align: left;
     }
   }
-`;
+`
 
-export const ItemTable = ({ title, array }: any) => {
+interface ItemTableProps {
+  title: string
+  array: string[]
+}
+
+export const ItemTable: React.FC<ItemTableProps> = ({ title, array }) => {
   const allKeys: string[] = array.reduce(
     (acc: any, curr: any) => mergeKeys(acc, Object.keys(curr)),
     []
-  );
+  )
 
   return (
     <>
@@ -68,25 +73,27 @@ export const ItemTable = ({ title, array }: any) => {
               return (
                 <tr key={`tr-${index}`}>
                   {allKeys.map((key, index) => {
-                    const value = line[key];
+                    const value = line[key]
                     // const [key, value] = item;
-                    const passKey = key.toLowerCase() === "price" ? key : "";
+                    const passKey = key.toLowerCase() === 'price' ? key : ''
                     return (
                       <td key={`td-${index}-${title}`}>
-                        {value !== undefined ? (
+                        {value !== undefined
+                          ? (
                           <Field prop={passKey} value={value} />
-                        ) : (
+                            )
+                          : (
                           <>&nbsp;</>
-                        )}
+                            )}
                       </td>
-                    );
+                    )
                   })}
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
       </TableWrapper>
     </>
-  );
-};
+  )
+}

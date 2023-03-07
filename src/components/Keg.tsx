@@ -8,11 +8,7 @@ import kegTop from "../assets/keg-top.svg";
 import kegBody from "../assets/keg-body-mask.svg";
 import kegInner from "../assets/keg-inner.svg";
 import kegBottom from "../assets/keg-bottom.svg";
-import beerWaves from "../assets/beer-wave.svg";
-import { Label } from "./layout/Label";
-import { Input } from "./layout/Input";
 import { Button } from "./layout/Button";
-import { useKegWeight } from "../utils/useKegWeight";
 import { useRecipe } from "../api";
 import { Modal } from "./Modal";
 import { BeerInfo } from "./BeerInfo";
@@ -25,6 +21,10 @@ const Wrapper = styled.div`
   align-items: center;
   h3 {
     text-align: center;
+    max-width: 94%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 `;
 
@@ -113,12 +113,12 @@ const Liquid = styled.div<BeerProps>`
   }
 `;
 
-const ColorBox = styled.div<ColorBoxProps>`
-  display: inline-flex;
-  width: 2rem;
-  height: 2rem;
-  background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
-`;
+// const ColorBox = styled.div<ColorBoxProps>`
+//   display: inline-flex;
+//   width: 2rem;
+//   height: 2rem;
+//   background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
+// `
 
 interface BeerProps extends ColorBoxProps {
   heightPercentage: number;
@@ -128,22 +128,23 @@ interface ColorBoxProps {
 }
 interface KegProps {
   recipeId?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-const KEG_BASE = 4.45;
+// const KEG_BASE = 4.45;
 
-const Keg = ({ onClick, recipeId }: KegProps) => {
-  const [ebcValue, setEbcValue] = useState<number>(10);
-  const [liter, setLiter] = useState<number>(19);
+const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
+  // const [ebcValue, setEbcValue] = useState<number>(10);
+  // const [liter, setLiter] = useState<number>(19)
+  const liter = 19;
   const [showInfo, setShowInfo] = useState<boolean>(false);
 
   const maxLiter = 19;
 
   // const { data } = useKegWeight();
-  const { data: recipe, isLoading } = useRecipe(recipeId || "");
+  const { data: recipe, isLoading } = useRecipe(recipeId ?? "");
   console.log({ recipe });
-  const rgb = useMemo(() => calcFromEbc(recipe?.color || 10), [recipe]);
+  const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe]);
   // console.log(data);
   const literPercentage = useMemo(() => {
     return Math.round((liter / maxLiter) * 100);
@@ -154,10 +155,8 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
   }
   return (
     <Wrapper>
-      <h3>
-        {" "}
-        {recipe?.name} {`${recipe?.abv}%`}
-      </h3>
+      <h3>{recipe?.name}</h3>
+      <p>{`${recipe?.abv ?? 0}%`}</p>
       <div className="short-info">
         {recipe?.style && <span>{recipe?.style?.name}</span>}
       </div>
@@ -183,9 +182,9 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
       {rgb} */}
 
       <StyledKeg $ebcColor={rgb}>
-        <img src={kegTop} className="keg-top" />
+        <img src={kegTop} className="keg-top" alt="keg-top" />
         <KegBody>
-          <img src={kegInner} className="keg-inner" />
+          <img src={kegInner} className="keg-inner" alt="keg-inner" />
           <Liquid heightPercentage={literPercentage} $ebcColor={rgb}>
             <div className="beer-top">
               <Wave />
@@ -193,16 +192,26 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
             </div>
             <div className="beer-body" />
           </Liquid>
-          <img src={kegBody} className="keg-body" />
+          <img src={kegBody} className="keg-body" alt="keg-body" />
         </KegBody>
-        <img src={kegBottom} className="keg-bottom" />
+        <img src={kegBottom} className="keg-bottom" alt="keg-bottom" />
       </StyledKeg>
-      <Button outlined onClick={() => setShowInfo(true)}>
+      <Button
+        outlined
+        onClick={() => {
+          setShowInfo(true);
+        }}
+      >
         <BsInfoCircle />
         Info
       </Button>
-      <Modal visible={showInfo} onClose={() => setShowInfo(false)}>
-        <BeerInfo recipe={recipe} />
+      <Modal
+        visible={showInfo}
+        onClose={() => {
+          setShowInfo(false);
+        }}
+      >
+        {recipe && <BeerInfo recipe={recipe} />}
       </Modal>
     </Wrapper>
   );

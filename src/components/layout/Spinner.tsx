@@ -1,5 +1,4 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components'
 
 const rotation = keyframes`
     0% {
@@ -10,7 +9,7 @@ const rotation = keyframes`
     transform: scale(1);
     opacity: 0;
   }
-`;
+`
 
 export const Spinner = styled.span`
   width: 48px;
@@ -34,4 +33,4 @@ export const Spinner = styled.span`
   &:after {
     animation-delay: 1s;
   }
-`;
+`
