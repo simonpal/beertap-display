@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Input } from "./layout/Input";
-import { Label } from "./layout/Label";
 import { ModalTitle } from "./layout/ModalTitle";
 import { BsDisplay } from "react-icons/Bs";
 import { useStorage } from "../utils/storage";
@@ -23,11 +21,27 @@ const StyledFormWrapper = styled.div`
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
-
+interface FormValue {
+  [key: string]: string;
+}
 export const DisplaySettings: React.FC = () => {
+  const [formData, setFormData] = useState<FormValue[]>([]);
+
   const {
     settings: { kegs },
   } = useStorage();
+
+  const handleChange =
+    (idx: number) =>
+    (key: string, val: string): void => {
+      let newArr = [...formData];
+      newArr[idx] = { ...formData[idx], [key]: val };
+      setFormData(newArr);
+    };
+
+  const handleSave = (): void => {
+    console.log(formData);
+  };
 
   return (
     <StyledSettings>
@@ -35,12 +49,12 @@ export const DisplaySettings: React.FC = () => {
         <BsDisplay /> Display settings
       </ModalTitle>
       {kegs.map((id, idx) => (
-        <StyledFormWrapper>
+        <StyledFormWrapper key={id}>
           <h3>Settings for keg {idx + 1}</h3>
-          <DisplayKegForm recipeId={id} />
+          <DisplayKegForm recipeId={id} onChange={handleChange(idx)} />
         </StyledFormWrapper>
       ))}
-      <Button>Save to display</Button>
+      <Button onClick={handleSave}>Save to display</Button>
       {/* <div>
         <Label htmlFor="brewfatherApiKey">Brewfather api key</Label>
         <Input

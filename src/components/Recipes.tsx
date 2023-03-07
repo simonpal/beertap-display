@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useRecipes } from "../api";
-import { type BaseRecipe } from "../models";
-import { useStorage } from "../utils/storage";
-import { Button } from "./layout/Button";
-import { Spinner } from "./layout/Spinner";
-import { BiBeer } from "react-icons/Bi";
-import { ModalTitle } from "./layout/ModalTitle";
-import { type ITheme } from "../App";
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { useRecipes } from '../api'
+import { type BaseRecipe } from '../models'
+import { useStorage } from '../utils/storage'
+import { Button } from './layout/Button'
+import { Spinner } from './layout/Spinner'
+import { BiBeer } from 'react-icons/Bi'
+import { ModalTitle } from './layout/ModalTitle'
+import { type ITheme } from '../App'
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -79,21 +79,21 @@ const StyledSettings = styled.div`
       margin-bottom: 1rem;
     }
   }
-`;
+`
 interface RecipeSettingsProps {
-  onClose: () => void;
+  onClose: () => void
 }
 export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
   const { settings, updateSettings = (k: string, v: any) => null } =
-    useStorage();
-  const [lastId, setLastId] = useState("");
+    useStorage()
+  const [lastId, setLastId] = useState('')
   const [selectedRecipes, setSelectedRecipes] = useState(
     Array(settings.noKegs)
       .fill(null)
       .map((_, i) => settings.kegs?.[i] || null)
-  );
+  )
 
-  const { recipes, isLoading, reachedLimit } = useRecipes(lastId);
+  const { recipes, isLoading, reachedLimit } = useRecipes(lastId)
   // const categorized: { [key: string]: BaseRecipe[] } = useMemo(() => {
   //   const defaultStyle = "No category";
   //   if (data && data.length > 0) {
@@ -111,23 +111,23 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
   // }, [data]);
   // console.log(categorized);
   const updateSelectedRecipes = (id: string, idx: number): void => {
-    const rec = [...selectedRecipes];
-    const found = selectedRecipes.findIndex((item) => item === id);
-    rec[idx] = id;
+    const rec = [...selectedRecipes]
+    const found = selectedRecipes.findIndex((item) => item === id)
+    rec[idx] = id
     if (found >= 0) {
-      rec[found] = null;
+      rec[found] = null
     }
-    setSelectedRecipes(rec);
-  };
+    setSelectedRecipes(rec)
+  }
 
   const isSelected = (value: string, idx: number): boolean => {
-    return selectedRecipes[idx] !== null && selectedRecipes[idx] === value;
-  };
+    return selectedRecipes[idx] !== null && selectedRecipes[idx] === value
+  }
 
   const saveRecipes = (): void => {
-    updateSettings("kegs", selectedRecipes);
-    onClose();
-  };
+    updateSettings('kegs', selectedRecipes)
+    onClose()
+  }
 
   useEffect(() => {
     if (selectedRecipes.length === 0 && settings.noKegs > 0) {
@@ -135,9 +135,9 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
         Array(settings.noKegs)
           .fill(null)
           .map((_, i) => settings.kegs?.[i] || null)
-      );
+      )
     }
-  }, [settings.noKegs]);
+  }, [settings.noKegs])
   return (
     <StyledSettings>
       <ModalTitle>
@@ -147,7 +147,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
         <ul>
           {recipes.map((rec: BaseRecipe) => (
             <li key={rec._id}>
-              <h3>{rec?.name || "(No name)"}</h3>
+              <h3>{rec?.name || '(No name)'}</h3>
               <div className="author">Author: {rec.author}</div>
               {rec?.style && (
                 <div className="style">Style: {rec.style.name}</div>
@@ -155,9 +155,9 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
               {selectedRecipes.map((_, idx) => (
                 <button
                   key={`button-${rec._id}-${idx}`}
-                  className={`${isSelected(rec._id, idx) ? "selected" : ""}`}
+                  className={`${isSelected(rec._id, idx) ? 'selected' : ''}`}
                   onClick={() => {
-                    updateSelectedRecipes(rec._id, idx);
+                    updateSelectedRecipes(rec._id, idx)
                   }}
                 >
                   Keg {idx + 1}
@@ -169,7 +169,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
       )}
 
       {isLoading && (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: '100%' }}>
           <Spinner />
         </div>
       )}
@@ -177,23 +177,23 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
         outlined
         center
         onClick={() => {
-          setLastId(recipes[recipes.length - 1]._id);
+          setLastId(recipes[recipes.length - 1]._id)
         }}
         disabled={reachedLimit}
       >
-        {reachedLimit ? "No more recipes" : "Fetch more"}
+        {reachedLimit ? 'No more recipes' : 'Fetch more'}
       </Button>
 
       <div className="save-recipes">
         <p>Do you want to save these settings?</p>
         <Button
           onClick={() => {
-            saveRecipes();
+            saveRecipes()
           }}
         >
           Save
         </Button>
       </div>
     </StyledSettings>
-  );
-};
+  )
+}

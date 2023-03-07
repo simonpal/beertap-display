@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { ITheme } from "../../App";
-import { Label } from "./Label";
+import React from 'react'
+import styled from 'styled-components'
+import { type ITheme } from '../../App'
+import { Label } from './Label'
 
 const CheckboxWrapper = styled.div`
   --input-ouline: ${({ theme }) => (theme as ITheme).colors.primary};
   display: flex;
   justify-content: flex-start;
-`;
+`
 
 const HiddenCheckbox = styled.input`
   /* Remove most all native input styles */
@@ -51,17 +51,17 @@ const HiddenCheckbox = styled.input`
   &:disabled {
     opacity: 0.5;
   }
-`;
+`
 
 const ExtendedLabel = styled(Label)`
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-`;
+`
 
 interface CheckboxProps extends React.HTMLAttributes<HTMLInputElement> {
-  label: string;
+  label: string
 }
 export const Checkbox: React.FC<CheckboxProps> = ({ label, ...rest }) => {
   return (
@@ -71,5 +71,5 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, ...rest }) => {
         {label}
       </ExtendedLabel>
     </CheckboxWrapper>
-  );
-};
+  )
+}

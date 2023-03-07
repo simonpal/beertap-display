@@ -3,10 +3,10 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
-} from "react";
-import { type StorageSettings } from "../models";
-import { isNull } from "../utils";
+  useState
+} from 'react'
+import { type StorageSettings } from '../models'
+import { isNull } from '../utils'
 
 // const storage = {
 // 	name: 'myStorage',
@@ -27,53 +27,53 @@ import { isNull } from "../utils";
 // }
 
 interface StorageProviderProps {
-  settings: StorageSettings;
-  updateSettings?: (key: string, value: any) => void;
+  settings: StorageSettings
+  updateSettings?: (key: string, value: any) => void
 }
 
 const baseSettings = {
-  brewfatherUserId: "",
-  brewfatherApiKey: "",
+  brewfatherUserId: '',
+  brewfatherApiKey: '',
   noKegs: 0,
   kegs: [],
-  connectedDisplay: false,
-};
+  connectedDisplay: false
+}
 
-let initSettings = { ...baseSettings };
+let initSettings = { ...baseSettings }
 
-const storageSettings = localStorage.getItem("settings");
+const storageSettings = localStorage.getItem('settings')
 
-if (typeof storageSettings !== "undefined" && !isNull(storageSettings)) {
-  initSettings = JSON.parse(storageSettings ?? "");
-  console.log("after parse", initSettings);
+if (typeof storageSettings !== 'undefined' && !isNull(storageSettings)) {
+  initSettings = JSON.parse(storageSettings ?? '')
+  console.log('after parse', initSettings)
 }
 
 const StorageContext = createContext<StorageProviderProps>({
-  settings: initSettings,
-});
+  settings: initSettings
+})
 
 export const StorageProvider: React.FC<React.ReactNode> = ({ children }) => {
-  const [settings, setSettings] = useState<StorageSettings>(initSettings);
+  const [settings, setSettings] = useState<StorageSettings>(initSettings)
 
   const updateSettings = (key: string, value: any): any => {
-    const settingsCopy = JSON.parse(JSON.stringify(settings));
-    settingsCopy[key] = value;
-    setSettings(settingsCopy);
-  };
+    const settingsCopy = JSON.parse(JSON.stringify(settings))
+    settingsCopy[key] = value
+    setSettings(settingsCopy)
+  }
   const settingsAreEmpty = useMemo(() => {
-    return JSON.stringify(settings) === JSON.stringify(baseSettings);
-  }, [settings, baseSettings]);
+    return JSON.stringify(settings) === JSON.stringify(baseSettings)
+  }, [settings, baseSettings])
   useEffect(() => {
     if (!settingsAreEmpty) {
-      localStorage.setItem("settings", JSON.stringify(settings));
+      localStorage.setItem('settings', JSON.stringify(settings))
     }
-  }, [settings, settingsAreEmpty]);
+  }, [settings, settingsAreEmpty])
   return (
     <StorageContext.Provider value={{ settings, updateSettings }}>
       {children}
     </StorageContext.Provider>
-  );
-};
+  )
+}
 
 export const useStorage = (): StorageProviderProps =>
-  useContext(StorageContext);
+  useContext(StorageContext)
