@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
-import { FullRecipe } from "../recipeModel";
+import { Fermentable, FullRecipe, Hop } from "../recipeModel";
 import { Field } from "./FieldType";
 import styled from "styled-components";
 import { KeyValue } from "./recipe/KeyValue";
 import StyleLimits from "./recipe/StyleLimits";
+import { formatObject } from "../utils";
 
 const Row = styled.div`
   display: flex;
@@ -127,63 +128,69 @@ export const BeerInfo = ({ recipe }: BeerInfoProps) => {
       <Field
         prop="Fermentables"
         value={recipe?.fermentables?.map((item) => {
-          const {
-            substitutes,
-            notes,
-            costPerAmount,
-            usedIn,
-            protein,
-            attenuation,
-            ibuPerAmount,
-            diastaticPower,
-            moisture,
-            grainCategory,
-            potential,
-            inventory,
-            notFermentable,
-            userNotes,
-            potentialPercentage,
-            origin,
-            bestBeforeDate,
-            manufacturingDate,
-            hidden,
-            lovibond,
-            name,
-            ...rest
-          } = item;
-          return { name, ...rest };
+          const { name: fermentable } = item;
+          const formatted = formatObject<Fermentable>(item, [
+            "substitutes",
+            "notes",
+            "costPerAmount",
+            "usedIn",
+            "protein",
+            "attenuation",
+            "ibuPerAmount",
+            "diastaticPower",
+            "moisture",
+            "grainCategory",
+            "potential",
+            "inventory",
+            "notFermentable",
+            "userNotes",
+            "potentialPercentage",
+            "origin",
+            "bestBeforeDate",
+            "manufacturingDate",
+            "hidden",
+            "lovibond",
+            "name",
+            "fgdb",
+            "acid",
+            "cgdb",
+            "maxInBatch",
+            "friability",
+            "coarseFineDiff",
+            "fan",
+          ]);
+          return { fermentable, ...formatted };
         })}
       />
       <Field
         prop="Hops"
         value={recipe?.hops?.map((item) => {
-          const {
-            notes,
-            inventory,
-            origin,
-            name,
-            usedIn,
-            substitutes,
-            userNotes,
-            year,
-            temp,
-            actualTime,
-            ...rest
-          } = item;
-          return { name, ...rest };
+          const { name: hop } = item;
+          const formatted = formatObject<Hop>(item, [
+            "notes",
+            "inventory",
+            "origin",
+            "name",
+            "usedIn",
+            "substitutes",
+            "userNotes",
+            "year",
+            "temp",
+            "actualTime",
+            "beta",
+            "manufacturingDate",
+            "oil",
+            "bestBeforeDate",
+            "farnesene",
+            "humulene",
+            "cohumulone",
+            "hsi",
+            "caryophyllene",
+            "myrcene",
+          ]);
+          return { hop, ...formatted };
         })}
       />
-      {/* <Row>
-        <HalfColumn>
-        </HalfColumn>
-        <HalfColumn>
-          <KeyValue title="EBC" value={`${recipe?.color}l`} />
-        </HalfColumn>
-      </Row> */}
-      {/* {Object.entries(recipe).map((item) => {
-        const [key, value] = item;
-        return <Field key={key} prop={key} value={value} />;
-      })} */}
     </div>
   );
 };

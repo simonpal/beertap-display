@@ -613,6 +613,13 @@ export interface Fermentable {
   notFermentable: boolean;
   ibuPerAmount?: any;
   lovibond?: number;
+  fgdb?: string | number;
+  acid?: string | number;
+  cgdb?: string | number;
+  maxInBatch?: number;
+  friability?: string | number;
+  coarseFineDiff?: number;
+  fan?: string | number;
 }
 
 export interface FullRecipe {

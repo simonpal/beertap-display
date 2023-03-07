@@ -24,6 +24,9 @@ export const Button = styled.button<ButtonProps>`
     width: 100%;
     height: 100%;
   }
+  svg {
+    margin-right: 0.75rem;
+  }
   ${({ outlined, theme }) =>
     outlined &&
     `

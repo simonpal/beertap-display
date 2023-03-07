@@ -14,3 +14,11 @@ Number.prototype.countDecimals = function () {
   if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
   return this.toString().split(".")[1].length || 0;
 };
+
+export function formatObject<T>(obj: T, keysToRemove: string[]): Partial<T> {
+  let formatted = { ...obj };
+  keysToRemove.forEach((key: string) => {
+    delete formatted[key as keyof T];
+  });
+  return formatted;
+}

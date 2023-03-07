@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 import { hot } from "react-hot-loader/root";
+import { BiBeer } from "react-icons/Bi";
+import { FiSettings } from "react-icons/Fi";
 import {
   createGlobalStyle,
   DefaultTheme,
@@ -110,10 +112,15 @@ header {
   padding: 1rem;
   button {
     background: transparent;
+    display: inline-flex;
+    align-items: center;
     border: 0;
     font-weight: bold;
-    text-decoration: underline;
+    // text-decoration: underline;
     cursor: pointer;
+    svg {
+      margin-right: 0.75rem;
+    }
   }
 }
 `;
@@ -129,9 +136,10 @@ const App: React.FC = () => {
           <GlobalStyles />
           <header>
             <button onClick={() => setRecipesModalVisible(true)}>
-              Select recipes
+              <BiBeer /> Select recipes
             </button>
             <button onClick={() => setSettingsModalVisible(true)}>
+              <FiSettings />
               Settings
             </button>
           </header>

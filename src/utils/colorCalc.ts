@@ -1,5 +1,5 @@
 export const calcFromEbc = (ebc: number) => {
-  var srm = srmFromEbc(ebc);
+  const srm = srmFromEbc(ebc);
   return srmToRGB(srm);
 };
 
@@ -9,7 +9,7 @@ const srmFromEbc = (ebc: number) => {
 
 const srmToRGB = (srm: any) => {
   // Returns an RGB value based on SRM
-  var r = 0,
+  let r = 0,
     g = 0,
     b = 0;
 
@@ -55,16 +55,16 @@ const srmToRGB = (srm: any) => {
       b = 17;
     }
   }
-  var red = doubleToHex(r);
-  var green = doubleToHex(g);
-  var blue = doubleToHex(b);
+  const red = doubleToHex(r);
+  const green = doubleToHex(g);
+  const blue = doubleToHex(b);
   return "" + red + green + blue;
 };
 
 const doubleToHex = (d: number) => {
   // Converts decimal in string to hex in string
-  var hexText = d.toString(16);
-  var point = hexText.indexOf(".");
+  let hexText = d.toString(16);
+  const point = hexText.indexOf(".");
   if (point != -1) {
     hexText = hexText.substring(0, point);
   }

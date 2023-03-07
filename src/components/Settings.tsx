@@ -24,6 +24,7 @@ const StyledSettings = styled.div`
 
 export const Settings = () => {
   const { updateSettings = () => null, settings } = useStorage();
+
   return (
     <StyledSettings>
       <h2>Settings</h2>

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled, { keyframes } from "styled-components";
+import { BsInfoCircle } from "react-icons/Bs";
 import { calcFromEbc } from "../utils/colorCalc";
 import { Wave } from "./Wave";
 
@@ -197,7 +198,8 @@ const Keg = ({ onClick, recipeId }: KegProps) => {
         <img src={kegBottom} className="keg-bottom" />
       </StyledKeg>
       <Button outlined onClick={() => setShowInfo(true)}>
-        Visa info
+        <BsInfoCircle />
+        Info
       </Button>
       <Modal visible={showInfo} onClose={() => setShowInfo(false)}>
         <BeerInfo recipe={recipe} />
