@@ -52,6 +52,11 @@ const StyledHeader = styled.header`
     justify-content: center;
     font-size: 1.2rem;
     font-family: "Righteous", cursive;
+    color: ${({ theme }) => theme.colors.gradientStart};
+    text-align: center;
+    background: ${({ theme }) => theme.colors.gradientBg};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     svg {
       margin-right: 0.25rem;
       font-size: 2rem;
@@ -60,11 +65,12 @@ const StyledHeader = styled.header`
   @media screen and (max-width: 420px) {
     flex-direction: column;
     margin-bottom: 2rem;
+    padding-bottom: 0;
     > div.logo {
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       flex-direction: row;
       padding-bottom: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
     }
     > div {
       width: 100%;
