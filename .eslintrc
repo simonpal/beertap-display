@@ -10,6 +10,7 @@
         "@typescript-eslint/no-var-requires": 0,
         "no-tabs": 0,
         "@typescript-eslint/no-dynamic-delete": "warn",
-        "@typescript-eslint/strict-boolean-expressions": 0
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "semi": [0, "always"]
     }
   }

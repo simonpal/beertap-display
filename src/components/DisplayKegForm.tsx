@@ -5,19 +5,19 @@ import { Input } from './layout/Input'
 import { calcFromEbc } from '../utils/colorCalc'
 import { Spinner } from './layout/Spinner'
 import { isNull } from '../utils'
+import { type FormValue } from './DisplaySettings'
 
 interface KegFormProps {
   recipeId: string
   onChange: (key: string, val: string) => void
+  setInitialValue: (obj: FormValue) => void
 }
 export const DisplayKegForm: React.FC<KegFormProps> = ({
   recipeId,
-  onChange
+  onChange,
+  setInitialValue
 }) => {
-  console.log({ recipeId })
   const { data: recipe, isLoading, error } = useRecipe(recipeId)
-
-  console.log('Recipe from form', recipe)
 
   const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe])
 
@@ -27,8 +27,10 @@ export const DisplayKegForm: React.FC<KegFormProps> = ({
 
   useEffect(() => {
     if (typeof recipe !== 'undefined' && isNull(error)) {
-      onChange('recipeName', recipeTitle)
-      onChange('recipeColor', `#${rgb}`)
+      setInitialValue({
+        recipeName: recipeTitle,
+        recipeColor: `#${rgb}`
+      })
     }
   }, [recipe, error])
 
