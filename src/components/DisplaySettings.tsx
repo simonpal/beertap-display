@@ -5,6 +5,8 @@ import { BsDisplay } from "react-icons/Bs";
 import { useStorage } from "../utils/storage";
 import { DisplayKegForm } from "./DisplayKegForm";
 import { Button } from "./layout/Button";
+import { Label } from "./layout/Label";
+import { Input } from "./layout/Input";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -38,9 +40,7 @@ export const DisplaySettings: React.FC = () => {
       setFormData(data);
     };
 
-  const {
-    settings: { kegs },
-  } = useStorage();
+  const { settings, updateSettings = () => null } = useStorage();
 
   const handleChange =
     (idx: number) =>
@@ -59,7 +59,18 @@ export const DisplaySettings: React.FC = () => {
       <ModalTitle>
         <BsDisplay /> Display settings
       </ModalTitle>
-      {kegs.map((id, idx) => (
+      <StyledFormWrapper>
+        <Label>Display API endpoint</Label>
+        <Input
+          type="text"
+          id="displayApiEndpoint"
+          defaultValue={settings.displayApiEndpoint}
+          onChange={(e) => {
+            updateSettings(e.target.id, e.target.value);
+          }}
+        />
+      </StyledFormWrapper>
+      {settings.kegs.map((id, idx) => (
         <StyledFormWrapper key={id}>
           <h3>Settings for keg {idx + 1}</h3>
           <DisplayKegForm
