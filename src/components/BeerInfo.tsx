@@ -1,10 +1,10 @@
-import React, { useMemo } from "react";
-import { type Fermentable, type FullRecipe, type Hop } from "../recipeModel";
-import { Field } from "./FieldType";
-import styled from "styled-components";
-import { KeyValue } from "./recipe/KeyValue";
-import StyleLimits from "./recipe/StyleLimits";
-import { formatObject } from "../utils";
+import React, { useMemo } from 'react'
+import { type Fermentable, type FullRecipe, type Hop } from '../recipeModel'
+import { Field } from './FieldType'
+import styled from 'styled-components'
+import { KeyValue } from './recipe/KeyValue'
+import StyleLimits from './recipe/StyleLimits'
+import { formatObject } from '../utils'
 
 const Row = styled.div`
   display: flex;
@@ -12,14 +12,14 @@ const Row = styled.div`
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
-`;
+`
 const HalfColumn = styled.div`
   width: 48%;
   justify-content: flex-start;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-`;
+`
 
 const BeerTitle = styled.h2`
   margin-bottom: 2rem !important;
@@ -27,29 +27,29 @@ const BeerTitle = styled.h2`
   text-align: center;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-`;
+`
 
 const StyledImage = styled.img`
   max-width: 50%;
   border-radius: 1rem;
   margin: 0 auto 2rem auto;
-`;
+`
 interface BeerInfoProps {
-  recipe: FullRecipe;
+  recipe: FullRecipe
 }
 
 export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
-  if (!recipe) return <div>No recipe</div>;
+  if (!recipe) return <div>No recipe</div>
 
   const hops = useMemo(() => {
-    const arr = [...new Set(recipe?.hops?.map((hop: any) => hop.name))];
-    return arr;
-  }, [recipe]);
+    const arr = [...new Set(recipe?.hops?.map((hop: any) => hop.name))]
+    return arr
+  }, [recipe])
   return (
     <div>
       <BeerTitle>{`${recipe?.name} by ${recipe?.author}`}</BeerTitle>
       {recipe?.img_url && (
-        <StyledImage src={recipe.img_url} alt={`${recipe?.name || ""}`} />
+        <StyledImage src={recipe.img_url} alt={`${recipe?.name || ''}`} />
       )}
       <Row>
         <HalfColumn>
@@ -65,17 +65,17 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
             value={`${recipe?.og?.toFixed(3)} / ${recipe?.fg?.toFixed(3)}`}
           />
           <KeyValue title="IBU" value={`${recipe?.ibu}`} />
-          <KeyValue title="Hops" value={hops.join(", ")} />
+          <KeyValue title="Hops" value={hops.join(', ')} />
           <KeyValue
             title="Yeasts"
-            value={(recipe?.yeasts || []).map((y) => y.name).join(", ")}
+            value={(recipe?.yeasts || []).map((y) => y.name).join(', ')}
           />
         </HalfColumn>
         <HalfColumn>
           <h3>
             {recipe?.style?.name && recipe?.style?.category
               ? `${recipe.style.name} - ${recipe.style.category}`
-              : "Style"}
+              : 'Style'}
           </h3>
 
           {recipe?.style && (
@@ -137,69 +137,69 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
       <Field
         prop="Fermentables"
         value={recipe?.fermentables?.map((item) => {
-          const { name: fermentable } = item;
+          const { name: fermentable } = item
           const formatted = formatObject<Fermentable>(item, [
-            "substitutes",
-            "notes",
-            "costPerAmount",
-            "usedIn",
-            "protein",
-            "attenuation",
-            "ibuPerAmount",
-            "diastaticPower",
-            "moisture",
-            "grainCategory",
-            "potential",
-            "inventory",
-            "notFermentable",
-            "userNotes",
-            "potentialPercentage",
-            "origin",
-            "bestBeforeDate",
-            "manufacturingDate",
-            "hidden",
-            "lovibond",
-            "name",
-            "fgdb",
-            "acid",
-            "cgdb",
-            "maxInBatch",
-            "friability",
-            "coarseFineDiff",
-            "fan",
-          ]);
-          return { fermentable, ...formatted };
+            'substitutes',
+            'notes',
+            'costPerAmount',
+            'usedIn',
+            'protein',
+            'attenuation',
+            'ibuPerAmount',
+            'diastaticPower',
+            'moisture',
+            'grainCategory',
+            'potential',
+            'inventory',
+            'notFermentable',
+            'userNotes',
+            'potentialPercentage',
+            'origin',
+            'bestBeforeDate',
+            'manufacturingDate',
+            'hidden',
+            'lovibond',
+            'name',
+            'fgdb',
+            'acid',
+            'cgdb',
+            'maxInBatch',
+            'friability',
+            'coarseFineDiff',
+            'fan'
+          ])
+          return { fermentable, ...formatted }
         })}
       />
       <Field
         prop="Hops"
         value={recipe?.hops?.map((item) => {
-          const { name: hop } = item;
+          const { name: hop } = item
           const formatted = formatObject<Hop>(item, [
-            "notes",
-            "inventory",
-            "origin",
-            "name",
-            "usedIn",
-            "substitutes",
-            "userNotes",
-            "year",
-            "temp",
-            "actualTime",
-            "beta",
-            "manufacturingDate",
-            "oil",
-            "bestBeforeDate",
-            "farnesene",
-            "humulene",
-            "cohumulone",
-            "hsi",
-            "caryophyllene",
-            "myrcene",
-          ]);
-          return { hop, ...formatted };
+            'notes',
+            'inventory',
+            'origin',
+            'name',
+            'usedIn',
+            'substitutes',
+            'userNotes',
+            'year',
+            'temp',
+            'actualTime',
+            'beta',
+            'manufacturingDate',
+            'oil',
+            'bestBeforeDate',
+            'farnesene',
+            'humulene',
+            'cohumulone',
+            'hsi',
+            'caryophyllene',
+            'myrcene'
+          ])
+          return { hop, ...formatted }
         })}
       />
     </div>
-  );
-};
+  )
+}
