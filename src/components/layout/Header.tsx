@@ -4,7 +4,7 @@ import { useStorage } from "../../utils/storage";
 import { BiBeer } from "react-icons/Bi";
 import { FiSettings } from "react-icons/Fi";
 import { BsDisplay } from "react-icons/Bs";
-import { IoMdBeer } from "react-icons/Io";
+import { CiBeerMugFull } from "react-icons/Ci";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -32,18 +32,29 @@ const StyledHeader = styled.header`
       }
     }
   }
-  div {
+  > div {
+    width: 33%;
+  }
+  .multi-btn {
+    display: flex;
+    justify-content: flex-end;
     button {
+      padding: 0 1rem;
       border-right: 1px solid rgba(255, 255, 255, 0.1);
+      &:last-of-type {
+        border-right: 0;
+      }
     }
   }
   .logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 1.2rem;
     font-family: "Righteous", cursive;
     svg {
-      margin-right: 0.75rem;
+      margin-right: 0.25rem;
+      font-size: 2rem;
     }
   }
 `;
@@ -63,18 +74,20 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <StyledHeader>
-      <button
-        onClick={() => {
-          setRecipesModalVisible(true);
-        }}
-      >
-        <BiBeer /> Select recipes
-      </button>
+      <div>
+        <button
+          onClick={() => {
+            setRecipesModalVisible(true);
+          }}
+        >
+          <BiBeer /> Select recipes
+        </button>
+      </div>
       <div className="logo">
-        <IoMdBeer />
+        <CiBeerMugFull />
         MyBeerTaps
       </div>
-      <div>
+      <div className="multi-btn">
         <button
           onClick={() => {
             setSettingsModalVisible(true);
