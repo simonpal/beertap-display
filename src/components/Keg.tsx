@@ -1,18 +1,18 @@
-import React, { useMemo, useState } from 'react'
-import styled, { keyframes } from 'styled-components'
-import { BsInfoCircle } from 'react-icons/Bs'
-import { calcFromEbc } from '../utils/colorCalc'
-import { Wave } from './Wave'
+import React, { useMemo, useState } from "react";
+import styled, { keyframes } from "styled-components";
+import { BsInfoCircle } from "react-icons/Bs";
+import { calcFromEbc } from "../utils/colorCalc";
+import { Wave } from "./Wave";
 
-import kegTop from '../assets/keg-top.svg'
-import kegBody from '../assets/keg-body-mask.svg'
-import kegInner from '../assets/keg-inner.svg'
-import kegBottom from '../assets/keg-bottom.svg'
-import { Button } from './layout/Button'
-import { useRecipe } from '../api'
-import { Modal } from './Modal'
-import { BeerInfo } from './BeerInfo'
-import { Spinner } from './layout/Spinner'
+import kegTop from "../assets/keg-top.svg";
+import kegBody from "../assets/keg-body-mask.svg";
+import kegInner from "../assets/keg-inner.svg";
+import kegBottom from "../assets/keg-bottom.svg";
+import { Button } from "./layout/Button";
+import { useRecipe } from "../api";
+import { Modal } from "./Modal";
+import { BeerInfo } from "./BeerInfo";
+import { Spinner } from "./layout/Spinner";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
-`
+`;
 
 const waves = keyframes`
 0% {
@@ -35,7 +35,7 @@ const waves = keyframes`
   100% {
     margin-left: -150px;
   }
-`
+`;
 
 const StyledKeg = styled.div<ColorBoxProps>`
   font-size: 2rem;
@@ -56,7 +56,7 @@ const StyledKeg = styled.div<ColorBoxProps>`
     z-index: 11;
     margin-top: -13px;
   }
-`
+`;
 
 const KegBody = styled.div`
   position: relative;
@@ -72,7 +72,7 @@ const KegBody = styled.div`
     position: relative;
     z-index: 10;
   }
-`
+`;
 
 const Liquid = styled.div<BeerProps>`
   height: ${({ heightPercentage }) => `calc(${heightPercentage}% - 20px)`};
@@ -111,7 +111,7 @@ const Liquid = styled.div<BeerProps>`
     flex-grow: 1;
     background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
   }
-`
+`;
 
 // const ColorBox = styled.div<ColorBoxProps>`
 //   display: inline-flex;
@@ -121,14 +121,14 @@ const Liquid = styled.div<BeerProps>`
 // `
 
 interface BeerProps extends ColorBoxProps {
-  heightPercentage: number
+  heightPercentage: number;
 }
 interface ColorBoxProps {
-  $ebcColor: string
+  $ebcColor: string;
 }
 interface KegProps {
-  recipeId?: string
-  onClick?: () => void
+  recipeId?: string;
+  onClick?: () => void;
 }
 
 // const KEG_BASE = 4.45;
@@ -136,27 +136,29 @@ interface KegProps {
 const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
   // const [ebcValue, setEbcValue] = useState<number>(10);
   // const [liter, setLiter] = useState<number>(19)
-  const liter = 19
-  const [showInfo, setShowInfo] = useState<boolean>(false)
+  const liter = 19;
+  const [showInfo, setShowInfo] = useState<boolean>(false);
 
-  const maxLiter = 19
+  const maxLiter = 19;
 
   // const { data } = useKegWeight();
-  const { data: recipe, isLoading } = useRecipe(recipeId ?? '')
-  console.log({ recipe })
-  const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe])
+  const { data: recipe, isLoading } = useRecipe(recipeId ?? "");
+  console.log({ recipe });
+  const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe]);
   // console.log(data);
   const literPercentage = useMemo(() => {
-    return Math.round((liter / maxLiter) * 100)
-  }, [liter])
+    return Math.round((liter / maxLiter) * 100);
+  }, [liter]);
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
   return (
     <Wrapper>
       <h3>{recipe?.name}</h3>
-      <p>{`${recipe?.abv ?? 0}%`}</p>
+      <p>
+        <strong>{`${recipe?.abv ?? 0}%`}</strong>
+      </p>
       <div className="short-info">
         {recipe?.style && <span>{recipe?.style?.name}</span>}
       </div>
@@ -199,7 +201,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
       <Button
         outlined
         onClick={() => {
-          setShowInfo(true)
+          setShowInfo(true);
         }}
       >
         <BsInfoCircle />
@@ -208,13 +210,13 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
       <Modal
         visible={showInfo}
         onClose={() => {
-          setShowInfo(false)
+          setShowInfo(false);
         }}
       >
         {recipe && <BeerInfo recipe={recipe} />}
       </Modal>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default React.memo(Keg)
+export default React.memo(Keg);

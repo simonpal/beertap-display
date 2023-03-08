@@ -1,16 +1,32 @@
-import React from 'react'
-import styled from 'styled-components'
-import { mergeKeys } from '../utils'
-import { Field } from './FieldType'
+import React from "react";
+import styled from "styled-components";
+import { GiHops, GiWheat } from "react-icons/Gi";
+import { mergeKeys } from "../utils";
+import { Field } from "./FieldType";
+import { ModalTitle } from "./layout/ModalTitle";
 
-const TableTitle = styled.h4`
+// const TableTitle = styled.h4`
+//   text-align: center;
+//   margin-top: 2rem;
+//   margin-bottom: 1rem;
+//   width: 100%;
+//   font-size: 1.1rem;
+//   color: ${({ theme }) => theme.colors.primary};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   svg {
+//     margin-right: 0.75rem;
+//   }
+// `;
+
+const TableTitle = styled(ModalTitle)`
   text-align: center;
+  justify-content: center;
+  width: 100%;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  width: 100%;
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.primary};
-`
+`;
 
 const TableWrapper = styled.div`
   width: 100%;
@@ -42,22 +58,30 @@ const TableWrapper = styled.div`
       text-align: left;
     }
   }
-`
+`;
 
 interface ItemTableProps {
-  title: string
-  array: string[]
+  title: string;
+  array: string[];
 }
 
 export const ItemTable: React.FC<ItemTableProps> = ({ title, array }) => {
   const allKeys: string[] = array.reduce(
     (acc: any, curr: any) => mergeKeys(acc, Object.keys(curr)),
     []
-  )
+  );
+
+  let Icon = GiWheat;
+  if (title === "Hops") Icon = GiHops;
 
   return (
     <>
-      {title && <TableTitle>{title}</TableTitle>}
+      {title && (
+        <TableTitle>
+          <Icon />
+          {title}
+        </TableTitle>
+      )}
 
       <TableWrapper>
         <table>
@@ -73,27 +97,25 @@ export const ItemTable: React.FC<ItemTableProps> = ({ title, array }) => {
               return (
                 <tr key={`tr-${index}`}>
                   {allKeys.map((key, index) => {
-                    const value = line[key]
+                    const value = line[key];
                     // const [key, value] = item;
-                    const passKey = key.toLowerCase() === 'price' ? key : ''
+                    const passKey = key.toLowerCase() === "price" ? key : "";
                     return (
                       <td key={`td-${index}-${title}`}>
-                        {value !== undefined
-                          ? (
+                        {value !== undefined ? (
                           <Field prop={passKey} value={value} />
-                            )
-                          : (
+                        ) : (
                           <>&nbsp;</>
-                            )}
+                        )}
                       </td>
-                    )
+                    );
                   })}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
       </TableWrapper>
     </>
-  )
-}
+  );
+};
