@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { ModalTitle } from './layout/ModalTitle'
-import { BsDisplay } from 'react-icons/Bs'
-import { useStorage } from '../utils/storage'
-import { DisplayKegForm } from './DisplayKegForm'
-import { Button } from './layout/Button'
+import React, { useState } from "react";
+import styled from "styled-components";
+import { ModalTitle } from "./layout/ModalTitle";
+import { BsDisplay } from "react-icons/Bs";
+import { useStorage } from "../utils/storage";
+import { DisplayKegForm } from "./DisplayKegForm";
+import { Button } from "./layout/Button";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -15,39 +15,44 @@ const StyledSettings = styled.div`
   input {
     width: 100%;
   }
-`
+  .center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 
 const StyledFormWrapper = styled.div`
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-`
-export type FormValue = Record<string, string>
+`;
+export type FormValue = Record<string, string>;
 export const DisplaySettings: React.FC = () => {
-  const [formData, setFormData] = useState<FormValue[]>([])
+  const [formData, setFormData] = useState<FormValue[]>([]);
 
   const setInitialValue =
     (idx: number) =>
-      (obj: FormValue): void => {
-        const data = [...formData]
-        data[idx] = obj
-        setFormData(data)
-      }
+    (obj: FormValue): void => {
+      const data = [...formData];
+      data[idx] = obj;
+      setFormData(data);
+    };
 
   const {
-    settings: { kegs }
-  } = useStorage()
+    settings: { kegs },
+  } = useStorage();
 
   const handleChange =
     (idx: number) =>
-      (key: string, val: string): void => {
-        const newArr = [...formData]
-        newArr[idx] = { ...formData[idx], [key]: val }
-        setFormData(newArr)
-      }
+    (key: string, val: string): void => {
+      const newArr = [...formData];
+      newArr[idx] = { ...formData[idx], [key]: val };
+      setFormData(newArr);
+    };
 
   const handleSave = (): void => {
-    console.log(formData)
-  }
+    console.log(formData);
+  };
 
   return (
     <StyledSettings>
@@ -64,7 +69,9 @@ export const DisplaySettings: React.FC = () => {
           />
         </StyledFormWrapper>
       ))}
-      <Button onClick={handleSave}>Save to display</Button>
+      <div className="center">
+        <Button onClick={handleSave}>Save to display</Button>
+      </div>
       {/* <div>
         <Label htmlFor="brewfatherApiKey">Brewfather api key</Label>
         <Input
@@ -93,5 +100,5 @@ export const DisplaySettings: React.FC = () => {
         </Button>
       </div> */}
     </StyledSettings>
-  )
-}
+  );
+};

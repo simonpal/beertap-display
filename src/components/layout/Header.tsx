@@ -1,9 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useStorage } from '../../utils/storage'
-import { BiBeer } from 'react-icons/Bi'
-import { FiSettings } from 'react-icons/Fi'
-import { BsDisplay } from 'react-icons/Bs'
+import React from "react";
+import styled from "styled-components";
+import { useStorage } from "../../utils/storage";
+import { BiBeer } from "react-icons/Bi";
+import { FiSettings } from "react-icons/Fi";
+import { BsDisplay } from "react-icons/Bs";
+import { IoMdBeer } from "react-icons/Io";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -11,6 +12,8 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
+  margin-bottom: 4rem;
+  background-color: rgba(0, 0, 0, 0.5);
   button {
     background: transparent;
     display: inline-flex;
@@ -29,34 +32,52 @@ const StyledHeader = styled.header`
       }
     }
   }
-`
+  div {
+    button {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: "Righteous", cursive;
+    svg {
+      margin-right: 0.75rem;
+    }
+  }
+`;
 
 interface HeaderProps {
-  setRecipesModalVisible: (val: boolean) => void
-  setSettingsModalVisible: (val: boolean) => void
-  setDisplayModalVisible: (val: boolean) => void
+  setRecipesModalVisible: (val: boolean) => void;
+  setSettingsModalVisible: (val: boolean) => void;
+  setDisplayModalVisible: (val: boolean) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   setRecipesModalVisible,
   setSettingsModalVisible,
-  setDisplayModalVisible
+  setDisplayModalVisible,
 }) => {
-  const { settings } = useStorage()
+  const { settings } = useStorage();
 
   return (
     <StyledHeader>
       <button
         onClick={() => {
-          setRecipesModalVisible(true)
+          setRecipesModalVisible(true);
         }}
       >
         <BiBeer /> Select recipes
       </button>
+      <div className="logo">
+        <IoMdBeer />
+        MyBeerTaps
+      </div>
       <div>
         <button
           onClick={() => {
-            setSettingsModalVisible(true)
+            setSettingsModalVisible(true);
           }}
         >
           <FiSettings />
@@ -65,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
         {settings.connectedDisplay && (
           <button
             onClick={() => {
-              setDisplayModalVisible(true)
+              setDisplayModalVisible(true);
             }}
           >
             <BsDisplay />
@@ -74,5 +95,5 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
     </StyledHeader>
-  )
-}
+  );
+};

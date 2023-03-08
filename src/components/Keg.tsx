@@ -19,9 +19,10 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   h3 {
     text-align: center;
-    max-width: 94%;
+    max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
