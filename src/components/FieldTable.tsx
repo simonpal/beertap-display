@@ -52,6 +52,9 @@ const TableWrapper = styled.div`
       &:last-of-type {
         border-right: 0;
       }
+      span:last-of-type {
+        text-align: left;
+      }
     }
     div {
       padding: 0;
