@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useStorage } from '../../utils/storage'
-import { BiBeer } from 'react-icons/Bi'
-import { FiSettings } from 'react-icons/Fi'
-import { BsDisplay } from 'react-icons/Bs'
-import { CiBeerMugFull } from 'react-icons/Ci'
+import React from "react";
+import styled from "styled-components";
+import { useStorage } from "../../utils/storage";
+import { BiBeer } from "react-icons/Bi";
+import { FiSettings } from "react-icons/Fi";
+import { BsDisplay } from "react-icons/Bs";
+import { CiBeerMugFull } from "react-icons/Ci";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -57,27 +57,63 @@ const StyledHeader = styled.header`
       font-size: 2rem;
     }
   }
-`
+  @media screen and (max-width: 420px) {
+    flex-direction: column;
+    margin-bottom: 2rem;
+    > div.logo {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-direction: row;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    > div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &.multi-btn button,
+      button {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 0;
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    > div:nth-child(2) {
+      order: 1;
+    }
+    > div:nth-child(1) {
+      order: 2;
+    }
+    > div:nth-child(3) {
+      order: 3;
+    }
+  }
+`;
 
 interface HeaderProps {
-  setRecipesModalVisible: (val: boolean) => void
-  setSettingsModalVisible: (val: boolean) => void
-  setDisplayModalVisible: (val: boolean) => void
+  setRecipesModalVisible: (val: boolean) => void;
+  setSettingsModalVisible: (val: boolean) => void;
+  setDisplayModalVisible: (val: boolean) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   setRecipesModalVisible,
   setSettingsModalVisible,
-  setDisplayModalVisible
+  setDisplayModalVisible,
 }) => {
-  const { settings } = useStorage()
+  const { settings } = useStorage();
 
   return (
     <StyledHeader>
       <div>
         <button
           onClick={() => {
-            setRecipesModalVisible(true)
+            setRecipesModalVisible(true);
           }}
         >
           <BiBeer /> Select recipes
@@ -90,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="multi-btn">
         <button
           onClick={() => {
-            setSettingsModalVisible(true)
+            setSettingsModalVisible(true);
           }}
         >
           <FiSettings />
@@ -99,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
         {settings.connectedDisplay && (
           <button
             onClick={() => {
-              setDisplayModalVisible(true)
+              setDisplayModalVisible(true);
             }}
           >
             <BsDisplay />
@@ -108,5 +144,5 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
     </StyledHeader>
-  )
-}
+  );
+};
