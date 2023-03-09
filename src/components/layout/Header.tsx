@@ -102,26 +102,22 @@ const StyledHeader = styled.header`
 `;
 
 interface HeaderProps {
-  setRecipesModalVisible: (val: boolean) => void;
-  setSettingsModalVisible: (val: boolean) => void;
-  setDisplayModalVisible: (val: boolean) => void;
+  showRecipesModal: () => void;
+  showSettingsModal: () => void;
+  showDisplayModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  setRecipesModalVisible,
-  setSettingsModalVisible,
-  setDisplayModalVisible,
+  showRecipesModal,
+  showSettingsModal,
+  showDisplayModal,
 }) => {
   const { settings } = useStorage();
 
   return (
     <StyledHeader>
       <div>
-        <button
-          onClick={() => {
-            setRecipesModalVisible(true);
-          }}
-        >
+        <button onClick={showRecipesModal}>
           <BiBeer /> Select recipes
         </button>
       </div>
@@ -130,20 +126,12 @@ export const Header: React.FC<HeaderProps> = ({
         MyBeerTaps
       </div>
       <div className="multi-btn">
-        <button
-          onClick={() => {
-            setSettingsModalVisible(true);
-          }}
-        >
+        <button onClick={showSettingsModal}>
           <FiSettings />
           Settings
         </button>
         {settings.connectedDisplay && (
-          <button
-            onClick={() => {
-              setDisplayModalVisible(true);
-            }}
-          >
+          <button onClick={showDisplayModal}>
             <BsDisplay />
             Display
           </button>
