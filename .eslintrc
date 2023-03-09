@@ -5,7 +5,7 @@
         "sourceType": "module"
     },
     "plugins": ["react","jsx-a11y"],
-    "extends": ["plugin:react/recommended","plugin:jsx-a11y/recommended", "standard-with-typescript"],
+    "extends": ["standard","plugin:react/recommended","plugin:jsx-a11y/recommended", "standard-with-typescript"],
     "rules": {
         "@typescript-eslint/no-var-requires": 0,
         "no-tabs": 0,
