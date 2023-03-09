@@ -5,8 +5,6 @@ import { BsDisplay } from "react-icons/Bs";
 import { useStorage } from "../utils/storage";
 import { DisplayKegForm } from "./DisplayKegForm";
 import { Button } from "./layout/Button";
-import { Label } from "./layout/Label";
-import { Input } from "./layout/Input";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -36,7 +34,10 @@ const StyledFormWrapper = styled.div`
 `;
 export type FormValue = Record<string, string>;
 export const DisplaySettings: React.FC = () => {
-  const [formData, setFormData] = useState<FormValue[]>([]);
+  const { settings, updateSettings = () => null } = useStorage();
+  const [formData, setFormData] = useState<FormValue[]>(
+    Array(settings.noKegs).fill({})
+  );
 
   const setInitialValue =
     (idx: number) =>
@@ -45,8 +46,6 @@ export const DisplaySettings: React.FC = () => {
       data[idx] = obj;
       setFormData(data);
     };
-
-  const { settings, updateSettings = () => null } = useStorage();
 
   const handleChange =
     (idx: number) =>
