@@ -145,7 +145,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
   // const { data } = useKegWeight();
   const { data: recipe, isLoading } = useRecipe(recipeId ?? "");
   const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe]);
-  // console.log(data);
+  console.log(recipe);
   const literPercentage = useMemo(() => {
     return Math.round((liter / maxLiter) * 100);
   }, [liter]);
