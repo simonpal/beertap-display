@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useStorage } from '../utils/storage'
-import { Input } from './layout/Input'
-import { Label } from './layout/Label'
-import { FiSettings } from 'react-icons/Fi'
-import { ModalTitle } from './layout/ModalTitle'
-import { Checkbox } from './layout/Checkbox'
+import React from "react";
+import styled from "styled-components";
+import { useStorage } from "../utils/storage";
+import { Input } from "./layout/Input";
+import { Label } from "./layout/Label";
+import { FiSettings } from "react-icons/Fi";
+import { ModalTitle } from "./layout/ModalTitle";
+import { Checkbox } from "./layout/Checkbox";
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -16,10 +16,10 @@ const StyledSettings = styled.div`
   input:not([type="checkbox"]) {
     width: 100%;
   }
-`
+`;
 
 export const Settings: React.FC = () => {
-  const { updateSettings = () => null, settings } = useStorage()
+  const { updateSettings = () => null, settings } = useStorage();
 
   return (
     <StyledSettings>
@@ -33,7 +33,7 @@ export const Settings: React.FC = () => {
           id="brewfaterUid"
           defaultValue={settings.brewfatherUserId}
           onChange={(e) => {
-            updateSettings('brewfatherUserId', e.target.value)
+            updateSettings("brewfatherUserId", e.target.value);
           }}
         />
       </div>
@@ -44,7 +44,7 @@ export const Settings: React.FC = () => {
           id="brewfaterApiKey"
           defaultValue={settings.brewfatherApiKey}
           onChange={(e) => {
-            updateSettings('brewfatherApiKey', e.target.value)
+            updateSettings("brewfatherApiKey", e.target.value);
           }}
         />
       </div>
@@ -55,7 +55,7 @@ export const Settings: React.FC = () => {
           id="noKegs"
           defaultValue={settings.noKegs}
           onChange={(e) => {
-            updateSettings('noKegs', Number(e.target.value))
+            updateSettings("noKegs", Number(e.target.value));
           }}
         />
       </div>
@@ -65,17 +65,30 @@ export const Settings: React.FC = () => {
           defaultChecked={settings.connectedDisplay}
           onChange={(e) => {
             updateSettings(
-              'connectedDisplay',
+              "connectedDisplay",
               Boolean(e.currentTarget.checked)
-            )
+            );
           }}
         />
       </div>
+      {settings.connectedDisplay && (
+        <div>
+          <Label>Display API endpoint</Label>
+          <Input
+            type="text"
+            id="displayApiEndpoint"
+            defaultValue={settings.displayApiEndpoint}
+            onChange={(e) => {
+              updateSettings(e.target.id, e.target.value);
+            }}
+          />
+        </div>
+      )}
       {/* <div>
         <Button>
           <span>Close</span>
         </Button>
       </div> */}
     </StyledSettings>
-  )
-}
+  );
+};
