@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { useStorage } from "../../utils/storage";
-import { BiBeer } from "react-icons/Bi";
-import { FiSettings } from "react-icons/Fi";
-import { BsDisplay } from "react-icons/Bs";
-import { CiBeerMugFull } from "react-icons/Ci";
+import React from 'react'
+import styled from 'styled-components'
+import { useStorage } from '../../utils/storage'
+import { BiBeer } from 'react-icons/Bi'
+import { FiSettings } from 'react-icons/Fi'
+import { BsDisplay } from 'react-icons/Bs'
+import { CiBeerMugFull } from 'react-icons/Ci'
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -99,20 +99,20 @@ const StyledHeader = styled.header`
       order: 3;
     }
   }
-`;
+`
 
 interface HeaderProps {
-  showRecipesModal: () => void;
-  showSettingsModal: () => void;
-  showDisplayModal: () => void;
+  showRecipesModal: () => void
+  showSettingsModal: () => void
+  showDisplayModal: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({
   showRecipesModal,
   showSettingsModal,
-  showDisplayModal,
+  showDisplayModal
 }) => {
-  const { settings } = useStorage();
+  const { settings } = useStorage()
 
   return (
     <StyledHeader>
@@ -138,5 +138,5 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
     </StyledHeader>
-  );
-};
+  )
+}

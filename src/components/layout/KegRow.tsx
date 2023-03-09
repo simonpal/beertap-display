@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 interface KegWrapperProps {
-  noKegs: number;
+  noKegs: number
 }
 export const KegRow = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const KegRow = styled.div`
   @media screen and (max-width: 420px) {
     flex-direction: column;
   }
-`;
+`
 export const KegWrapper = styled.div<KegWrapperProps>`
   width: ${(props) => `${100 / props.noKegs}%`};
   display: flex;
@@ -23,4 +23,4 @@ export const KegWrapper = styled.div<KegWrapperProps>`
     width: 100%;
     margin-bottom: 2rem;
   }
-`;
+`

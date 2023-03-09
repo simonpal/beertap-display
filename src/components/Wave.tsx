@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
 
 export const Wave: React.FC<React.HTMLAttributes<HTMLOrSVGElement>> = (
   props
@@ -26,5 +25,5 @@ export const Wave: React.FC<React.HTMLAttributes<HTMLOrSVGElement>> = (
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}

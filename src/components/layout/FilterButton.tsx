@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { ITheme } from "../../App";
+import styled from 'styled-components'
+import { type ITheme } from '../../App'
 
 interface FilterButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  selected?: boolean;
+  selected?: boolean
 }
 export const FilterButton = styled.button<FilterButtonProps>`
   height: 2rem;
@@ -19,7 +19,7 @@ export const FilterButton = styled.button<FilterButtonProps>`
   ${({ selected, theme }) =>
     selected &&
     `
-        background-color: ${theme.colors.primary};
-        color: ${theme.colors.text}
+        background-color: ${(theme as ITheme).colors.primary};
+        color: ${(theme as ITheme).colors.text}
     `}
-`;
+`
