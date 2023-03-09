@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-const Svg = styled.svg``
-
-export const Wave: React.FC = (props: any) => {
+export const Wave: React.FC<React.HTMLAttributes<HTMLOrSVGElement>> = (
+  props
+) => {
   return (
-    <Svg
+    <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 150 20"
       fill="none"
@@ -25,6 +25,6 @@ export const Wave: React.FC = (props: any) => {
           <rect width="150" height="20" fill="white" />
         </clipPath>
       </defs>
-    </Svg>
-  )
-}
+    </svg>
+  );
+};

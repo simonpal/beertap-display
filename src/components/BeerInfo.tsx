@@ -52,7 +52,7 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
   if (!recipe) return <div>No recipe</div>;
 
   const hops = useMemo(() => {
-    const arr = [...new Set(recipe?.hops?.map((hop: any) => hop.name))];
+    const arr = [...new Set(recipe?.hops?.map((hop: Hop) => hop.name))];
     return arr;
   }, [recipe]);
   return (
