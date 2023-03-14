@@ -1,0 +1,20 @@
+{
+    "short_name": "BeertapDisplay",
+    "name": "Beertap Display",
+    "icons": [
+        {
+            "src": "../images/favicon.ico",
+            "sizes": "64x64",
+            "type": "image/ico"
+        },
+        {
+            "src": "../images/beertap-icon-256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        }
+    ],
+    "start_url": "../",
+    "display": "standalone",
+    "theme_color": "#c6426e",
+    "background_color": "#101018"
+}
