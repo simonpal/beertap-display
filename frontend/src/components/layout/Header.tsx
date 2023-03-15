@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   background-color: rgba(0, 0, 0, 0.5);
   button {
     background: transparent;
