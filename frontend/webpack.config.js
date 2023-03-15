@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const WorkboxPlugin = require("workbox-webpack-plugin")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
+const RemoveConsolePlugin = require("remove-console-webpack-plugin")
 // const WebpackBundleAnalyzer =
 //   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -76,6 +77,7 @@ const config = (env, argv) => {
       // new WebpackBundleAnalyzer(),
       ...(argv.mode === "production"
         ? [
+            new RemoveConsolePlugin(),
             new WorkboxPlugin.GenerateSW({
               // these options encourage the ServiceWorkers to get in there fast
               // and not allow any straggling "old" SWs to hang around

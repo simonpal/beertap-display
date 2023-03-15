@@ -9,7 +9,6 @@ export const IconWrapper: React.FC<IconWrapperProps> = ({
   children,
   ...rest
 }) => {
-  console.log("---- REST: ", rest)
   return (
     <svg
       stroke="currentColor"
