@@ -17,6 +17,7 @@
   "dependencies": {
     "js-base64": "^3.7.4",
     "react": "^17.0.2",
+    "react-detect-offline": "^2.4.5",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "react-query": "^3.34.19",
@@ -29,6 +30,7 @@
     "@hot-loader/react-dom": "^17.0.2+4.13.0",
     "@types/lodash": "^4.14.191",
     "@types/react": "^17.0.39",
+    "@types/react-detect-offline": "^2.4.1",
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.24",
     "@typescript-eslint/eslint-plugin": "^5.54.1",

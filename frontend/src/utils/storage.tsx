@@ -3,10 +3,10 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState
-} from 'react'
-import { type StorageSettings } from '../models'
-import { isNull } from '../utils'
+  useState,
+} from "react"
+import { type StorageSettings } from "../models"
+import { isNull } from "../utils"
 
 // const storage = {
 // 	name: 'myStorage',
@@ -32,25 +32,25 @@ interface StorageProviderProps {
 }
 
 const baseSettings = {
-  brewfatherUserId: '',
-  brewfatherApiKey: '',
+  brewfatherUserId: "",
+  brewfatherApiKey: "",
   noKegs: 0,
   kegs: [],
   connectedDisplay: false,
-  displayApiEndpoint: ''
+  displayApiEndpoint: "",
 }
 
 let initSettings = { ...baseSettings }
 
-const storageSettings = localStorage.getItem('settings')
+const storageSettings = localStorage.getItem("settings")
 
-if (typeof storageSettings !== 'undefined' && !isNull(storageSettings)) {
-  initSettings = JSON.parse(storageSettings ?? '')
-  console.log('after parse', initSettings)
+if (typeof storageSettings !== "undefined" && !isNull(storageSettings)) {
+  initSettings = JSON.parse(storageSettings ?? "")
+  console.log("after parse", initSettings)
 }
 
 const StorageContext = createContext<StorageProviderProps>({
-  settings: initSettings
+  settings: initSettings,
 })
 
 export const StorageProvider: React.FC<React.ReactNode> = ({ children }) => {
@@ -66,9 +66,10 @@ export const StorageProvider: React.FC<React.ReactNode> = ({ children }) => {
   }, [settings, baseSettings])
   useEffect(() => {
     if (!settingsAreEmpty) {
-      localStorage.setItem('settings', JSON.stringify(settings))
+      localStorage.setItem("settings", JSON.stringify(settings))
     }
   }, [settings, settingsAreEmpty])
+
   return (
     <StorageContext.Provider value={{ settings, updateSettings }}>
       {children}
@@ -76,5 +77,4 @@ export const StorageProvider: React.FC<React.ReactNode> = ({ children }) => {
   )
 }
 
-export const useStorage = (): StorageProviderProps =>
-  useContext(StorageContext)
+export const useStorage = (): StorageProviderProps => useContext(StorageContext)

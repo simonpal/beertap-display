@@ -1,28 +1,30 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { hot } from 'react-hot-loader/root'
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { Modal } from './components/Modal'
-import { Settings } from './components/Settings'
-import { StorageProvider } from './utils/storage'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import AllKegs from './components/AllKegs'
-import { RecipeSettings } from './components/Recipes'
-import { DisplaySettings } from './components/DisplaySettings'
-import { Header } from './components/layout/Header'
+import * as React from "react"
+import { useState } from "react"
+import { hot } from "react-hot-loader/root"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
+import { Modal } from "./components/Modal"
+import { Settings } from "./components/Settings"
+import { StorageProvider } from "./utils/storage"
+import { QueryClient, QueryClientProvider } from "react-query"
+import AllKegs from "./components/AllKegs"
+import { RecipeSettings } from "./components/Recipes"
+import { DisplaySettings } from "./components/DisplaySettings"
+import { Header } from "./components/layout/Header"
+import { Detector } from "react-detect-offline"
+import { OfflineOverlay } from "./components/OfflineOverlay"
 // import appBg from "./assets/pexels-pixabay-65210.jpeg";
 
 // const appBg = require("./assets/pexels-pixabay-65210.jpeg");
 
-const appBg = require('./assets/appbg-3.jpeg')
+const appBg = require("./assets/appbg-3.jpeg")
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60
-    }
-  }
+      staleTime: 60 * 1000 * 60,
+    },
+  },
 })
 
 export interface ITheme {
@@ -32,19 +34,20 @@ export interface ITheme {
     primary: string
     modalBg: string
     gradientBg: string
+    gradientStart: string
     error: string
   }
 }
 const theme = {
   colors: {
-    pageBg: '#101018',
-    text: '#FFF',
-    primary: '#7A5CF5',
-    modalBg: '#101018',
-    gradientStart: '#c6426e',
-    gradientBg: 'linear-gradient(to right, #c6426e, #642b73)',
-    error: '#eb4d4b'
-  }
+    pageBg: "#101018",
+    text: "#FFF",
+    primary: "#7A5CF5",
+    modalBg: "#101018",
+    gradientStart: "#c6426e",
+    gradientBg: "linear-gradient(to right, #c6426e, #642b73)",
+    error: "#eb4d4b",
+  },
 }
 
 interface GlobalStyleProps {
@@ -136,10 +139,20 @@ const App: React.FC = () => {
         <StorageProvider>
           <GlobalStyles />
           <Header
-            showSettingsModal={() => { setSettingsModalVisible(true) }}
-            showRecipesModal={() => { setRecipesModalVisible(true) }}
-            showDisplayModal={() => { setDisplayModalVisible(true) }}
+            showSettingsModal={() => {
+              setSettingsModalVisible(true)
+            }}
+            showRecipesModal={() => {
+              setRecipesModalVisible(true)
+            }}
+            showDisplayModal={() => {
+              setDisplayModalVisible(true)
+            }}
           />
+          <Detector
+            render={({ online }) => <OfflineOverlay offline={!online} />}
+          />
+
           <Modal
             visible={settingsModalVisible}
             onClose={() => {
