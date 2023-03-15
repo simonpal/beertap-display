@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react"
 
 interface IconWrapperProps extends React.HTMLAttributes<HTMLOrSVGElement> {
-  fill?: string;
+  fill?: string
+  viewBox?: string
 }
 
 export const IconWrapper: React.FC<IconWrapperProps> = ({
   children,
   ...rest
 }) => {
-  console.log('---- REST: ', rest);
+  console.log("---- REST: ", rest)
   return (
     <svg
       stroke="currentColor"
@@ -22,5 +23,5 @@ export const IconWrapper: React.FC<IconWrapperProps> = ({
     >
       {children}
     </svg>
-  );
-};
+  )
+}
