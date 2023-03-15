@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useStorage } from '../../utils/storage'
-import { BiBeer } from 'react-icons/Bi'
-import { FiSettings } from 'react-icons/Fi'
-import { BsDisplay } from 'react-icons/Bs'
-import { CiBeerMugFull } from 'react-icons/Ci'
+import React from 'react';
+import styled from 'styled-components';
+import { useStorage } from '../../utils/storage';
+import BeerGlassIcon from '../icons/BeerGlassIcon';
+import BeerMugFull from '../icons/BeerMugFull';
+import SettingsIcon from '../icons/SettingsIcon';
+import DisplayIcon from '../icons/DisplayIcon';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -51,7 +51,7 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    font-family: "Righteous", cursive;
+    font-family: 'Righteous', cursive;
     color: ${({ theme }) => theme.colors.gradientStart};
     text-align: center;
     background: ${({ theme }) => theme.colors.gradientBg};
@@ -99,44 +99,44 @@ const StyledHeader = styled.header`
       order: 3;
     }
   }
-`
+`;
 
 interface HeaderProps {
-  showRecipesModal: () => void
-  showSettingsModal: () => void
-  showDisplayModal: () => void
+  showRecipesModal: () => void;
+  showSettingsModal: () => void;
+  showDisplayModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   showRecipesModal,
   showSettingsModal,
-  showDisplayModal
+  showDisplayModal,
 }) => {
-  const { settings } = useStorage()
+  const { settings } = useStorage();
 
   return (
     <StyledHeader>
       <div>
         <button onClick={showRecipesModal}>
-          <BiBeer /> Select recipes
+          <BeerGlassIcon /> Select recipes
         </button>
       </div>
       <div className="logo">
-        <CiBeerMugFull />
+        <BeerMugFull />
         MyBeerTaps
       </div>
       <div className="multi-btn">
         <button onClick={showSettingsModal}>
-          <FiSettings />
+          <SettingsIcon />
           Settings
         </button>
         {settings.connectedDisplay && (
           <button onClick={showDisplayModal}>
-            <BsDisplay />
+            <DisplayIcon />
             Display
           </button>
         )}
       </div>
     </StyledHeader>
-  )
-}
+  );
+};

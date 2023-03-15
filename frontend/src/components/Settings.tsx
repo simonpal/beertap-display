@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useStorage } from '../utils/storage'
-import { Input } from './layout/Input'
-import { Label } from './layout/Label'
-import { FiSettings } from 'react-icons/Fi'
-import { ModalTitle } from './layout/ModalTitle'
-import { Checkbox } from './layout/Checkbox'
+import React from 'react';
+import styled from 'styled-components';
+import { useStorage } from '../utils/storage';
+import { Input } from './layout/Input';
+import { Label } from './layout/Label';
+import { ModalTitle } from './layout/ModalTitle';
+import { Checkbox } from './layout/Checkbox';
+import SettingsIcon from './icons/SettingsIcon';
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -13,18 +13,18 @@ const StyledSettings = styled.div`
   > div {
     margin-bottom: 1rem;
   }
-  input:not([type="checkbox"]) {
+  input:not([type='checkbox']) {
     width: 100%;
   }
-`
+`;
 
 export const Settings: React.FC = () => {
-  const { updateSettings = () => null, settings } = useStorage()
+  const { updateSettings = () => null, settings } = useStorage();
 
   return (
     <StyledSettings>
       <ModalTitle>
-        <FiSettings /> Settings
+        <SettingsIcon /> Settings
       </ModalTitle>
       <div>
         <Label htmlFor="brewfatherUid">Brewfather user id</Label>
@@ -33,7 +33,7 @@ export const Settings: React.FC = () => {
           id="brewfaterUid"
           defaultValue={settings.brewfatherUserId}
           onChange={(e) => {
-            updateSettings('brewfatherUserId', e.target.value)
+            updateSettings('brewfatherUserId', e.target.value);
           }}
         />
       </div>
@@ -44,7 +44,7 @@ export const Settings: React.FC = () => {
           id="brewfaterApiKey"
           defaultValue={settings.brewfatherApiKey}
           onChange={(e) => {
-            updateSettings('brewfatherApiKey', e.target.value)
+            updateSettings('brewfatherApiKey', e.target.value);
           }}
         />
       </div>
@@ -55,7 +55,7 @@ export const Settings: React.FC = () => {
           id="noKegs"
           defaultValue={settings.noKegs}
           onChange={(e) => {
-            updateSettings('noKegs', Number(e.target.value))
+            updateSettings('noKegs', Number(e.target.value));
           }}
         />
       </div>
@@ -67,7 +67,7 @@ export const Settings: React.FC = () => {
             updateSettings(
               'connectedDisplay',
               Boolean(e.currentTarget.checked)
-            )
+            );
           }}
         />
       </div>
@@ -79,7 +79,7 @@ export const Settings: React.FC = () => {
             id="displayApiEndpoint"
             defaultValue={settings.displayApiEndpoint}
             onChange={(e) => {
-              updateSettings(e.target.id, e.target.value)
+              updateSettings(e.target.id, e.target.value);
             }}
           />
         </div>
@@ -90,5 +90,5 @@ export const Settings: React.FC = () => {
         </Button>
       </div> */}
     </StyledSettings>
-  )
-}
+  );
+};

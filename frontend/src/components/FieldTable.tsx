@@ -1,9 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { GiHops, GiWheat } from 'react-icons/Gi'
-import { mergeKeys } from '../utils'
-import { Field } from './FieldType'
-import { ModalTitle } from './layout/ModalTitle'
+import React from 'react';
+import styled from 'styled-components';
+import { mergeKeys } from '../utils';
+import { Field } from './FieldType';
+import { ModalTitle } from './layout/ModalTitle';
+import WheatIcon from './icons/WheatIcon';
+import HopIcon from './icons/HopIcon';
 
 // const TableTitle = styled.h4`
 //   text-align: center;
@@ -26,7 +27,7 @@ const TableTitle = styled(ModalTitle)`
   width: 100%;
   margin-top: 2rem;
   margin-bottom: 1rem;
-`
+`;
 
 const TableWrapper = styled.div`
   width: 100%;
@@ -61,21 +62,21 @@ const TableWrapper = styled.div`
       text-align: left;
     }
   }
-`
+`;
 
 interface ItemTableProps {
-  title: string
-  array: string[]
+  title: string;
+  array: string[];
 }
 
 export const ItemTable: React.FC<ItemTableProps> = ({ title, array }) => {
   const allKeys: string[] = array.reduce(
     (acc: any, curr: any) => mergeKeys(acc, Object.keys(curr)),
     []
-  )
+  );
 
-  let Icon = GiWheat
-  if (title === 'Hops') Icon = GiHops
+  let Icon = WheatIcon;
+  if (title === 'Hops') Icon = HopIcon;
 
   return (
     <>
@@ -100,27 +101,25 @@ export const ItemTable: React.FC<ItemTableProps> = ({ title, array }) => {
               return (
                 <tr key={`tr-${index}`}>
                   {allKeys.map((key, index) => {
-                    const value = line[key]
+                    const value = line[key];
                     // const [key, value] = item;
-                    const passKey = key.toLowerCase() === 'price' ? key : ''
+                    const passKey = key.toLowerCase() === 'price' ? key : '';
                     return (
                       <td key={`td-${index}-${title}`}>
-                        {value !== undefined
-                          ? (
+                        {value !== undefined ? (
                           <Field prop={passKey} value={value} />
-                            )
-                          : (
+                        ) : (
                           <>&nbsp;</>
-                            )}
+                        )}
                       </td>
-                    )
+                    );
                   })}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
       </TableWrapper>
     </>
-  )
-}
+  );
+};

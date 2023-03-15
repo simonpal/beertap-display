@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { ModalTitle } from './layout/ModalTitle'
-import { BsDisplay } from 'react-icons/Bs'
-import { useStorage } from '../utils/storage'
-import { DisplayKegForm } from './DisplayKegForm'
-import { Button } from './layout/Button'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { ModalTitle } from './layout/ModalTitle';
+import { useStorage } from '../utils/storage';
+import { DisplayKegForm } from './DisplayKegForm';
+import { Button } from './layout/Button';
+import DisplayIcon from './icons/DisplayIcon';
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -20,7 +20,7 @@ const StyledSettings = styled.div`
     flex-direction: column;
     align-items: center;
   }
-`
+`;
 
 const StyledFormWrapper = styled.div`
   padding: 1rem 0;
@@ -28,41 +28,41 @@ const StyledFormWrapper = styled.div`
   h3 {
     margin-bottom: 1rem;
   }
-  input:not([type="checkbox"]) {
+  input:not([type='checkbox']) {
     margin-bottom: 1rem;
   }
-`
-export type FormValue = Record<string, string>
+`;
+export type FormValue = Record<string, string>;
 export const DisplaySettings: React.FC = () => {
-  const { settings } = useStorage()
+  const { settings } = useStorage();
   const [formData, setFormData] = useState<FormValue[]>(
     Array(settings.noKegs).fill({})
-  )
+  );
 
   const setInitialValue =
     (idx: number) =>
-      (obj: FormValue): void => {
-        const data = [...formData]
-        data[idx] = obj
-        setFormData(data)
-      }
+    (obj: FormValue): void => {
+      const data = [...formData];
+      data[idx] = obj;
+      setFormData(data);
+    };
 
   const handleChange =
     (idx: number) =>
-      (key: string, val: string): void => {
-        const newArr = [...formData]
-        newArr[idx] = { ...formData[idx], [key]: val }
-        setFormData(newArr)
-      }
+    (key: string, val: string): void => {
+      const newArr = [...formData];
+      newArr[idx] = { ...formData[idx], [key]: val };
+      setFormData(newArr);
+    };
 
   const handleSave = (): void => {
-    console.log(formData)
-  }
+    console.log(formData);
+  };
 
   return (
     <StyledSettings>
       <ModalTitle>
-        <BsDisplay /> Display settings
+        <DisplayIcon /> Display settings
       </ModalTitle>
       {settings.kegs.map((id, idx) => (
         <StyledFormWrapper key={id}>
@@ -105,5 +105,5 @@ export const DisplaySettings: React.FC = () => {
         </Button>
       </div> */}
     </StyledSettings>
-  )
-}
+  );
+};

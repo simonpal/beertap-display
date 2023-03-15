@@ -5,12 +5,13 @@
         "sourceType": "module"
     },
     "plugins": ["react","jsx-a11y"],
-    "extends": ["standard","plugin:react/recommended","plugin:jsx-a11y/recommended", "standard-with-typescript"],
+    "extends": ["standard","plugin:react/recommended","plugin:jsx-a11y/recommended", "standard-with-typescript", "prettier"],
     "rules": {
         "@typescript-eslint/no-var-requires": 0,
         "no-tabs": 0,
         "@typescript-eslint/no-dynamic-delete": "warn",
         "@typescript-eslint/strict-boolean-expressions": 0,
-        "semi": [0, "always"]
+        "semi": [0, "always"],
+        "prettier/prettier": ["error", { "singleQuote": true }]
     }
   }
