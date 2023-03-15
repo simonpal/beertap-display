@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useStorage } from '../../utils/storage';
-import BeerGlassIcon from '../icons/BeerGlassIcon';
-import BeerMugFull from '../icons/BeerMugFull';
-import SettingsIcon from '../icons/SettingsIcon';
-import DisplayIcon from '../icons/DisplayIcon';
+import React from "react"
+import styled from "styled-components"
+import { useStorage } from "../../utils/storage"
+import BeerGlassIcon from "../icons/BeerGlassIcon"
+// import BeerMugFull from '../icons/BeerMugFull';
+import SettingsIcon from "../icons/SettingsIcon"
+import DisplayIcon from "../icons/DisplayIcon"
+import LogoIcon from "../icons/LogoIcon"
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -51,15 +52,15 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    font-family: 'Righteous', cursive;
+    font-family: "Righteous", cursive;
     color: ${({ theme }) => theme.colors.gradientStart};
     text-align: center;
     background: ${({ theme }) => theme.colors.gradientBg};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     svg {
-      margin-right: 0.25rem;
-      font-size: 2rem;
+      margin-right: 0.5rem;
+      font-size: 1.5rem;
     }
   }
   @media screen and (max-width: 420px) {
@@ -99,12 +100,12 @@ const StyledHeader = styled.header`
       order: 3;
     }
   }
-`;
+`
 
 interface HeaderProps {
-  showRecipesModal: () => void;
-  showSettingsModal: () => void;
-  showDisplayModal: () => void;
+  showRecipesModal: () => void
+  showSettingsModal: () => void
+  showDisplayModal: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -112,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
   showSettingsModal,
   showDisplayModal,
 }) => {
-  const { settings } = useStorage();
+  const { settings } = useStorage()
 
   return (
     <StyledHeader>
@@ -122,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </div>
       <div className="logo">
-        <BeerMugFull />
+        <LogoIcon />
         MyBeerTaps
       </div>
       <div className="multi-btn">
@@ -138,5 +139,5 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
     </StyledHeader>
-  );
-};
+  )
+}

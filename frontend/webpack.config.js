@@ -1,63 +1,63 @@
 // const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const Dotenv = require("dotenv-webpack")
+const WorkboxPlugin = require("workbox-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 // const WebpackBundleAnalyzer =
 //   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = (env, argv) => {
-  console.log('CONFIG ENV', env);
-  console.log('CONFIG ARGV', argv);
+  // console.log("CONFIG ENV", env)
+  // console.log("CONFIG ARGV", argv)
   return {
-    entry: ['react-hot-loader/patch', './src/index.tsx'],
+    entry: ["react-hot-loader/patch", "./src/index.tsx"],
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].[contenthash].js',
+      path: path.resolve(__dirname, "dist"),
+      filename: "[name].[contenthash].js",
     },
     module: {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          use: 'babel-loader',
+          use: "babel-loader",
           exclude: /node_modules/,
         },
         {
           test: /\.ts(x)?$/,
-          loader: 'ts-loader',
+          loader: "ts-loader",
           exclude: /node_modules/,
         },
         {
           test: /\.(jpe?g|png|gif)$/i,
           use: [
             {
-              loader: 'url-loader',
+              loader: "url-loader",
               options: {
-                mimetype: 'image/png',
+                mimetype: "image/png",
               },
             },
           ],
         },
         {
           test: /\.svg$/,
-          use: 'file-loader',
+          use: "file-loader",
         },
       ],
     },
     devServer: {
       static: {
-        directory: './dist',
+        directory: "./dist",
       },
     },
     plugins: [
       new Dotenv(),
       new HtmlWebpackPlugin({
-        title: 'Beer display',
+        title: "Beer display",
         templateContent: ({ htmlWebpackPlugin }) =>
           '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
           htmlWebpackPlugin.options.title +
-          '</title>' +
+          "</title>" +
           '<meta name="viewport" content="width=device-width, initial-scale=1" />' +
           '<link rel="manifest" href="manifest/manifest.json" />' +
           '<link rel="preconnect" href="https://fonts.googleapis.com">' +
@@ -66,15 +66,15 @@ const config = (env, argv) => {
           '<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">' +
           '<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">' +
           '<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">' +
-          '<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">' +
+          '<link rel="icon" type="image/x-icon" href="images/favicon.ico">' +
           '<meta name="msapplication-TileColor" content="#c6426e">' +
           '<meta name="theme-color" content="#101018">' +
           '</head><body><div id="app"></div></body></html>',
-        filename: 'index.html',
+        filename: "index.html",
       }),
 
       // new WebpackBundleAnalyzer(),
-      ...(argv.mode === 'production'
+      ...(argv.mode === "production"
         ? [
             new WorkboxPlugin.GenerateSW({
               // these options encourage the ServiceWorkers to get in there fast
@@ -84,8 +84,8 @@ const config = (env, argv) => {
             }),
             new CopyWebpackPlugin({
               patterns: [
-                { from: 'manifest', to: 'manifest' },
-                { from: 'src/images', to: 'images' },
+                { from: "manifest", to: "manifest" },
+                { from: "images", to: "images" },
               ],
             }),
           ]
@@ -96,32 +96,32 @@ const config = (env, argv) => {
       // ]),
     ],
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.mjs'],
+      extensions: [".tsx", ".ts", ".js", ".mjs"],
       alias: {
-        'react-dom': '@hot-loader/react-dom',
+        "react-dom": "@hot-loader/react-dom",
       },
     },
     optimization: {
-      runtimeChunk: 'single',
+      runtimeChunk: "single",
       splitChunks: {
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
+            name: "vendors",
+            chunks: "all",
           },
         },
       },
     },
-  };
-};
+  }
+}
 
 module.exports = (env, argv) => {
-  const conf = config(env, argv);
+  const conf = config(env, argv)
   if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
-    conf.output.filename = '[name].[hash].js';
+    conf.output.filename = "[name].[hash].js"
   }
 
-  return conf;
-};
+  return conf
+}
