@@ -7,6 +7,8 @@ import SettingsIcon from "../icons/SettingsIcon"
 import DisplayIcon from "../icons/DisplayIcon"
 import LogoIcon from "../icons/LogoIcon"
 
+import glass from "../../assets/glass-icon.svg"
+
 const StyledHeader = styled.header`
   width: 100%;
   display: flex;
@@ -35,6 +37,8 @@ const StyledHeader = styled.header`
   }
   > div {
     width: 33%;
+    align-items: center;
+    display: flex;
   }
   .multi-btn {
     display: flex;
@@ -52,15 +56,26 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    font-family: "Righteous", cursive;
-    color: ${({ theme }) => theme.colors.gradientStart};
+    font-family: "Lobster", cursive;
+    /* color: ${({ theme }) => theme.colors.gradientStart}; */
+    color: #fff;
     text-align: center;
-    background: ${({ theme }) => theme.colors.gradientBg};
+    /* background: ${({ theme }) => theme.colors.gradientBg};
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
     svg {
       margin-right: 0.5rem;
       font-size: 1.5rem;
+    }
+    img {
+      max-width: 2rem;
+      margin-right: 0.5rem;
+    }
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 80%;
     }
   }
   @media screen and (max-width: 420px) {
@@ -123,8 +138,13 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </div>
       <div className="logo">
-        <LogoIcon />
-        MyBeerTaps
+        {/* <LogoIcon /> */}
+        <img src={glass} alt="MyCraftBeer" />
+        <div className="text">
+          <span>My</span>
+          <span>Craft</span>
+          <span>Beer</span>
+        </div>
       </div>
       <div className="multi-btn">
         <button onClick={showSettingsModal}>

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 interface KegWrapperProps {
   noKegs: number
@@ -9,6 +9,7 @@ export const KegRow = styled.div`
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  flex-wrap: wrap;
   @media screen and (max-width: 420px) {
     flex-direction: column;
   }

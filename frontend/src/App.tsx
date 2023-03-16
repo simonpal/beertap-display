@@ -2,16 +2,21 @@ import * as React from "react"
 import { useState } from "react"
 import { hot } from "react-hot-loader/root"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-import { Modal } from "./components/Modal"
-import { Settings } from "./components/Settings"
+// import { Modal } from "./components/Modal"
+// import { Settings } from "./components/Settings"
 import { StorageProvider } from "./utils/storage"
 import { QueryClient, QueryClientProvider } from "react-query"
-import AllKegs from "./components/AllKegs"
-import { RecipeSettings } from "./components/Recipes"
-import { DisplaySettings } from "./components/DisplaySettings"
-import { Header } from "./components/layout/Header"
+// import AllKegs from "./components/AllKegs"
+// import { RecipeSettings } from "./components/Recipes"
+// import { DisplaySettings } from "./components/DisplaySettings"
+// import { Header } from "./components/layout/Header"
 import { Detector } from "react-detect-offline"
 import { OfflineOverlay } from "./components/OfflineOverlay"
+import { Outlet, Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import SignIn from "./pages/SignIn"
+import SignUp from "./pages/SignUp"
+import NoMatch from "./pages/NoMatch"
 // import appBg from "./assets/pexels-pixabay-65210.jpeg";
 
 // const appBg = require("./assets/pexels-pixabay-65210.jpeg");
@@ -82,6 +87,9 @@ input, button, textarea, select {
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
+a {
+    color: ${({ theme }) => (theme as ITheme).colors.text};
+}
 #root, #__next {
   isolation: isolate;
 }
@@ -125,6 +133,7 @@ header {
       }
     }
   }
+  
 }
 `
 
@@ -138,50 +147,22 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <StorageProvider>
           <GlobalStyles />
-          <Header
-            showSettingsModal={() => {
-              setSettingsModalVisible(true)
-            }}
-            showRecipesModal={() => {
-              setRecipesModalVisible(true)
-            }}
-            showDisplayModal={() => {
-              setDisplayModalVisible(true)
-            }}
-          />
+
           <Detector
             render={({ online }) => <OfflineOverlay offline={!online} />}
           />
+          <Routes>
+            <Route path="/" element={<Outlet />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
 
-          <Modal
-            visible={settingsModalVisible}
-            onClose={() => {
-              setSettingsModalVisible(false)
-            }}
-          >
-            <Settings />
-          </Modal>
-          <Modal
-            visible={recipesModalVisible}
-            onClose={() => {
-              setRecipesModalVisible(false)
-            }}
-          >
-            <RecipeSettings
-              onClose={() => {
-                setRecipesModalVisible(false)
-              }}
-            />
-          </Modal>
-          <Modal
-            visible={displayModalVisible}
-            onClose={() => {
-              setDisplayModalVisible(false)
-            }}
-          >
-            <DisplaySettings />
-          </Modal>
-          <AllKegs />
+              {/* Using path="*"" means "match anything", so this route
+                    acts like a catch-all for URLs that we don't have explicit
+                    routes for. */}
+              <Route path="*" element={<NoMatch />} />
+            </Route>
+          </Routes>
         </StorageProvider>
       </ThemeProvider>
     </QueryClientProvider>

@@ -1,18 +1,19 @@
-import React, { useMemo, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { calcFromEbc } from '../utils/colorCalc';
-import { Wave } from './Wave';
+import React, { useMemo, useState } from "react"
+import styled, { css, keyframes } from "styled-components"
+import { calcFromEbc } from "../utils/colorCalc"
+// import { Wave } from "./Wave"
 
-import kegTop from '../assets/keg-top.svg';
-import kegBody from '../assets/keg-body-mask.svg';
-import kegInner from '../assets/keg-inner.svg';
-import kegBottom from '../assets/keg-bottom.svg';
-import { Button } from './layout/Button';
-import { useRecipe } from '../api';
-import { Modal } from './Modal';
-import { BeerInfo } from './BeerInfo';
-import { Spinner } from './layout/Spinner';
-import InfoIcon from './icons/InfoIcon';
+// import kegTop from "../assets/keg-top.svg"
+// import kegBody from "../assets/keg-body-mask.svg"
+// import kegInner from "../assets/keg-inner.svg"
+// import kegBottom from "../assets/keg-bottom.svg"
+import keg from "../assets/keg-illustrated.svg"
+import { Button } from "./layout/Button"
+import { useRecipe } from "../api"
+import { Modal } from "./Modal"
+import { BeerInfo } from "./BeerInfo"
+import { Spinner } from "./layout/Spinner"
+import InfoIcon from "./icons/InfoIcon"
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,39 +28,39 @@ const Wrapper = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
-`;
+`
 
-const waves = keyframes`
-0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: -150px;
-  }
-`;
+// const waves = keyframes`
+// 0% {
+//     margin-left: 0;
+//   }
+//   100% {
+//     margin-left: -150px;
+//   }
+// `
 
-const StyledKeg = styled.div<ColorBoxProps>`
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  width: 150px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  margin-top: 1rem;
-  img {
-    max-width: 100%;
-  }
-  .keg-top {
-    margin-bottom: -13px;
-    z-index: 11;
-  }
-  .keg-bottom {
-    z-index: 11;
-    margin-top: -13px;
-  }
-`;
+// const StyledKeg = styled.div<ColorBoxProps>`
+//   font-size: 2rem;
+//   margin-bottom: 1rem;
+//   width: 150px;
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
+//   margin-top: 1rem;
+//   img {
+//     max-width: 100%;
+//   }
+//   .keg-top {
+//     margin-bottom: -13px;
+//     z-index: 11;
+//   }
+//   .keg-bottom {
+//     z-index: 11;
+//     margin-top: -13px;
+//   }
+// `
 
-const KegBody = styled.div`
+/* const KegBody = styled.div`
   position: relative;
   background: #333;
   .keg-inner {
@@ -73,9 +74,9 @@ const KegBody = styled.div`
     position: relative;
     z-index: 10;
   }
-`;
+` */
 
-const Liquid = styled.div<BeerProps>`
+/* const Liquid = styled.div<BeerProps>`
   height: ${({ heightPercentage }) => `calc(${heightPercentage}% - 20px)`};
   transition: height 0.2s ease;
   display: flex;
@@ -112,7 +113,77 @@ const Liquid = styled.div<BeerProps>`
     flex-grow: 1;
     background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
   }
-`;
+` */
+
+const NewKegWrapper = styled.div<BeerProps>`
+  position: relative;
+  margin: 1rem auto;
+  .level-wrapper {
+    width: 60%;
+    height: 68%;
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    background: #222;
+    border: 6px solid #000;
+    border-radius: 0.75rem;
+    z-index: 2;
+  }
+  .level {
+    position: absolute;
+    bottom: 0;
+    background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
+    width: 100%;
+    height: ${({ heightPercentage }) => `${heightPercentage}%`};
+    border-bottom-left-radius: 0.65rem;
+    border-bottom-right-radius: 0.65rem;
+    overflow: hidden;
+  }
+  .percentage-text {
+    position: absolute;
+    font-weight: bold;
+    font-size: 2rem;
+    top: 1rem;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  }
+`
+
+interface BubbleProps {
+  pxWidth: number
+  leftPercentage: number
+  loopSeconds: number
+}
+
+const bubbleAnimation = keyframes`
+  0% {
+    bottom: -10px;
+  }
+  100% {
+    bottom: 100%;
+  }
+`
+const animation = (props: any) => css`
+  ${bubbleAnimation} ${props.animationLength} cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+`
+// css`
+//   ${bubbleAnimation} ${props.animationLength} cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+// `
+const Bubble = styled.span<BubbleProps>`
+  background-color: rgba(255, 255, 255, 0.7);
+  width: ${({ pxWidth }) => `${pxWidth}px`};
+  height: ${({ pxWidth }) => `${pxWidth}px`};
+  border-radius: 50%;
+  display: inline-block;
+  left: ${({ leftPercentage }) => `${leftPercentage}%`};
+  position: absolute;
+  animation-delay: ${({ loopSeconds }) => `${loopSeconds}ms`};
+  animation: ${({ loopSeconds }) =>
+    animation({ animationLength: `${loopSeconds}ms` })};
+`
 
 // const ColorBox = styled.div<ColorBoxProps>`
 //   display: inline-flex;
@@ -122,36 +193,49 @@ const Liquid = styled.div<BeerProps>`
 // `
 
 interface BeerProps extends ColorBoxProps {
-  heightPercentage: number;
+  heightPercentage: number
 }
 interface ColorBoxProps {
-  $ebcColor: string;
+  $ebcColor: string
 }
 interface KegProps {
-  recipeId?: string;
-  onClick?: () => void;
+  recipeId?: string
+  onClick?: () => void
 }
 
 // const KEG_BASE = 4.45;
+const generateRandom = (max: number, min: number): number =>
+  Math.floor(Math.random() * (max - min + 1) + min)
 
 const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
   // const [ebcValue, setEbcValue] = useState<number>(10);
   // const [liter, setLiter] = useState<number>(19)
-  const liter = 19;
-  const [showInfo, setShowInfo] = useState<boolean>(false);
+  const [showInfo, setShowInfo] = useState<boolean>(false)
 
-  const maxLiter = 19;
+  const maxLiter = 19
+  const liter = useMemo(() => generateRandom(maxLiter, 1), [maxLiter])
+  const bubbles = useMemo(
+    () =>
+      Array(10)
+        .fill(null)
+        .map((_) => ({
+          left: generateRandom(90, 1),
+          size: generateRandom(8, 2),
+          loop: generateRandom(4000, 500),
+        })),
+    []
+  )
 
   // const { data } = useKegWeight();
-  const { data: recipe, isLoading } = useRecipe(recipeId ?? '');
-  const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe]);
-  console.log(recipe);
+  const { data: recipe, isLoading } = useRecipe(recipeId ?? "")
+  const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe])
+  console.log(recipe)
   const literPercentage = useMemo(() => {
-    return Math.round((liter / maxLiter) * 100);
-  }, [liter]);
+    return Math.round((liter / maxLiter) * 100)
+  }, [liter])
 
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
   return (
     <Wrapper>
@@ -183,11 +267,11 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
       {/* <ColorBox $ebcColor={rgb} />
       {rgb} */}
 
-      <StyledKeg $ebcColor={rgb}>
+      {/* <StyledKeg $ebcColor={rgb}>
         <img src={kegTop} className="keg-top" alt="keg-top" />
         <KegBody>
           <img src={kegInner} className="keg-inner" alt="keg-inner" />
-          <Liquid heightPercentage={literPercentage} $ebcColor={rgb}>
+          <Liquid heightPercentage $ebcColor={rgb}>
             <div className="beer-top">
               <Wave />
               <Wave />
@@ -197,11 +281,27 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
           <img src={kegBody} className="keg-body" alt="keg-body" />
         </KegBody>
         <img src={kegBottom} className="keg-bottom" alt="keg-bottom" />
-      </StyledKeg>
+      </StyledKeg> */}
+      <NewKegWrapper $ebcColor={rgb} heightPercentage={literPercentage}>
+        <img src={keg} alt="Keg" />
+        <div className="level-wrapper">
+          <span className="percentage-text">{literPercentage}%</span>
+          <div className="level">
+            {bubbles.map((item, i) => (
+              <Bubble
+                key={`${recipe?.name}-bubble-${i}`}
+                leftPercentage={item.left}
+                pxWidth={item.size}
+                loopSeconds={item.loop}
+              />
+            ))}
+          </div>
+        </div>
+      </NewKegWrapper>
       <Button
         outlined
         onClick={() => {
-          setShowInfo(true);
+          setShowInfo(true)
         }}
       >
         <InfoIcon />
@@ -210,13 +310,13 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
       <Modal
         visible={showInfo}
         onClose={() => {
-          setShowInfo(false);
+          setShowInfo(false)
         }}
       >
         {recipe && <BeerInfo recipe={recipe} />}
       </Modal>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default React.memo(Keg);
+export default React.memo(Keg)

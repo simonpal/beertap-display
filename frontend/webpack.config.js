@@ -16,6 +16,7 @@ const config = (env, argv) => {
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[contenthash].js",
+      publicPath: "/",
     },
     module: {
       rules: [
@@ -47,6 +48,7 @@ const config = (env, argv) => {
       ],
     },
     devServer: {
+      historyApiFallback: true,
       static: {
         directory: "./dist",
       },
@@ -54,7 +56,7 @@ const config = (env, argv) => {
     plugins: [
       new Dotenv(),
       new HtmlWebpackPlugin({
-        title: "Beer display",
+        title: "My Craft Beer",
         templateContent: ({ htmlWebpackPlugin }) =>
           '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
           htmlWebpackPlugin.options.title +

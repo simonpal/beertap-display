@@ -1,11 +1,12 @@
 {
-  "name": "mf-app",
+  "name": "mycraftbeer-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "homepage": "./",
   "scripts": {
     "clean": "rm dist/bundle.js",
     "build-dev": "webpack --mode development",
@@ -21,6 +22,8 @@
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "react-query": "^3.34.19",
+    "react-router": "^6.9.0",
+    "react-router-dom": "^6.9.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
