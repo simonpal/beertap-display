@@ -42,6 +42,28 @@ export const SignInForm = styled.div`
       max-width: 4rem;
     }
   }
+  .google-login {
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    button {
+      margin-top: 1rem;
+      display: inline-flex;
+      border-radius: 0.25rem;
+      height: 3rem;
+      line-height: 3rem;
+      align-items: center;
+      font-size: 1rem;
+      justify-content: center;
+      font-weight: bold;
+      background-color: #ea4335;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+  }
 `
 
 export const InputWrapper = styled.div`

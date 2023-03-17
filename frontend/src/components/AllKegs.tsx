@@ -10,7 +10,7 @@ const OnTap = styled.div`
   font-family: "Lobster", cursive;
   font-size: 3rem;
   margin-bottom: 2rem;
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
   text-align: center;
   display: flex;
   justify-content: center;

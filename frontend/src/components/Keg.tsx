@@ -1,12 +1,6 @@
 import React, { useMemo, useState } from "react"
 import styled, { css, keyframes } from "styled-components"
 import { calcFromEbc } from "../utils/colorCalc"
-// import { Wave } from "./Wave"
-
-// import kegTop from "../assets/keg-top.svg"
-// import kegBody from "../assets/keg-body-mask.svg"
-// import kegInner from "../assets/keg-inner.svg"
-// import kegBottom from "../assets/keg-bottom.svg"
 import keg from "../assets/keg-illustrated.svg"
 import { Button } from "./layout/Button"
 import { useRecipe } from "../api"
@@ -27,93 +21,10 @@ const Wrapper = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+    font-size: 1.75rem;
   }
 `
-
-// const waves = keyframes`
-// 0% {
-//     margin-left: 0;
-//   }
-//   100% {
-//     margin-left: -150px;
-//   }
-// `
-
-// const StyledKeg = styled.div<ColorBoxProps>`
-//   font-size: 2rem;
-//   margin-bottom: 1rem;
-//   width: 150px;
-//   display: flex;
-//   flex-direction: column;
-//   overflow: hidden;
-//   margin-top: 1rem;
-//   img {
-//     max-width: 100%;
-//   }
-//   .keg-top {
-//     margin-bottom: -13px;
-//     z-index: 11;
-//   }
-//   .keg-bottom {
-//     z-index: 11;
-//     margin-top: -13px;
-//   }
-// `
-
-/* const KegBody = styled.div`
-  position: relative;
-  background: #333;
-  .keg-inner {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    opacity: 0.3;
-  }
-  .keg-body {
-    position: relative;
-    z-index: 10;
-  }
-` */
-
-/* const Liquid = styled.div<BeerProps>`
-  height: ${({ heightPercentage }) => `calc(${heightPercentage}% - 20px)`};
-  transition: height 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  .beer-top {
-    height: 20px;
-    flex-grow: 0;
-    align-items: flex-end;
-    justify-content: flex-end;
-    display: flex;
-    position: relative;
-    margin-bottom: -1px;
-    margin-left: -1px;
-    svg path {
-      fill: ${({ $ebcColor }) => `#${$ebcColor}`};
-    }
-    .waves {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      animation: ${waves} 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-      transform: translate3d(0, 0, 0);
-      &:last-of-type {
-        transform: translateX(150px);
-      }
-    }
-  }
-  .beer-body {
-    flex-grow: 1;
-    background-color: ${({ $ebcColor }) => `#${$ebcColor}`};
-  }
-` */
 
 const NewKegWrapper = styled.div<BeerProps>`
   position: relative;

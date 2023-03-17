@@ -17,6 +17,7 @@ import Home from "./pages/Home"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import NoMatch from "./pages/NoMatch"
+import ForgotPassword from "./pages/ForgotPassword"
 // import appBg from "./assets/pexels-pixabay-65210.jpeg";
 
 // const appBg = require("./assets/pexels-pixabay-65210.jpeg");
@@ -153,9 +154,10 @@ const App: React.FC = () => {
           />
           <Routes>
             <Route path="/" element={<Outlet />}>
-              <Route index element={<Home />} />
-              <Route path="login" element={<SignIn />} />
+              <Route index element={<SignIn />} />
+              <Route path="mybeers" element={<Home />} />
               <Route path="signup" element={<SignUp />} />
+              <Route path="reset" element={<ForgotPassword />} />
 
               {/* Using path="*"" means "match anything", so this route
                     acts like a catch-all for URLs that we don't have explicit
