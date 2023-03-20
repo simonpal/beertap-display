@@ -17,6 +17,8 @@ import {
   where,
   addDoc,
 } from "firebase/firestore"
+import { StorageSettings } from "./models"
+import toast from "react-hot-toast"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -54,7 +56,7 @@ const signInWithGoogle = async () => {
     }
   } catch (err: unknown) {
     console.error(err)
-    alert((err as Error).message)
+    toast.error((err as Error).message)
   }
 }
 
@@ -63,7 +65,7 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password)
   } catch (err) {
     console.error(err)
-    alert((err as Error).message)
+    toast.error((err as Error).message)
   }
 }
 
@@ -83,23 +85,37 @@ const registerWithEmailAndPassword = async (
     })
   } catch (err) {
     console.error(err)
-    alert((err as Error).message)
+    toast.error((err as Error).message)
   }
 }
 
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email)
-    alert("Password reset link sent!")
+    toast.success("Password reset link sent!")
   } catch (err) {
     console.error(err)
-    alert((err as Error).message)
+    toast.error((err as Error).message)
   }
 }
 
 const logout = () => {
   signOut(auth)
 }
+
+// const updateSettings = async (settings: StorageSettings, userId: string) => {
+//   try {
+//     // const res = await createUserWithEmailAndPassword(auth, email, password)
+//     //const user = res.user
+//     await addDoc(collection(db, "usersettings"), {
+//       userRef: userId,
+//       ...settings,
+//     })
+//   } catch (err) {
+//     console.error(err)
+//     alert((err as Error).message)
+//   }
+// }
 
 export {
   auth,

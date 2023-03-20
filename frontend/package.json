@@ -16,6 +16,7 @@
     "serve": "serve dist"
   },
   "dependencies": {
+    "@react-query-firebase/firestore": "^1.0.0-dev.7",
     "firebase": "^9.18.0",
     "js-base64": "^3.7.4",
     "react": "^17.0.2",
@@ -23,6 +24,7 @@
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^5.1.1",
     "react-hot-loader": "^4.13.0",
+    "react-hot-toast": "^2.4.0",
     "react-query": "^3.34.19",
     "react-router": "^6.9.0",
     "react-router-dom": "^6.9.0",

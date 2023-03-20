@@ -1,10 +1,13 @@
-import React, { useMemo } from 'react'
-import { type Fermentable, type FullRecipe, type Hop } from '../recipeModel'
-import { Field } from './FieldType'
-import styled from 'styled-components'
-import { KeyValue } from './recipe/KeyValue'
-import StyleLimits from './recipe/StyleLimits'
-import { formatObject } from '../utils'
+import React, { useMemo } from "react"
+import { type Fermentable, type FullRecipe, type Hop } from "../recipeModel"
+import { Field } from "./FieldType"
+import styled from "styled-components"
+import { KeyValue } from "./recipe/KeyValue"
+import StyleLimits from "./recipe/StyleLimits"
+import { formatObject } from "../utils"
+import LogoIcon from "./icons/LogoIcon"
+
+import glass from "../assets/glass-icon.svg"
 
 const Row = styled.div`
   display: flex;
@@ -34,6 +37,13 @@ const BeerTitle = styled.h2`
   text-align: center;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 2rem;
+    margin-right: 1rem;
+  }
 `
 
 const StyledImage = styled.img`
@@ -57,9 +67,12 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
   }, [recipe])
   return (
     <div>
-      <BeerTitle>{`${recipe?.name} by ${recipe?.author}`}</BeerTitle>
+      <BeerTitle>
+        <img src={glass} alt={`${recipe?.name}`} />
+        {`${recipe?.name} by ${recipe?.author}`}
+      </BeerTitle>
       {recipe?.img_url && (
-        <StyledImage src={recipe.img_url} alt={`${recipe?.name || ''}`} />
+        <StyledImage src={recipe.img_url} alt={`${recipe?.name || ""}`} />
       )}
       <Row>
         <HalfColumn>
@@ -75,17 +88,17 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
             value={`${recipe?.og?.toFixed(3)} / ${recipe?.fg?.toFixed(3)}`}
           />
           <KeyValue title="IBU" value={`${recipe?.ibu}`} />
-          <KeyValue title="Hops" value={hops.join(', ')} />
+          <KeyValue title="Hops" value={hops.join(", ")} />
           <KeyValue
             title="Yeasts"
-            value={(recipe?.yeasts || []).map((y) => y.name).join(', ')}
+            value={(recipe?.yeasts || []).map((y) => y.name).join(", ")}
           />
         </HalfColumn>
         <HalfColumn>
           <h3>
             {recipe?.style?.name && recipe?.style?.category
               ? `${recipe.style.name} - ${recipe.style.category}`
-              : 'Style'}
+              : "Style"}
           </h3>
 
           {recipe?.style && (
@@ -149,34 +162,34 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
         value={recipe?.fermentables?.map((item) => {
           const { name: fermentable } = item
           const formatted = formatObject<Fermentable>(item, [
-            'substitutes',
-            'notes',
-            'costPerAmount',
-            'usedIn',
-            'protein',
-            'attenuation',
-            'ibuPerAmount',
-            'diastaticPower',
-            'moisture',
-            'grainCategory',
-            'potential',
-            'inventory',
-            'notFermentable',
-            'userNotes',
-            'potentialPercentage',
-            'origin',
-            'bestBeforeDate',
-            'manufacturingDate',
-            'hidden',
-            'lovibond',
-            'name',
-            'fgdb',
-            'acid',
-            'cgdb',
-            'maxInBatch',
-            'friability',
-            'coarseFineDiff',
-            'fan'
+            "substitutes",
+            "notes",
+            "costPerAmount",
+            "usedIn",
+            "protein",
+            "attenuation",
+            "ibuPerAmount",
+            "diastaticPower",
+            "moisture",
+            "grainCategory",
+            "potential",
+            "inventory",
+            "notFermentable",
+            "userNotes",
+            "potentialPercentage",
+            "origin",
+            "bestBeforeDate",
+            "manufacturingDate",
+            "hidden",
+            "lovibond",
+            "name",
+            "fgdb",
+            "acid",
+            "cgdb",
+            "maxInBatch",
+            "friability",
+            "coarseFineDiff",
+            "fan",
           ])
           return { fermentable, ...formatted }
         })}
@@ -186,26 +199,26 @@ export const BeerInfo: React.FC<BeerInfoProps> = ({ recipe }) => {
         value={recipe?.hops?.map((item) => {
           const { name: hop } = item
           const formatted = formatObject<Hop>(item, [
-            'notes',
-            'inventory',
-            'origin',
-            'name',
-            'usedIn',
-            'substitutes',
-            'userNotes',
-            'year',
-            'temp',
-            'actualTime',
-            'beta',
-            'manufacturingDate',
-            'oil',
-            'bestBeforeDate',
-            'farnesene',
-            'humulene',
-            'cohumulone',
-            'hsi',
-            'caryophyllene',
-            'myrcene'
+            "notes",
+            "inventory",
+            "origin",
+            "name",
+            "usedIn",
+            "substitutes",
+            "userNotes",
+            "year",
+            "temp",
+            "actualTime",
+            "beta",
+            "manufacturingDate",
+            "oil",
+            "bestBeforeDate",
+            "farnesene",
+            "humulene",
+            "cohumulone",
+            "hsi",
+            "caryophyllene",
+            "myrcene",
           ])
           return { hop, ...formatted }
         })}

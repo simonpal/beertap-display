@@ -18,6 +18,7 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import NoMatch from "./pages/NoMatch"
 import ForgotPassword from "./pages/ForgotPassword"
+import { Toaster } from "react-hot-toast"
 // import appBg from "./assets/pexels-pixabay-65210.jpeg";
 
 // const appBg = require("./assets/pexels-pixabay-65210.jpeg");
@@ -139,10 +140,6 @@ header {
 `
 
 const App: React.FC = () => {
-  const [settingsModalVisible, setSettingsModalVisible] = useState(false)
-  const [recipesModalVisible, setRecipesModalVisible] = useState(false)
-  const [displayModalVisible, setDisplayModalVisible] = useState(false)
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
@@ -151,6 +148,17 @@ const App: React.FC = () => {
 
           <Detector
             render={({ online }) => <OfflineOverlay offline={!online} />}
+          />
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                border: "1px solid rgba(255,255,255,0.1)",
+                padding: "1rem",
+                color: "#fff",
+                backgroundColor: theme.colors.modalBg,
+              },
+            }}
           />
           <Routes>
             <Route path="/" element={<Outlet />}>

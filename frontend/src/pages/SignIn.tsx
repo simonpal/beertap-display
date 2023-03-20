@@ -37,7 +37,7 @@ const SignIn = () => {
   }
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    console.log(formData)
+    // console.log(formData)
     logInWithEmailAndPassword(formData.username, formData.password)
   }
 

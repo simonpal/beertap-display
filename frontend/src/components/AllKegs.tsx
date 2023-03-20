@@ -1,10 +1,11 @@
 import React from "react"
-import { useStorage } from "../utils/storage"
 import Keg from "./Keg"
 import { KegRow, KegWrapper } from "./layout/KegRow"
-import { NoKegsOrSettings } from "./NoKegsOrSettings"
 import styled from "styled-components"
 import { ITheme } from "../App"
+import { useSettings } from "../utils/customHooks"
+import { auth } from "../firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 const OnTap = styled.div`
   font-family: "Lobster", cursive;
@@ -36,30 +37,28 @@ const OnTap = styled.div`
 `
 
 const AllKegs: React.FC = () => {
-  const { settings } = useStorage()
-
+  const { fbSettings } = useSettings()
+  if (!fbSettings) return null
   return (
     <>
-      <NoKegsOrSettings />
       <OnTap>
         <span className="line" />
         <span>On Tap</span>
         <span className="line" />
       </OnTap>
       <KegRow>
-        {Array(settings.noKegs)
-          .fill(null)
-          .map((_, i) => i)
-          .map((_, i) => (
-            <KegWrapper noKegs={settings.noKegs} key={`keg-${i}`}>
-              <Keg
-                recipeId={settings.kegs[i]}
-                onClick={() => {
-                  console.log(i)
-                }}
-              />
-            </KegWrapper>
-          ))}
+        {Boolean(fbSettings && fbSettings?.noKegs > 0) &&
+          Array(fbSettings.noKegs)
+            .fill(null)
+            .map((_, i) => {
+              const keg = fbSettings?.kegs?.[i]
+              if (!keg) return null
+              return (
+                <KegWrapper noKegs={fbSettings?.noKegs ?? 1} key={`keg-${i}`}>
+                  <Keg recipeId={fbSettings?.kegs[i]} />
+                </KegWrapper>
+              )
+            })}
       </KegRow>
     </>
   )

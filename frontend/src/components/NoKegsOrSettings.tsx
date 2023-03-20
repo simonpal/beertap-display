@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { useStorage } from "../utils/storage"
 import InfoIcon from "./icons/InfoIcon"
+import { useSettings } from "../utils/customHooks"
 
 const NoContentWrapper = styled.div`
   display: flex;
@@ -26,12 +26,14 @@ const NoContentWrapper = styled.div`
 `
 
 export const NoKegsOrSettings = () => {
-  const { settings } = useStorage()
+  const { fbSettings } = useSettings()
+  // console.log(fbSettings)
   if (
-    settings?.noKegs > 0 &&
-    settings?.brewfatherApiKey !== "" &&
-    settings?.brewfatherUserId !== ""
+    fbSettings?.noKegs > 0 &&
+    fbSettings?.brewfatherApiKey !== "" &&
+    fbSettings?.brewfatherUserId !== ""
   ) {
+    console.log("Do not show empty message")
     return null
   }
   return (

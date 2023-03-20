@@ -31,7 +31,7 @@ interface StorageProviderProps {
   updateSettings?: (key: string, value: unknown) => void
 }
 
-const baseSettings = {
+export const baseSettings = {
   brewfatherUserId: "",
   brewfatherApiKey: "",
   noKegs: 0,
@@ -46,7 +46,7 @@ const storageSettings = localStorage.getItem("settings")
 
 if (typeof storageSettings !== "undefined" && !isNull(storageSettings)) {
   initSettings = JSON.parse(storageSettings ?? "")
-  console.log("after parse", initSettings)
+  // console.log("after parse", initSettings)
 }
 
 const StorageContext = createContext<StorageProviderProps>({

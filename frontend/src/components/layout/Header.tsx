@@ -1,13 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import { useStorage } from "../../utils/storage"
 import BeerGlassIcon from "../icons/BeerGlassIcon"
 // import BeerMugFull from '../icons/BeerMugFull';
 import SettingsIcon from "../icons/SettingsIcon"
 import DisplayIcon from "../icons/DisplayIcon"
-import LogoIcon from "../icons/LogoIcon"
 
 import glass from "../../assets/glass-icon.svg"
+import { auth, logout } from "../../firebase"
+import LogoutIcon from "../icons/LogoutIcon"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useSettings } from "../../utils/customHooks"
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -128,7 +130,10 @@ export const Header: React.FC<HeaderProps> = ({
   showSettingsModal,
   showDisplayModal,
 }) => {
-  const { settings } = useStorage()
+  const { fbSettings } = useSettings()
+  const [user] = useAuthState(auth)
+
+  console.log(fbSettings)
 
   return (
     <StyledHeader>
@@ -151,10 +156,16 @@ export const Header: React.FC<HeaderProps> = ({
           <SettingsIcon />
           Settings
         </button>
-        {settings.connectedDisplay && (
+        {fbSettings?.connectedDisplay && (
           <button onClick={showDisplayModal}>
             <DisplayIcon />
             Display
+          </button>
+        )}
+        {user && (
+          <button onClick={logout}>
+            <LogoutIcon />
+            Sign out
           </button>
         )}
       </div>

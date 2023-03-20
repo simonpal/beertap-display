@@ -1,11 +1,11 @@
 import React from "react"
 
-interface IconWrapperProps extends React.HTMLAttributes<HTMLOrSVGElement> {
-  fill?: string
-  viewBox?: string
-}
+// interface IconWrapperProps extends React.HTMLAttributes<HTMLOrSVGElement> {
+//   fill?: string
+//   viewBox?: string
+// }
 
-export const IconWrapper: React.FC<IconWrapperProps> = ({
+export const IconWrapper: React.FC<React.SVGProps<SVGSVGElement>> = ({
   children,
   ...rest
 }) => {

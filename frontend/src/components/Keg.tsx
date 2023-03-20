@@ -8,6 +8,8 @@ import { Modal } from "./Modal"
 import { BeerInfo } from "./BeerInfo"
 import { Spinner } from "./layout/Spinner"
 import InfoIcon from "./icons/InfoIcon"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "../firebase"
 
 const Wrapper = styled.div`
   display: flex;
@@ -140,7 +142,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
   // const { data } = useKegWeight();
   const { data: recipe, isLoading } = useRecipe(recipeId ?? "")
   const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe])
-  console.log(recipe)
+  // console.log(recipe)
   const literPercentage = useMemo(() => {
     return Math.round((liter / maxLiter) * 100)
   }, [liter])

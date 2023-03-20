@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { useRecipes } from '../api';
-import { type BaseRecipe } from '../models';
-import { useStorage } from '../utils/storage';
-import { Button } from './layout/Button';
-import { Spinner } from './layout/Spinner';
-import { ModalTitle } from './layout/ModalTitle';
-import { type ITheme } from '../App';
-import { FilterButton } from './layout/FilterButton';
-import BeerGlassIcon from './icons/BeerGlassIcon';
+import React, { useEffect, useMemo, useState } from "react"
+import styled from "styled-components"
+import { useRecipes } from "../api"
+import { type BaseRecipe } from "../models"
+import { Button } from "./layout/Button"
+import { Spinner } from "./layout/Spinner"
+import { ModalTitle } from "./layout/ModalTitle"
+import { type ITheme } from "../App"
+import { FilterButton } from "./layout/FilterButton"
+import BeerGlassIcon from "./icons/BeerGlassIcon"
+import { useMutateSettings, useSettings } from "../utils/customHooks"
 
 const StyledSettings = styled.div`
   width: 600px;
@@ -80,104 +80,113 @@ const StyledSettings = styled.div`
       margin-bottom: 1rem;
     }
   }
-`;
+`
 
 const FilterWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-`;
+`
 interface RecipeSettingsProps {
-  onClose: () => void;
+  onClose: () => void
+  userId: string
 }
 interface StyleFilter {
-  name: string;
-  count: number;
+  name: string
+  count: number
 }
-export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
-  const { settings, updateSettings = (k: string, v: any) => null } =
-    useStorage();
-  const [lastId, setLastId] = useState('');
-  const [filters, setFilters] = useState<string[]>([]);
+export const RecipeSettings: React.FC<RecipeSettingsProps> = ({
+  onClose,
+  userId,
+}) => {
+  if (!userId) return null
+  const { fbSettings } = useSettings()
+  const { mutation } = useMutateSettings(userId)
+  const [lastId, setLastId] = useState("")
+  const [filters, setFilters] = useState<string[]>([])
   const [selectedRecipes, setSelectedRecipes] = useState(
-    Array(settings.noKegs)
+    Array(fbSettings?.noKegs ?? 0)
       .fill(null)
-      .map((_, i) => settings.kegs?.[i] || null)
-  );
+      .map((_, i) => fbSettings?.kegs?.[i] ?? null)
+  )
 
-  const { recipes, isLoading, reachedLimit } = useRecipes(lastId);
+  const { recipes, isLoading, reachedLimit } = useRecipes(lastId, userId)
+
+  const { mutate } = mutation
 
   const parsedRecipes = useMemo(() => {
     return recipes.map((rec) =>
-      rec?.style?.name ? rec : { ...rec, style: { name: 'Uncategorized' } }
-    );
-  }, [recipes]);
+      rec?.style?.name ? rec : { ...rec, style: { name: "Uncategorized" } }
+    )
+  }, [recipes])
 
   const availableFilters = useMemo(() => {
     return parsedRecipes.reduce(
       (allFilters: StyleFilter[], currentRecipe: BaseRecipe) => {
         const foundIdx = allFilters.findIndex(
           (filt) => filt.name === currentRecipe.style.name
-        );
+        )
         if (foundIdx > -1) {
-          const newArr = [...allFilters];
+          const newArr = [...allFilters]
           const obj: StyleFilter = {
             ...allFilters[foundIdx],
             count: allFilters[foundIdx].count + 1,
-          };
-          newArr[foundIdx] = obj;
-          return newArr;
+          }
+          newArr[foundIdx] = obj
+          return newArr
         } else {
-          return [...allFilters, { name: currentRecipe.style.name, count: 1 }];
+          return [...allFilters, { name: currentRecipe.style.name, count: 1 }]
         }
       },
       []
-    );
-  }, [parsedRecipes]);
+    )
+  }, [parsedRecipes])
 
   const handleSelectedFilters: (rec: BaseRecipe) => boolean = (
     rec: BaseRecipe
   ) => {
-    if (filters.length === 0) return true;
-    return filters.includes(rec?.style?.name);
-  };
+    if (filters.length === 0) return true
+    return filters.includes(rec?.style?.name)
+  }
 
   const updateSelectedRecipes = (id: string, idx: number): void => {
-    const rec = [...selectedRecipes];
-    const found = selectedRecipes.findIndex((item) => item === id);
-    rec[idx] = id;
+    const rec = [...selectedRecipes]
+    const found = selectedRecipes.findIndex((item) => item === id)
+    rec[idx] = id
     if (found >= 0) {
-      rec[found] = null;
+      rec[found] = null
     }
-    setSelectedRecipes(rec);
-  };
+    setSelectedRecipes(rec)
+  }
 
   const handleFilterSelection: (name: string) => void = (name: string) => {
     if (filters.includes(name)) {
-      setFilters([...filters.filter((filt) => filt !== name)]);
+      setFilters([...filters.filter((filt) => filt !== name)])
     } else {
-      setFilters([...filters, name]);
+      setFilters([...filters, name])
     }
-  };
+  }
 
   const isSelected = (value: string, idx: number): boolean => {
-    return selectedRecipes[idx] !== null && selectedRecipes[idx] === value;
-  };
+    return selectedRecipes[idx] !== null && selectedRecipes[idx] === value
+  }
 
   const saveRecipes = (): void => {
-    updateSettings('kegs', selectedRecipes);
-    onClose();
-  };
+    const newObj = { ...fbSettings, kegs: selectedRecipes }
+    mutate(newObj)
+    //updateSettings('kegs', selectedRecipes);
+    onClose()
+  }
 
   useEffect(() => {
-    if (selectedRecipes.length === 0 && settings.noKegs > 0) {
+    if (selectedRecipes.length === 0 && fbSettings?.noKegs > 0) {
       setSelectedRecipes(
-        Array(settings.noKegs)
+        Array(fbSettings?.noKegs ?? 0)
           .fill(null)
-          .map((_, i) => settings.kegs?.[i] || null)
-      );
+          .map((_, i) => fbSettings?.kegs?.[i] ?? null)
+      )
     }
-  }, [settings.noKegs]);
+  }, [fbSettings])
   return (
     <StyledSettings>
       <ModalTitle>
@@ -194,7 +203,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
                     selected={filters.includes(filt.name)}
                     key={filt.name}
                     onClick={() => {
-                      handleFilterSelection(filt.name);
+                      handleFilterSelection(filt.name)
                     }}
                   >
                     {filt.name} ({filt.count})
@@ -208,7 +217,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
               .filter(handleSelectedFilters)
               .map((rec: BaseRecipe) => (
                 <li key={rec._id}>
-                  <h3>{rec?.name || '(No name)'}</h3>
+                  <h3>{rec?.name || "(No name)"}</h3>
                   <div className="author">Author: {rec.author}</div>
                   {rec?.style && (
                     <div className="style">Style: {rec.style.name}</div>
@@ -217,10 +226,10 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
                     <button
                       key={`button-${rec._id}-${idx}`}
                       className={`${
-                        isSelected(rec._id, idx) ? 'selected' : ''
+                        isSelected(rec._id, idx) ? "selected" : ""
                       }`}
                       onClick={() => {
-                        updateSelectedRecipes(rec._id, idx);
+                        updateSelectedRecipes(rec._id, idx)
                       }}
                     >
                       Keg {idx + 1}
@@ -233,7 +242,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
       )}
 
       {isLoading && (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: "100%" }}>
           <Spinner />
         </div>
       )}
@@ -241,23 +250,23 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({ onClose }) => {
         outlined
         center
         onClick={() => {
-          setLastId(recipes[recipes.length - 1]._id);
+          setLastId(recipes[recipes.length - 1]._id)
         }}
         disabled={reachedLimit}
       >
-        {reachedLimit ? 'No more recipes' : 'Fetch more'}
+        {reachedLimit ? "No more recipes" : "Fetch more"}
       </Button>
 
       <div className="save-recipes">
         <p>Do you want to save these settings?</p>
         <Button
           onClick={() => {
-            saveRecipes();
+            saveRecipes()
           }}
         >
           Save
         </Button>
       </div>
     </StyledSettings>
-  );
-};
+  )
+}
