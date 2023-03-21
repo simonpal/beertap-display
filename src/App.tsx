@@ -1,15 +1,8 @@
 import * as React from "react"
-import { useState } from "react"
 import { hot } from "react-hot-loader/root"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-// import { Modal } from "./components/Modal"
-// import { Settings } from "./components/Settings"
 import { StorageProvider } from "./utils/storage"
 import { QueryClient, QueryClientProvider } from "react-query"
-// import AllKegs from "./components/AllKegs"
-// import { RecipeSettings } from "./components/Recipes"
-// import { DisplaySettings } from "./components/DisplaySettings"
-// import { Header } from "./components/layout/Header"
 import { Detector } from "react-detect-offline"
 import { OfflineOverlay } from "./components/OfflineOverlay"
 import { Outlet, Route, Routes } from "react-router-dom"
@@ -19,9 +12,6 @@ import SignUp from "./pages/SignUp"
 import NoMatch from "./pages/NoMatch"
 import ForgotPassword from "./pages/ForgotPassword"
 import { Toaster } from "react-hot-toast"
-// import appBg from "./assets/pexels-pixabay-65210.jpeg";
-
-// const appBg = require("./assets/pexels-pixabay-65210.jpeg");
 
 const appBg = require("./assets/appbg-3.jpeg")
 
@@ -123,7 +113,6 @@ header {
     align-items: center;
     border: 0;
     font-weight: bold;
-    // text-decoration: underline;
     cursor: pointer;
     svg {
       margin-right: 0.75rem;
@@ -167,9 +156,6 @@ const App: React.FC = () => {
               <Route path="signup" element={<SignUp />} />
               <Route path="reset" element={<ForgotPassword />} />
 
-              {/* Using path="*"" means "match anything", so this route
-                    acts like a catch-all for URLs that we don't have explicit
-                    routes for. */}
               <Route path="*" element={<NoMatch />} />
             </Route>
           </Routes>

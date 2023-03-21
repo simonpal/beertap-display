@@ -17,14 +17,11 @@ import {
   where,
   addDoc,
 } from "firebase/firestore"
-import { StorageSettings } from "./models"
 import toast from "react-hot-toast"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY, // "AIzaSyC04S9AYB5xThCdxWkWK5VL8zg2cMqIyHE",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "mycraftbeer-8eec7.firebaseapp.com",
   projectId: "mycraftbeer-8eec7",
   storageBucket: "mycraftbeer-8eec7.appspot.com",
@@ -102,20 +99,6 @@ const sendPasswordReset = async (email: string) => {
 const logout = () => {
   signOut(auth)
 }
-
-// const updateSettings = async (settings: StorageSettings, userId: string) => {
-//   try {
-//     // const res = await createUserWithEmailAndPassword(auth, email, password)
-//     //const user = res.user
-//     await addDoc(collection(db, "usersettings"), {
-//       userRef: userId,
-//       ...settings,
-//     })
-//   } catch (err) {
-//     console.error(err)
-//     alert((err as Error).message)
-//   }
-// }
 
 export {
   auth,
