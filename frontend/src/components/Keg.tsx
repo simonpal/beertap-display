@@ -52,6 +52,7 @@ const NewKegWrapper = styled.div<BeerProps>`
     border-bottom-left-radius: 0.65rem;
     border-bottom-right-radius: 0.65rem;
     overflow: hidden;
+    transition: height 0.5s ease;
   }
   .percentage-text {
     position: absolute;

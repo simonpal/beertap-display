@@ -1,10 +1,9 @@
-import { collection, doc, query, where } from "firebase/firestore"
+import { doc } from "firebase/firestore"
 import React, { useEffect, useMemo, useState } from "react"
 import { auth, db } from "../firebase"
 import {
   useFirestoreDocument,
   useFirestoreDocumentMutation,
-  useFirestoreQuery,
 } from "@react-query-firebase/firestore"
 import toast from "react-hot-toast"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -31,7 +30,9 @@ export const useSettings = () => {
   const { data, isLoading } = useFirestoreDocument(
     ["userSettings", { userId: user?.uid ?? "" }],
     ref,
-    {},
+    {
+      subscribe: true,
+    },
     {
       enabled: typeof user?.uid !== "undefined" && typeof ref !== "undefined",
       staleTime: 5000,
@@ -64,6 +65,7 @@ export const useMutateSettings = (userId: string) => {
         toast.success("Saved successfully!", {
           duration: 4000,
         })
+        setTimeout(() => window.location.reload(), 2000)
       },
       onError(error) {
         toast.error("Failed to update!")

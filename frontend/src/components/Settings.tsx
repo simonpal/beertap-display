@@ -24,7 +24,7 @@ const StyledSettings = styled.div`
 
 export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
   if (!userId) return null
-  const [formData, setFormData] = useState({ ...baseSettings })
+  const [formData, setFormData] = useState({})
 
   const { fbSettings, fetchingSettings } = useSettings()
   const { mutation } = useMutateSettings(userId)
@@ -43,7 +43,7 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
 
   const onSubmit = () => {
     if (userId) {
-      console.log("Save: ", formData)
+      console.log("--- Save: ", formData)
       mutate(formData)
     } else {
       toast.error("Something went wrong")
@@ -103,24 +103,27 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
           label="I have a connected display"
           defaultChecked={fbSettings?.connectedDisplay}
           id="connectedDisplay"
-          onChange={(e) => {
+          // onChange={(e) => {
+          //   handleFormChange(e.currentTarget.id, e.currentTarget.checked)
+          // }}
+          onClick={(e) => {
             handleFormChange(e.currentTarget.id, e.currentTarget.checked)
           }}
         />
       </div>
-      {/* {settings.connectedDisplay && ( */}
-      <div>
-        <Label>Display API endpoint</Label>
-        <Input
-          type="text"
-          id="displayApiEndpoint"
-          defaultValue={fbSettings?.displayApiEndpoint}
-          onChange={(e) => {
-            handleFormChange(e.target.id, e.target.value)
-          }}
-        />
-      </div>
-      {/* )} */}
+      {fbSettings?.connectedDisplay && (
+        <div>
+          <Label>Display API endpoint</Label>
+          <Input
+            type="text"
+            id="displayApiEndpoint"
+            defaultValue={fbSettings?.displayApiEndpoint}
+            onChange={(e) => {
+              handleFormChange(e.target.id, e.target.value)
+            }}
+          />
+        </div>
+      )}
       <Button onClick={onSubmit}>Save settings</Button>
       {/* <div>
         <Button>

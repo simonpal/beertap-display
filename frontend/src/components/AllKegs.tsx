@@ -10,7 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 const OnTap = styled.div`
   font-family: "Lobster", cursive;
   font-size: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
   text-align: center;
   display: flex;
