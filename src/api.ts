@@ -69,11 +69,15 @@ export const useRecipes = (
   const [reachedLimit, setReachedLimit] = useState<boolean>(false)
 
   const { fbSettings } = useSettings()
-  const queryEnabled = Boolean(
-    typeof fbSettings?.brewfatherUserId !== "undefined" &&
-      typeof fbSettings?.brewfatherApiKey !== "undefined" &&
-      fbSettings?.brewfatherUserId !== "" &&
-      fbSettings?.brewfatherApiKey !== ""
+  const queryEnabled = useMemo(
+    () =>
+      Boolean(
+        typeof fbSettings?.brewfatherUserId !== "undefined" &&
+          typeof fbSettings?.brewfatherApiKey !== "undefined" &&
+          fbSettings?.brewfatherUserId !== "" &&
+          fbSettings?.brewfatherApiKey !== ""
+      ),
+    [fbSettings]
   )
   const header = useMemo(
     () => ({

@@ -22,6 +22,8 @@ export const useSettings = () => {
 
   const [user] = useAuthState(auth)
 
+  console.log(user)
+
   const ref = useMemo(
     () => (user?.uid ? doc(db, "userSettings", user.uid) : undefined),
     [user]
