@@ -64,16 +64,18 @@ export const DisplaySettings: React.FC = () => {
       <ModalTitle>
         <DisplayIcon /> Display settings
       </ModalTitle>
-      {fbSettings?.kegs.map((id: string, idx: number) => (
-        <StyledFormWrapper key={id}>
-          <h3>Settings for keg {idx + 1}</h3>
-          <DisplayKegForm
-            recipeId={id}
-            onChange={handleChange(idx)}
-            setInitialValue={setInitialValue(idx)}
-          />
-        </StyledFormWrapper>
-      ))}
+      {fbSettings?.kegs &&
+        fbSettings?.kegs.length > 0 &&
+        fbSettings.kegs.map((id: string, idx: number) => (
+          <StyledFormWrapper key={id}>
+            <h3>Settings for keg {idx + 1}</h3>
+            <DisplayKegForm
+              recipeId={id}
+              onChange={handleChange(idx)}
+              setInitialValue={setInitialValue(idx)}
+            />
+          </StyledFormWrapper>
+        ))}
       <div className="center">
         <Button onClick={handleSave}>Save to display</Button>
       </div>

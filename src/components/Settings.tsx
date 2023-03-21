@@ -10,6 +10,11 @@ import { Button } from "./layout/Button"
 import { Spinner } from "./layout/Spinner"
 import { useMutateSettings, useSettings } from "../utils/customHooks"
 import toast from "react-hot-toast"
+import HelpIcon from "./icons/HelpIcon"
+import { Modal } from "./Modal"
+
+const helpImg1 = require("../assets/brewfather-help-1.png")
+const helpImg2 = require("../assets/brewfather-help-2.png")
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -20,11 +25,20 @@ const StyledSettings = styled.div`
   input:not([type="checkbox"]) {
     width: 100%;
   }
+  p,
+  h4 {
+    text-align: left;
+    margin-bottom: 1rem;
+    img {
+      margin-bottom: 1rem;
+    }
+  }
 `
 
 export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
   if (!userId) return null
   const [formData, setFormData] = useState({})
+  const [showHelpModal, setShowHelpModal] = useState<boolean>(false)
 
   const { fbSettings, fetchingSettings } = useSettings()
   const { mutation } = useMutateSettings(userId)
@@ -66,7 +80,12 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
         <SettingsIcon /> Settings
       </ModalTitle>
       <div>
-        <Label htmlFor="brewfatherUserId">Brewfather user id</Label>
+        <Label htmlFor="brewfatherUserId">
+          Brewfather user id{" "}
+          <button onClick={() => setShowHelpModal(true)}>
+            <HelpIcon />
+          </button>
+        </Label>
         <Input
           type="text"
           id="brewfatherUserId"
@@ -125,6 +144,25 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
         </div>
       )}
       <Button onClick={onSubmit}>Save settings</Button>
+      <Modal visible={showHelpModal} onClose={() => setShowHelpModal(false)}>
+        <StyledSettings>
+          <ModalTitle>Help</ModalTitle>
+          <h4>How to get a brewfather user id and token?</h4>
+          <p>Start with signing in yo your brewfather application.</p>
+          <p>Go to settings</p>
+          <p>
+            <img src={helpImg1.default} alt="Settings" />
+          </p>
+          <p>Go to Generate API key and click generate</p>
+          <p>
+            <img src={helpImg2.default} alt="API Key" />
+          </p>
+          <p>
+            Generate an api key with read access to Recipes and enter the
+            generated User id and API Key in the settings.
+          </p>
+        </StyledSettings>
+      </Modal>
       {/* <div>
         <Button>
           <span>Close</span>
