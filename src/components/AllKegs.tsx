@@ -55,7 +55,7 @@ const AllKegs: React.FC = () => {
               if (!keg) return null
               return (
                 <KegWrapper noKegs={fbSettings?.noKegs ?? 1} key={`keg-${i}`}>
-                  <Keg recipeId={fbSettings?.kegs[i]} />
+                  <Keg recipeId={fbSettings?.kegs[i]} kegIdx={i} />
                 </KegWrapper>
               )
             })}

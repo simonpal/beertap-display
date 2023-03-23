@@ -12,6 +12,7 @@ import { useMutateSettings, useSettings } from "../utils/customHooks"
 import toast from "react-hot-toast"
 import HelpIcon from "./icons/HelpIcon"
 import { Modal } from "./Modal"
+import { SmallText } from "./layout/SmallText"
 
 const helpImg1 = require("../assets/brewfather-help-1.png")
 const helpImg2 = require("../assets/brewfather-help-2.png")
@@ -35,6 +36,19 @@ const StyledSettings = styled.div`
   }
 `
 
+const KegLevels = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  > div {
+    width: 50%;
+    padding: 0.5rem;
+  }
+`
+
 export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
   if (!userId) return null
   const [formData, setFormData] = useState({})
@@ -46,11 +60,11 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
   const { mutate, error } = mutation
 
   // console.log(fbSettings)
-  // console.log(formData)
+  console.log(formData)
 
   const handleFormChange = (
     key: string,
-    val: string | number | boolean
+    val: string | number | boolean | number[]
   ): void => {
     setFormData({ ...formData, [key]: val })
   }
@@ -117,6 +131,33 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
           }}
         />
       </div>
+      {fbSettings?.noKegs && fbSettings?.noKegs > 0 && (
+        <>
+          <Label>Manual keg level in percentage for each keg</Label>
+          <KegLevels>
+            {Array((formData as any)?.noKegs || 0)
+              .fill(null)
+              .map((_, i) => (
+                <div key={`level-keg-${i}`}>
+                  <Label htmlFor={`keg-level-${i}`}>Keg {i + 1}</Label>
+                  <Input
+                    type="number"
+                    id={`keg-level-${i}`}
+                    defaultValue={fbSettings?.kegLevel?.[i] ?? 100}
+                    onChange={(e) => {
+                      let arr = [...((formData as any)?.kegLevel ?? [])]
+                      arr[i] = Number(e.target.value)
+                      handleFormChange("kegLevel", arr)
+                    }}
+                  />
+                </div>
+              ))}
+          </KegLevels>
+          <SmallText>
+            If you have a connected display and sensor this will be overwritten.
+          </SmallText>
+        </>
+      )}
       <div>
         <Checkbox
           label="I have a connected display"

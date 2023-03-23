@@ -10,6 +10,7 @@ import { Spinner } from "./layout/Spinner"
 import InfoIcon from "./icons/InfoIcon"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../firebase"
+import { useSettings } from "../utils/customHooks"
 
 const Wrapper = styled.div`
   display: flex;
@@ -115,16 +116,19 @@ interface ColorBoxProps {
 interface KegProps {
   recipeId?: string
   onClick?: () => void
+  kegIdx: number
 }
 
 // const KEG_BASE = 4.45;
 const generateRandom = (max: number, min: number): number =>
   Math.floor(Math.random() * (max - min + 1) + min)
 
-const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
+const Keg: React.FC<KegProps> = ({ onClick, recipeId, kegIdx }) => {
   // const [ebcValue, setEbcValue] = useState<number>(10);
   // const [liter, setLiter] = useState<number>(19)
   const [showInfo, setShowInfo] = useState<boolean>(false)
+
+  const { fbSettings } = useSettings()
 
   const maxLiter = 19
   const liter = useMemo(() => generateRandom(maxLiter, 1), [maxLiter])
@@ -145,7 +149,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId }) => {
   const rgb = useMemo(() => calcFromEbc(recipe?.color ?? 10), [recipe])
   // console.log(recipe)
   const literPercentage = useMemo(() => {
-    return Math.round((liter / maxLiter) * 100)
+    return fbSettings?.kegLevel?.[kegIdx] ?? 100 // Math.round((liter / maxLiter) * 100)
   }, [liter])
 
   if (isLoading) {
