@@ -131,7 +131,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId, kegIdx }) => {
   const { fbSettings } = useSettings()
 
   const maxLiter = 19
-  const liter = useMemo(() => generateRandom(maxLiter, 1), [maxLiter])
+  // const liter = useMemo(() => generateRandom(maxLiter, 1), [maxLiter])
   const bubbles = useMemo(
     () =>
       Array(10)
@@ -150,7 +150,7 @@ const Keg: React.FC<KegProps> = ({ onClick, recipeId, kegIdx }) => {
   // console.log(recipe)
   const literPercentage = useMemo(() => {
     return fbSettings?.kegLevel?.[kegIdx] ?? 100 // Math.round((liter / maxLiter) * 100)
-  }, [liter])
+  }, [fbSettings])
 
   if (isLoading) {
     return <Spinner />
