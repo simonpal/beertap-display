@@ -142,6 +142,8 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
                   <Label htmlFor={`keg-level-${i}`}>Keg {i + 1}</Label>
                   <Input
                     type="number"
+                    max="100"
+                    min="0"
                     id={`keg-level-${i}`}
                     defaultValue={fbSettings?.kegLevel?.[i] ?? 100}
                     onChange={(e) => {
