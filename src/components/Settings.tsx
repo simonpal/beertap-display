@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { baseSettings } from "../utils/storage"
 import { Input } from "./layout/Input"
 import { Label } from "./layout/Label"
 import { ModalTitle } from "./layout/ModalTitle"
@@ -13,6 +12,7 @@ import toast from "react-hot-toast"
 import HelpIcon from "./icons/HelpIcon"
 import { Modal } from "./Modal"
 import { SmallText } from "./layout/SmallText"
+import { useGlobalState } from "../utils/globalState"
 
 const helpImg1 = require("../assets/brewfather-help-1.png")
 const helpImg2 = require("../assets/brewfather-help-2.png")
@@ -53,6 +53,9 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
   if (!userId) return null
   const [formData, setFormData] = useState({})
   const [showHelpModal, setShowHelpModal] = useState<boolean>(false)
+  const {
+    state: { isOffline },
+  } = useGlobalState()
 
   const { fbSettings, fetchingSettings } = useSettings()
   const { mutation } = useMutateSettings(userId)
@@ -186,7 +189,9 @@ export const Settings: React.FC<{ userId?: string }> = ({ userId }) => {
           />
         </div>
       )}
-      <Button onClick={onSubmit}>Save settings</Button>
+      <Button onClick={onSubmit} disabled={isOffline}>
+        Save settings
+      </Button>
       <Modal visible={showHelpModal} onClose={() => setShowHelpModal(false)}>
         <StyledSettings>
           <ModalTitle>Help</ModalTitle>

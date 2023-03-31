@@ -138,9 +138,11 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <StyledHeader>
       <div>
-        <button onClick={showRecipesModal}>
-          <BeerGlassIcon /> Select recipes
-        </button>
+        {user && (
+          <button onClick={showRecipesModal}>
+            <BeerGlassIcon /> Select recipes
+          </button>
+        )}
       </div>
       <div className="logo">
         {/* <LogoIcon /> */}
@@ -152,21 +154,23 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
       <div className="multi-btn">
-        <button onClick={showSettingsModal}>
-          <SettingsIcon />
-          Settings
-        </button>
-        {fbSettings?.connectedDisplay && (
-          <button onClick={showDisplayModal}>
-            <DisplayIcon />
-            Display
-          </button>
-        )}
         {user && (
-          <button onClick={logout}>
-            <LogoutIcon />
-            Sign out
-          </button>
+          <>
+            <button onClick={showSettingsModal}>
+              <SettingsIcon />
+              Settings
+            </button>
+            {fbSettings?.connectedDisplay && (
+              <button onClick={showDisplayModal}>
+                <DisplayIcon />
+                Display
+              </button>
+            )}
+            <button onClick={logout}>
+              <LogoutIcon />
+              Sign out
+            </button>
+          </>
         )}
       </div>
     </StyledHeader>

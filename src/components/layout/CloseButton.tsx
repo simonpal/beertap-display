@@ -1,7 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 export const CloseButton = styled.button`
-  width: 3rem;
-  height: 3rem;
+  width: 54px;
+  height: 54px;
   z-index: 101;
   top: -1rem;
   right: -1rem;

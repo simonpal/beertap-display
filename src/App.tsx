@@ -1,7 +1,7 @@
 import * as React from "react"
 import { hot } from "react-hot-loader/root"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-import { StorageProvider } from "./utils/storage"
+import { GlobalStateProvider } from "./utils/globalState"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { Detector } from "react-detect-offline"
 import { OfflineOverlay } from "./components/OfflineOverlay"
@@ -132,7 +132,7 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <StorageProvider>
+        <GlobalStateProvider>
           <GlobalStyles />
 
           <Detector
@@ -159,7 +159,7 @@ const App: React.FC = () => {
               <Route path="*" element={<NoMatch />} />
             </Route>
           </Routes>
-        </StorageProvider>
+        </GlobalStateProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )

@@ -9,6 +9,7 @@ import { type ITheme } from "../App"
 import { FilterButton } from "./layout/FilterButton"
 import BeerGlassIcon from "./icons/BeerGlassIcon"
 import { useMutateSettings, useSettings } from "../utils/customHooks"
+import { useGlobalState } from "../utils/globalState"
 
 const StyledSettings = styled.div`
   width: 600px;
@@ -109,6 +110,10 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({
       .fill(null)
       .map((_, i) => fbSettings?.kegs?.[i] ?? null)
   )
+
+  const {
+    state: { isOffline },
+  } = useGlobalState()
 
   const { recipes, isLoading, reachedLimit } = useRecipes(lastId, userId)
 
@@ -252,7 +257,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({
         onClick={() => {
           setLastId(recipes[recipes.length - 1]._id)
         }}
-        disabled={reachedLimit}
+        disabled={reachedLimit || isOffline}
       >
         {reachedLimit ? "No more recipes" : "Fetch more"}
       </Button>
@@ -260,6 +265,7 @@ export const RecipeSettings: React.FC<RecipeSettingsProps> = ({
       <div className="save-recipes">
         <p>Do you want to save these settings?</p>
         <Button
+          disabled={isOffline}
           onClick={() => {
             saveRecipes()
           }}

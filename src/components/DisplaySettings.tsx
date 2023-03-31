@@ -5,6 +5,7 @@ import { DisplayKegForm } from "./DisplayKegForm"
 import { Button } from "./layout/Button"
 import DisplayIcon from "./icons/DisplayIcon"
 import { useSettings } from "../utils/customHooks"
+import { useGlobalState } from "../utils/globalState"
 
 const StyledSettings = styled.div`
   width: 500px;
@@ -38,6 +39,10 @@ export const DisplaySettings: React.FC = () => {
   const [formData, setFormData] = useState<FormValue[]>(
     Array(fbSettings?.noKegs ?? 0).fill({})
   )
+
+  const {
+    state: { isOffline },
+  } = useGlobalState()
 
   const setInitialValue =
     (idx: number) =>
@@ -77,7 +82,9 @@ export const DisplaySettings: React.FC = () => {
           </StyledFormWrapper>
         ))}
       <div className="center">
-        <Button onClick={handleSave}>Save to display</Button>
+        <Button onClick={handleSave} disabled={isOffline}>
+          Save to display
+        </Button>
       </div>
       {/* <div>
         <Label htmlFor="brewfatherApiKey">Brewfather api key</Label>
